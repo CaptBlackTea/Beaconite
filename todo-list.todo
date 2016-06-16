@@ -1,0 +1,15 @@
+App Ideas:
+ ✔ show seeing/not seeing a beacon @done (15-11-09 17:15)
+ ✔ show all received Beacon Data @done (15-11-09 17:15)
+ ✔ show distance calculations @done (15-11-09 17:16)
+
+Beacons:
+ ☐ config as altBeacon
+ ☐ config as EddyStone
+
+General:
+ ☐ differences altBeacon, iBeacon, EddyStone
+ ☐ compare distance algorithms
+ ☐ test how objects influence the calculations
+   ☐ effect of the height the Beacons are put in the room
+ ☐ 
