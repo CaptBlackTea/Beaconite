@@ -1,5 +1,6 @@
 package com.example.deas.beaconite;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
@@ -60,83 +61,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 	@Override
 	public void onBeaconServiceConnect() {
-		final Context rangingActivityContext = this;
+		final Activity rangingActivityContext = this;
 
 		beaconManager.setRangeNotifier(new RangeNotifier() {
 			@Override
 			public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						if (beacons.size() > 0) {
-							int index = 0;
-							for (Beacon b : beacons) {
-								index++;
-//						logToDisplay("The " + index + ". beacon " + b.toString() + " is about " + b.getDistance() + " meters away.");
-
-								TableLayout table = (TableLayout) findViewById(R.id.table);
-
-								// check if an element with the UUID as tag of the beacon exists
-								String bUuid = b.getId1().toString();
-								Log.d(TAG, "Beacon UUID: " + bUuid);
-
-								View elementWithUUID = table.findViewWithTag(bUuid);
-
-
-								if (elementWithUUID == null) {
-									// No View/TableRow exists with this UUID as id
-									// create row
-									TableRow row = new TableRow(rangingActivityContext);
-									TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-									row.setLayoutParams(lp);
-									row.setTag(bUuid);
-
-									// add to TableLayout
-									table.addView(row);
-
-
-								}
-
-								// there exists a row with this UUID as tag -> this beacon was seen before!
-								// clear all child views of this row -> clear old data
-								TableRow refreshRow = (TableRow) table.findViewWithTag(bUuid);
-								refreshRow.removeAllViews();
-
-								// create a TextView for each Beacon information: UUID, RSSI, Major, Minor, Accuracy, Distance
-								TextView uuid = new TextView(rangingActivityContext);
-								TextView rssi = new TextView(rangingActivityContext);
-								TextView major = new TextView(rangingActivityContext);
-								TextView minor = new TextView(rangingActivityContext);
-								TextView accuracy = new TextView(rangingActivityContext);
-								TextView distance = new TextView(rangingActivityContext);
-
-								uuid.setEms(5);
-								uuid.setText(b.getId1().toString());
-
-								rssi.setText("" + b.getRssi());
-								major.setText(b.getId2().toString());
-								minor.setText(b.getId3().toString());
-
-								accuracy.setText(calculateAccuracy(b.getDistance()));
-								accuracy.setEms(5);
-
-								distance.setText("" + b.getDistance());
-
-								refreshRow.addView(uuid);
-								refreshRow.addView(rssi);
-								refreshRow.addView(major);
-								refreshRow.addView(minor);
-								refreshRow.addView(accuracy);
-								refreshRow.addView(distance);
-
-							}
-							// code from the tutorial, but can only display the first beacon, therefore commented out
-//					Beacon firstBeacon = beacons.iterator().next();
-//					logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
-						}
-
-					}
-				});
+				runOnUiThread(new BeaconOverviewTable(beacons, rangingActivityContext));
 
 			}
 		});
@@ -170,15 +100,5 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 //		});
 //	}
 
-	private String calculateAccuracy(double distance) {
-		if (distance == -1.0) {
-			return "Unknown";
-		} else if (distance < 1) {
-			return "Immediate, under 1 meter";
-		} else if (distance < 3) {
-			return "Near, under 3 meter";
-		} else {
-			return "Far";
-		}
-	}
+
 }
