@@ -23,9 +23,14 @@ import org.altbeacon.beacon.Region;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class RangingActivity extends AppCompatActivity implements BeaconConsumer {
 	protected static final String TAG = "RangingActivity";
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
+
+	Logger log = LoggerFactory.getLogger(RangingActivity.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,10 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		beaconManager.bind(this);
 
 		Log.i(TAG, "********* Ranging!");
+		log.info("*** Started Ranging App");
+		log.info("Does it reload now?!");
+
+
 	}
 
 	@Override

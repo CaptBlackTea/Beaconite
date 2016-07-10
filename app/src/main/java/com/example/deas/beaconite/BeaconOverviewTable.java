@@ -70,11 +70,18 @@ public class BeaconOverviewTable implements Runnable {
 				refreshRow.addView(accuracy);
 				refreshRow.addView(distance);
 
+				writeBeaconInFile(b);
+
 			}
 			// code from the tutorial, but can only display the first beacon, therefore commented out
 //					Beacon firstBeacon = beacons.iterator().next();
 //					logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
 		}
+
+	}
+
+	private void writeBeaconInFile(Beacon b) {
+
 
 	}
 
