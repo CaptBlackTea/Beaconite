@@ -53,8 +53,10 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 		backgroundPowerSaver = new BackgroundPowerSaver(this);
 
 		// If you wish to test beacon detection in the Android Emulator, you can use code like this:
-		 BeaconManager.setBeaconSimulator(new TimedBeaconSimulator() );
-		 ((TimedBeaconSimulator) BeaconManager.getBeaconSimulator()).createTimedSimulatedBeacons();
+//		 BeaconManager.setBeaconSimulator(new TimedBeaconSimulator() );
+//		 ((TimedBeaconSimulator) BeaconManager.getBeaconSimulator()).createTimedSimulatedBeacons();
+
+		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator());
 	}
 
 	@Override

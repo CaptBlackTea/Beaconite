@@ -1,30 +1,47 @@
 <configuration scan="true">
+
+    <!-- Insert the current time formatted as "yyyyMMdd'T'HHmmss" under
+       the key "bySecond" into the logger context. This value will be
+       available to all subsequent configuration elements. -->
+    <timestamp key="byDay" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <property name="DEV_HOME" value="/home/dea/Development/Beaconite/app/src/main/LogFiles"/>
+
+
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
         <tagEncoder>
             <pattern>%logger{12}</pattern>
         </tagEncoder>
         <encoder>
-            <pattern>[%thread] %msg</pattern>
+            <pattern>[%20thread] %msg</pattern>
         </encoder>
     </appender>
 
-    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>app/src/main/logFiles/application.log</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!-- daily rollover. Make sure the path matches the one in the file element or else
-             the rollover logs are placed in the working directory. -->
-            <fileNamePattern>app/src/main/logFiles/application_%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+    <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>/home/dea/Development/Beaconite/app/src/main/LogFiles/application.log</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--&lt;!&ndash; daily rollover. Make sure the path matches the one in the file element or else-->
+    <!--the rollover logs are placed in the working directory. &ndash;&gt;-->
+    <!--<fileNamePattern>/home/dea/Development/Beaconite/app/src/main/LogFiles/application_%d{yyyy-MM-dd}.%i.log</fileNamePattern>-->
 
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>5MB</maxFileSize>
-            </timeBasedFileNamingAndTriggeringPolicy>
-            <!-- keep 30 days' worth of history -->
-            <maxHistory>30</maxHistory>
-        </rollingPolicy>
+    <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+    <!--<maxFileSize>5MB</maxFileSize>-->
+    <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+    <!--&lt;!&ndash; keep 30 days' worth of history &ndash;&gt;-->
+    <!--<maxHistory>30</maxHistory>-->
+    <!--</rollingPolicy>-->
 
+    <!--<encoder>-->
+    <!--<charset>UTF-8</charset>-->
+    <!--<pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>-->
+    <!--</encoder>-->
+    <!--</appender>-->
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>${DEV_HOME}/application.log</file>
+        <append>true</append>
         <encoder>
-            <charset>UTF-8</charset>
-            <pattern>%d %-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
 
