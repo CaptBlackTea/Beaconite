@@ -56,7 +56,7 @@ public class BeaconReferenceApplication extends Application implements Bootstrap
 //		 BeaconManager.setBeaconSimulator(new TimedBeaconSimulator() );
 //		 ((TimedBeaconSimulator) BeaconManager.getBeaconSimulator()).createTimedSimulatedBeacons();
 
-		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator());
+		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
 	}
 
 	@Override

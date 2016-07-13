@@ -5,9 +5,6 @@
        available to all subsequent configuration elements. -->
     <timestamp key="byDay" datePattern="yyyyMMdd'T'HHmmss"/>
 
-    <property name="DEV_HOME" value="/home/dea/Development/Beaconite/app/src/main/LogFiles"/>
-
-
     <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
         <tagEncoder>
             <pattern>%logger{12}</pattern>
@@ -38,7 +35,7 @@
     <!--</appender>-->
 
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <file>${DEV_HOME}/application.log</file>
+        <file>/home/dea/Development/Beaconite/app/src/main/LogFiles/application.log</file>
         <append>true</append>
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
