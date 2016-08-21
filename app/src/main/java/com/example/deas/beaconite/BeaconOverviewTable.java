@@ -1,8 +1,8 @@
 package com.example.deas.beaconite;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.util.Log;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -12,6 +12,8 @@ import org.altbeacon.beacon.Beacon;
 import java.util.Collection;
 
 /**
+ * Creates a table that displays detected Beacons and information about them.
+ * <p/>
  * Created by dea on 28/06/16.
  */
 public class BeaconOverviewTable implements Runnable {
@@ -29,19 +31,20 @@ public class BeaconOverviewTable implements Runnable {
 	@Override
 	public void run() {
 		if (!beacons.isEmpty()) {
-			int index = 0;
 
 			for (Beacon b : beacons) {
-//				index++;
-//				logToDisplay("The " + index + ". beacon " + b.toString() + " is about " + b.getDistance() + " meters away.");
 
 				// check if an element with the UUID as tag of the beacon exists
 				String bUuid = b.getId1().toString();
 				Log.d(TAG, "Beacon UUID: " + bUuid);
 
-				// there exists a row with this UUID as tag -> this beacon was seen before!
-				// clear all child views of this row -> clear old data
+				// if there exists a row with this UUID as tag -> this beacon was seen before!
+				// If this beacon was seen before: the data of this row needs to be refreshed and no additional table row should be created.
 				TableRow refreshRow = getTableRow(bUuid);
+
+				// clear all child views of this row -> clear old data
+				// clear it from color
+				clearRowView(refreshRow);
 
 				// create a TextView for each Beacon information: UUID, RSSI, Major, Minor, Accuracy, Distance
 				TextView uuid = new TextView(rangingActivity);
@@ -80,13 +83,35 @@ public class BeaconOverviewTable implements Runnable {
 
 	}
 
-	private void writeBeaconInFile(Beacon b) {
+	/**
+	 * Takes a TableRow and removes all its child views and clears its from any set background color.
+	 *
+	 * @param refreshRow the TableRow View to clean up.
+	 */
+	private void clearRowView(TableRow refreshRow) {
 
+		// TODO: check for null?
 
+		// remove all children of this view
+		refreshRow.removeAllViews();
+
+		// TODO: clear background color
 	}
 
-	private TableRow getTableRow(String bUuid){
-		TableRow row = (TableRow) table.findViewWithTag(bUuid);
+	private void writeBeaconInFile(Beacon b) {
+		// TODO: implement this some day...maybe...ideas change
+	}
+
+	/**
+	 * Searches if there exists a table row with the given bUuid as tag attribute.
+	 * If there is no such row a row will be created. This row has then the given bUuid as tag.
+	 * Otherwise the found row is returned.
+	 *
+	 * @param bUuid the tag of the table row to search for
+	 * @return a TableRow with the given bUuid as tag attribute
+	 */
+	private TableRow getTableRow(String bUuid) {
+		TableRow row = (TableRow) this.table.findViewWithTag(bUuid);
 
 		if (row == null) {
 			// No View/TableRow exists with this UUID as id
@@ -97,12 +122,14 @@ public class BeaconOverviewTable implements Runnable {
 			row.setTag(bUuid);
 
 			// add to TableLayout
-			table.addView(row);
-		} else {
-			row.removeAllViews();
+			this.table.addView(row);
 		}
 
 		return row;
+	}
+
+	private void colorDisappearedBeaconRow(TableRow row) {
+		row.setBackgroundColor(Color.RED);
 	}
 
 	private String calculateAccuracy(double distance) {

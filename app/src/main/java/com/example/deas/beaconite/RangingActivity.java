@@ -1,18 +1,11 @@
 package com.example.deas.beaconite;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -20,11 +13,10 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-
-import java.util.Collection;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 public class RangingActivity extends AppCompatActivity implements BeaconConsumer {
 	protected static final String TAG = "RangingActivity";
@@ -72,7 +64,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	public void onBeaconServiceConnect() {
 		final Activity rangingActivityContext = this;
 
-		beaconManager.setRangeNotifier(new RangeNotifier() {
+		beaconManager.addRangeNotifier(new RangeNotifier() {
 			@Override
 			public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
 				runOnUiThread(new BeaconOverviewTable(beacons, rangingActivityContext));
