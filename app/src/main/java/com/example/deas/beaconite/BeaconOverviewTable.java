@@ -18,21 +18,78 @@ import java.util.Collection;
  */
 public class BeaconOverviewTable implements Runnable {
 	protected static final String TAG = "BeaconOverviewTable";
-	private final Collection<Beacon> beacons;
+	private final Collection<Beacon> currentBeacons;
+
+	private Collection<Beacon> previousBeacons;
+
 	private Activity rangingActivity;
 	private TableLayout table;
 
 	public BeaconOverviewTable(final Collection<Beacon> beacons, Activity rangingActivity) {
-		this.beacons = beacons;
+		this.currentBeacons = beacons;
+
+		// when the table is first created there is no previous list of detected beacons
+		// therefore it is set to the same value as the variable currentBeacons
+		this.previousBeacons = beacons;
+
 		this.rangingActivity = rangingActivity;
 		this.table = (TableLayout) rangingActivity.findViewById(R.id.table);
 	}
 
 	@Override
 	public void run() {
-		if (!beacons.isEmpty()) {
 
-			for (Beacon b : beacons) {
+
+		if (!currentBeacons.isEmpty()) {
+
+			//if there is a Beacon that is in previousBeacons and not in currentBeacons: mark the
+			// table row; else do nothing
+			//TODO: refactor to make it more efficient if possible
+
+			Collection<Beacon> tempBeacons = previousBeacons;
+//			tempBeacons.removeAll(currentBeacons);
+			Log.d(TAG, "Current Beacons: " + currentBeacons + " ; Temp Beacons: " + tempBeacons);
+
+			for (Beacon b : previousBeacons) {
+				for (Beacon cb : currentBeacons) {
+//					tempBeacons.removeIf(b.equals(cb));
+
+				}
+			}
+
+
+//			for(Beacon b : tempBeacons) {
+//				TableRow markRow = getTableRow(b.getId1().toString());
+//				colorDisappearedBeaconRow(markRow);
+//			}
+
+//			for (Beacon pb : previousBeacons) {
+
+//				for(Beacon cb : currentBeacons){
+//					Log.d(TAG, "Comparing previous Beacon: " + pb.getId2() + " with current " +
+//								"Beacon: " + cb.getId2() + " ; equals: " + pb.equals(cb));
+//
+//					if (!pb.equals(cb)){
+//
+//					TableRow markRow = getTableRow(pb.getId1().toString());
+//					colorDisappearedBeaconRow(markRow);
+//
+//					}
+//				}
+
+
+//				TableRow markRow = getTableRow(pb.getId1().toString());
+//				colorDisappearedBeaconRow(markRow);
+
+
+//			}
+
+			// after checking which beacons are currently seen compared to the last list that was
+			// received the current list becomes the new previous list.
+			previousBeacons = currentBeacons;
+
+
+			for (Beacon b : currentBeacons) {
 
 				// check if an element with the UUID as tag of the beacon exists
 				String bUuid = b.getId1().toString();
@@ -77,7 +134,7 @@ public class BeaconOverviewTable implements Runnable {
 
 			}
 			// code from the tutorial, but can only display the first beacon, therefore commented out
-//					Beacon firstBeacon = beacons.iterator().next();
+//					Beacon firstBeacon = currentBeacons.iterator().next();
 //					logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
 		}
 
@@ -86,18 +143,18 @@ public class BeaconOverviewTable implements Runnable {
 	/**
 	 * Takes a TableRow and removes all its child views and clears its from any set background color.
 	 *
-	 * @param refreshRow the TableRow View to clean up.
+	 * @param refreshRow the TableRow View to clean up. If this parameter is null nothing happens.
 	 */
 	private void clearRowView(TableRow refreshRow) {
 
-		// TODO: check for null?
+		if (refreshRow != null) {
+			// remove all children of this view
+			refreshRow.removeAllViews();
 
-		// remove all children of this view
-		refreshRow.removeAllViews();
-
-		// TODO: clear background color
+			// TODO: clear background color
+//			refreshRow.setBackgroundColor(0);
+		}
 	}
-
 	private void writeBeaconInFile(Beacon b) {
 		// TODO: implement this some day...maybe...ideas change
 	}
@@ -111,6 +168,8 @@ public class BeaconOverviewTable implements Runnable {
 	 * @return a TableRow with the given bUuid as tag attribute
 	 */
 	private TableRow getTableRow(String bUuid) {
+
+		//TODO: check if bUuid is null? Should not happen and it is a private method, but...
 		TableRow row = (TableRow) this.table.findViewWithTag(bUuid);
 
 		if (row == null) {
