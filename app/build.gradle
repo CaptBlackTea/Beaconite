@@ -10,7 +10,19 @@ android {
         targetSdkVersion 23
         versionCode 3
 //        versionName "1.0"
+
+        // for Java 8 support
+//        jackOptions {
+//            enabled true
+//        }
+
     }
+
+    // for Java 8
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_8
+//        targetCompatibility JavaVersion.VERSION_1_8
+//    }
 
     buildTypes {
         release {
@@ -29,9 +41,9 @@ dependencies {
 
     // for logging
     compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'com.github.tony19:logback-android-core:1.1.1-5'
-    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
-        // workaround issue #73
-        exclude group: 'com.google.android', module: 'android'
-    }
+//    compile 'com.github.tony19:logback-android-core:1.1.1-5'
+//    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
+//        // workaround issue #73
+//        exclude group: 'com.google.android', module: 'android'
+//    }
 }

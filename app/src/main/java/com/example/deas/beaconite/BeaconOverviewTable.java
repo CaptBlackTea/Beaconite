@@ -25,12 +25,11 @@ public class BeaconOverviewTable implements Runnable {
 	private Activity rangingActivity;
 	private TableLayout table;
 
-	public BeaconOverviewTable(final Collection<Beacon> beacons, Activity rangingActivity) {
+	public BeaconOverviewTable(final Collection<Beacon> beacons, Collection<Beacon> previousBeacons, Activity rangingActivity) {
+
 		this.currentBeacons = beacons;
 
-		// when the table is first created there is no previous list of detected beacons
-		// therefore it is set to the same value as the variable currentBeacons
-		this.previousBeacons = beacons;
+		this.previousBeacons = previousBeacons;
 
 		this.rangingActivity = rangingActivity;
 		this.table = (TableLayout) rangingActivity.findViewById(R.id.table);
@@ -46,48 +45,22 @@ public class BeaconOverviewTable implements Runnable {
 			// table row; else do nothing
 			//TODO: refactor to make it more efficient if possible
 
-			Collection<Beacon> tempBeacons = previousBeacons;
-//			tempBeacons.removeAll(currentBeacons);
-			Log.d(TAG, "Current Beacons: " + currentBeacons + " ; Temp Beacons: " + tempBeacons);
+			Log.d(TAG, "Current Beacons: " + currentBeacons);
+			Log.d(TAG, "Prev Beacons: " + previousBeacons);
 
-			for (Beacon b : previousBeacons) {
-				for (Beacon cb : currentBeacons) {
-//					tempBeacons.removeIf(b.equals(cb));
+			if (previousBeacons != null && !previousBeacons.isEmpty()) {
+				for (Beacon b : previousBeacons) {
+					Log.d(TAG, "Previous Beacon: " + b.getId2());
+					Log.d(TAG, "Is " + b.getId2() + " in current beacons? contains = " + currentBeacons
+							.contains(b));
 
+					if (!currentBeacons.contains(b)) {
+						Log.d(TAG, "Beacon " + b.getId2() + " was not in current beacons.");
+						TableRow markRow = getTableRow(b.getId1().toString());
+						colorDisappearedBeaconRow(markRow);
+					}
 				}
 			}
-
-
-//			for(Beacon b : tempBeacons) {
-//				TableRow markRow = getTableRow(b.getId1().toString());
-//				colorDisappearedBeaconRow(markRow);
-//			}
-
-//			for (Beacon pb : previousBeacons) {
-
-//				for(Beacon cb : currentBeacons){
-//					Log.d(TAG, "Comparing previous Beacon: " + pb.getId2() + " with current " +
-//								"Beacon: " + cb.getId2() + " ; equals: " + pb.equals(cb));
-//
-//					if (!pb.equals(cb)){
-//
-//					TableRow markRow = getTableRow(pb.getId1().toString());
-//					colorDisappearedBeaconRow(markRow);
-//
-//					}
-//				}
-
-
-//				TableRow markRow = getTableRow(pb.getId1().toString());
-//				colorDisappearedBeaconRow(markRow);
-
-
-//			}
-
-			// after checking which beacons are currently seen compared to the last list that was
-			// received the current list becomes the new previous list.
-			previousBeacons = currentBeacons;
-
 
 			for (Beacon b : currentBeacons) {
 
@@ -133,9 +106,7 @@ public class BeaconOverviewTable implements Runnable {
 				writeBeaconInFile(b);
 
 			}
-			// code from the tutorial, but can only display the first beacon, therefore commented out
-//					Beacon firstBeacon = currentBeacons.iterator().next();
-//					logToDisplay("The first beacon " + firstBeacon.toString() + " is about " + firstBeacon.getDistance() + " meters away.");
+
 		}
 
 	}
@@ -152,7 +123,7 @@ public class BeaconOverviewTable implements Runnable {
 			refreshRow.removeAllViews();
 
 			// TODO: clear background color
-//			refreshRow.setBackgroundColor(0);
+			refreshRow.setBackgroundColor(0);
 		}
 	}
 	private void writeBeaconInFile(Beacon b) {

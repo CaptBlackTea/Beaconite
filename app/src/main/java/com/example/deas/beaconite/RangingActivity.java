@@ -23,6 +23,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
 	Logger log = LoggerFactory.getLogger(RangingActivity.class);
+	private Collection<Beacon> previousBeacons = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +67,11 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 		beaconManager.addRangeNotifier(new RangeNotifier() {
 			@Override
-			public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
-				runOnUiThread(new BeaconOverviewTable(beacons, rangingActivityContext));
-
+			public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region
+					region) {
+				runOnUiThread(new BeaconOverviewTable(beacons, previousBeacons,
+						rangingActivityContext));
+				previousBeacons = beacons;
 			}
 		});
 

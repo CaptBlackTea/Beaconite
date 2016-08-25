@@ -134,8 +134,11 @@ public class MyBeaconsSimulator implements BeaconSimulator {
 
 			// for the beacon with the Major 4 the rssi value is set to a fixed value for the first
 			// 10 seconds then it is set to 0 -> beacon disappears after 10 seconds
+			// after 20 seconds it reappears
 			case 4:
 				if (seconds < 10) {
+					rssi = -55;
+				} else if (seconds > 20) {
 					rssi = -55;
 				} else {
 					rssi = 0;
