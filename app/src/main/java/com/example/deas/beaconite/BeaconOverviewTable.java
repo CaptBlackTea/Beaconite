@@ -103,11 +103,32 @@ public class BeaconOverviewTable implements Runnable {
 				refreshRow.addView(accuracy);
 				refreshRow.addView(distance);
 
+				// add the rssi of this beacon to its corresponding MyBeacon
+				addRssiTimestamp(b);
+
 				writeBeaconInFile(b);
 
 			}
 
 		}
+
+	}
+
+	/**
+	 * Takes a Beacon and adds the current rssi value connected with a timestamp to it.
+	 *
+	 * @param b the Beacon to which the rssi and timestamp is added to.
+	 */
+	private void addRssiTimestamp(Beacon b) {
+		// if there is no such Beacon create it and add it to the list of known Beacons.
+		if (!((RangingActivity) rangingActivity).existsBeacon(b)) {
+			MyBeacon myBeacon = new MyBeacon(b);
+			((RangingActivity) rangingActivity).addBeaconToList(myBeacon);
+		}
+
+		// add the current time and rssi to the given or just created Beacon
+		((RangingActivity) rangingActivity).addNewRssiToBeacon(b, System.currentTimeMillis(), b
+				.getRssi());
 
 	}
 
