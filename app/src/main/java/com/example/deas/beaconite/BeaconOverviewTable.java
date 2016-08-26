@@ -1,6 +1,7 @@
 package com.example.deas.beaconite;
 
 import android.app.Activity;
+import android.app.Service;
 import android.graphics.Color;
 import android.util.Log;
 import android.widget.TableLayout;
@@ -24,14 +25,21 @@ public class BeaconOverviewTable implements Runnable {
 
 	private Activity rangingActivity;
 	private TableLayout table;
+	private BeaconDataService service;
 
-	public BeaconOverviewTable(final Collection<Beacon> beacons, Collection<Beacon> previousBeacons, Activity rangingActivity) {
+	public BeaconOverviewTable(final Collection<Beacon> beacons, Collection<Beacon>
+			previousBeacons, Activity rangingActivity, Service service) {
 
 		this.currentBeacons = beacons;
 
 		this.previousBeacons = previousBeacons;
 
 		this.rangingActivity = rangingActivity;
+		if (service != null) {
+			this.service = (BeaconDataService) service;
+		} else {
+			Log.d(TAG, "SERVICE IS NULL!");
+		}
 		this.table = (TableLayout) rangingActivity.findViewById(R.id.table);
 	}
 
@@ -110,6 +118,11 @@ public class BeaconOverviewTable implements Runnable {
 
 			}
 
+			if (this.service != null) {
+//			Log.d(TAG, "AllMyBeacons " + service.getAllMyBeacons());
+////				printAllBeaconsWithRssiOverTime();
+//			service.printAllBeaconsWithRssiOverTime();
+			}
 		}
 
 	}
@@ -120,16 +133,17 @@ public class BeaconOverviewTable implements Runnable {
 	 * @param b the Beacon to which the rssi and timestamp is added to.
 	 */
 	private void addRssiTimestamp(Beacon b) {
-		// if there is no such Beacon create it and add it to the list of known Beacons.
-		if (!((RangingActivity) rangingActivity).existsBeacon(b)) {
-			MyBeacon myBeacon = new MyBeacon(b);
-			((RangingActivity) rangingActivity).addBeaconToList(myBeacon);
+		if (service != null) {
+			// if there is no such Beacon create it and add it to the list of known Beacons.
+			if (!service.existsBeacon(b)) {
+				MyBeacon myBeacon = new MyBeacon(b);
+				service.addBeaconToList(myBeacon);
+			}
+
+			// add the current time and rssi to the given or just created Beacon
+			service.addNewRssiToBeacon(b, System.currentTimeMillis(), b
+					.getRssi());
 		}
-
-		// add the current time and rssi to the given or just created Beacon
-		((RangingActivity) rangingActivity).addNewRssiToBeacon(b, System.currentTimeMillis(), b
-				.getRssi());
-
 	}
 
 	/**
@@ -143,7 +157,7 @@ public class BeaconOverviewTable implements Runnable {
 			// remove all children of this view
 			refreshRow.removeAllViews();
 
-			// TODO: clear background color
+			// clear background color
 			refreshRow.setBackgroundColor(0);
 		}
 	}

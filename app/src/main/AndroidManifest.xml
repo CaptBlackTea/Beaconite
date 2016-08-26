@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".MonitoringActivityBefore">
         </activity>
+
+        <service android:name=".BeaconDataService"/>
     </application>
 
 </manifest>

@@ -15,4 +15,6 @@
     <string name="scanning">Scanning...</string>
     <string name="stop_scanning">Stop Scanning</string>
     <string name="RowNumberTitle">No.</string>
+    <string name="beacon_data_service_stopped">BeaconDataService has stopped.</string>
+    <string name="beacon_data_service_started">BeaconDataService started.</string>
 </resources>
