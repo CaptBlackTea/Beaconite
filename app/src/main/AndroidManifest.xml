@@ -33,7 +33,11 @@
         <activity android:name=".MonitoringActivityBefore">
         </activity>
 
-        <service android:name=".BeaconDataService"/>
+        <service android:name=".BeaconDataService">
+            <intent-filter>
+                <action android:name="com.example.deas.beaconite.BeaconDataService"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

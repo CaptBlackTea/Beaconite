@@ -72,6 +72,18 @@ public class BeaconDataService extends Service {
 	}
 
 	@Override
+	public boolean onUnbind(Intent intent) {
+		super.onUnbind(intent);
+		return true;
+	}
+
+	@Override
+	public void onRebind(Intent intent) {
+		super.onRebind(intent);
+	}
+
+
+	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		// Tell the user we stopped.
