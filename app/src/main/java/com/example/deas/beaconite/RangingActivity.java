@@ -39,48 +39,46 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
 
-	private static final ServiceConnection connectionService = null;
 
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
-	private ServiceConnection mConnection;
-//			= new ServiceConnection() {
-//
-//		@Override
-//		public void onServiceConnected(ComponentName className, IBinder service) {
-//			// We've bound to BeaconDataService, cast the IBinder and get BeaconDataService instance
-//
-//			// This is called when the connection with the service has been
-//			// established, giving us the service object we can use to
-//			// interact with the service.  Because we have bound to a explicit
-//			// service that we know is running in our own process, we can
-//			// cast its IBinder to a concrete class and directly access it.
-//
-//			BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
-//					service;
-//			mService = serviceBinder.getService();
-//			mIsBound = true;
-//
-//			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
-//					+ ", " + mIsBound);
-//
-//			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
-//
-//		}
-//
-//		@Override
-//		public void onServiceDisconnected(ComponentName arg0) {
-//			mIsBound = false;
-//			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
-//		}
-//	};
+	private ServiceConnection mConnection
+			= new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// We've bound to BeaconDataService, cast the IBinder and get BeaconDataService instance
+
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  Because we have bound to a explicit
+			// service that we know is running in our own process, we can
+			// cast its IBinder to a concrete class and directly access it.
+
+			BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
+					service;
+			mService = serviceBinder.getService();
+			mIsBound = true;
+
+			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
+					+ ", " + mIsBound);
+
+			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
+
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mIsBound = false;
+			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
+		}
+	};
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_ranging);
 		setContentView(R.layout.activity_ranging_table);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -90,52 +88,14 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
-		if (mConnection == null) {
-			mConnection = new ServiceConnection() {
-
-				@Override
-				public void onServiceConnected(ComponentName className, IBinder service) {
-					// We've bound to BeaconDataService, cast the IBinder and get BeaconDataService instance
-
-					// This is called when the connection with the service has been
-					// established, giving us the service object we can use to
-					// interact with the service.  Because we have bound to a explicit
-					// service that we know is running in our own process, we can
-					// cast its IBinder to a concrete class and directly access it.
-
-					BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
-							service;
-					mService = serviceBinder.getService();
-					mIsBound = true;
-
-					Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
-							+ ", " + mIsBound);
-
-					Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
-
-				}
-
-				@Override
-				public void onServiceDisconnected(ComponentName arg0) {
-					mIsBound = false;
-					Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
-				}
-			};
-
-		}
 		// Bind to BeaconDataService
 //		Intent beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 		Log.d(TAG, "mConnection is " + mConnection);
 
-		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+		startService(beaconDataServiceIntent);
+//		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 
 
-//		if(!mIsBound && mService != null){
-//			mService.onRebind(beaconDataServiceIntent);
-//		} else {
-//			bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-//		}
-//
 //		Log.d(TAG, "SERVICE is " + mService);
 //		Log.d(TAG, "mBOUND is " + mIsBound);
 
@@ -148,12 +108,10 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		super.onStart();
 //		// Bind to BeaconDataService
 //		Intent beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
-//		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
 
-		if (!mIsBound && mService != null) {
-			mService.onRebind(beaconDataServiceIntent);
-		}
+
 
 		Log.d(TAG, "SERVICE is " + mService);
 	}
@@ -164,8 +122,8 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		// Unbind from the service
 		Log.d(TAG, "#### STOP: mIsBound: " + mIsBound + " mService: " + mService);
 		if (mIsBound) {
-//			unbindService(mConnection);
-			mService.onUnbind(beaconDataServiceIntent);
+			unbindService(mConnection);
+//			mService.onUnbind(beaconDataServiceIntent);
 			mIsBound = false;
 		}
 	}
@@ -176,11 +134,11 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		super.onDestroy();
 		beaconManager.unbind(this);
 		if (mIsBound) {
-			mService.onUnbind(beaconDataServiceIntent);
+//			mService.onUnbind(beaconDataServiceIntent);
 			unbindService(mConnection);
 //			mService.stopSelf();
 			mIsBound = false;
-			mService = null;
+//			mService = null;
 		}
 	}
 
@@ -210,7 +168,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 				runOnUiThread(new BeaconOverviewTable(beacons, previousBeacons,
 						rangingActivityContext, mService));
 				previousBeacons = beacons;
-				Log.d(TAG, "mService and mIsBound: " + mService + " ; " + mIsBound);
+				Log.d(TAG, "+++++ mService and mIsBound: " + mService + " ; " + mIsBound);
 
 				if (mService != null) {
 					mService.printAllBeaconsWithRssiOverTime();
