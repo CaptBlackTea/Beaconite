@@ -35,18 +35,15 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
+
+
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'org.altbeacon:android-beacon-library:2+'
+    compile 'org.altbeacon:android-beacon-library:2.+'
 
     // for drawing charts
     compile 'com.jjoe64:graphview:4.1.1'
 
-    // for logging
     compile 'org.slf4j:slf4j-api:1.7.21'
-//    compile 'com.github.tony19:logback-android-core:1.1.1-5'
-//    compile('com.github.tony19:logback-android-classic:1.1.1-5') {
-//        // workaround issue #73
-//        exclude group: 'com.google.android', module: 'android'
-//    }
+    compile 'com.android.support:design:23.4.0'
 }
