@@ -10,8 +10,9 @@ import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 /**
@@ -24,8 +25,12 @@ public class BeaconDataService extends Service {
 	protected static final String TAG = "BeaconDataService";
 
 	// Collects all Beacons that were seen since Activity start
-	// idea is that it only holds MyBeacons, as they can store Rssi connected with timestamp
-	private List<Beacon> allMyBeacons;
+	// idea is that it holds Beacons connected with a Map. In the map a timestamp(Long) and
+	// corresponding Rssi value (int) is stored. So a it is stored how a Beacons visibility is
+	// changes over time.
+
+	//	private List<Beacon> allMyBeacons;
+	private Map<Beacon, Map<Long, Integer>> allMyBeacons;
 
 
 	// Binder given to clients
@@ -54,7 +59,8 @@ public class BeaconDataService extends Service {
 		// Tell the user we started.
 		Toast.makeText(this, R.string.beacon_data_service_started, Toast.LENGTH_SHORT).show();
 
-		allMyBeacons = new ArrayList<Beacon>();
+//		allMyBeacons = new ArrayList<Beacon>();
+		allMyBeacons = new HashMap<>();
 
 	}
 
@@ -96,35 +102,33 @@ public class BeaconDataService extends Service {
 	 */
 	public void printAllBeaconsWithRssiOverTime() {
 		if (!allMyBeacons.isEmpty()) {
-			for (Beacon b : allMyBeacons) {
-				MyBeacon mb = (MyBeacon) b;
-				Log.d(TAG, "Beacon " + mb.getId2() + ": " + mb.getAllTimestamps().toString());
+			for (Entry<Beacon, Map<Long, Integer>> entry : allMyBeacons.entrySet()) {
+				Beacon b = entry.getKey();
+				Map<Long, Integer> timeRssiMap = entry.getValue();
+
+				Log.d(TAG, "Beacon " + b.getId2() + ": " + timeRssiMap.toString());
 			}
 		}
 	}
 
-	public List<Beacon> getAllMyBeacons() {
+	public Map<Beacon, Map<Long, Integer>> getAllMyBeacons() {
 		return allMyBeacons;
 	}
 
 	/**
-	 * Adds a given Beacon to the list of all Beacons that were seen since Activity start. Wraps the
-	 * given Beacon in a MyBeacon and then adds it to the list.
+	 * Adds a given Beacon to the list of all Beacons that were seen since Activity start.
 	 *
-	 * @param beacon the Beacon to wrap in a MyBeacon and add to the list of all Beacons.
-	 * @return true: the given Beacon was successfully added to the list. false: the given Beacon is
-	 * already in the list and therefore was not added and the list did not change.
+	 * @param beacon the Beacon to add to the list of all Beacons.
+	 *
 	 */
-	public boolean addBeaconToList(Beacon beacon) {
-		if (!allMyBeacons.contains(beacon)) {
-			return allMyBeacons.add(new MyBeacon(beacon));
+	public void addBeaconToList(Beacon beacon) {
+		if (!allMyBeacons.containsKey(beacon)) {
+			allMyBeacons.put(beacon, new HashMap<Long, Integer>());
 		}
-
-		return false;
 	}
 
 	public boolean existsBeacon(Beacon beacon) {
-		return allMyBeacons.contains(beacon);
+		return allMyBeacons.containsKey(beacon);
 	}
 
 	/**
@@ -138,10 +142,8 @@ public class BeaconDataService extends Service {
 	 * Beacon exists and add it if it is unknown (does not exist).
 	 */
 	public boolean addNewRssiToBeacon(Beacon b, Long timestamp, int rssi) {
-		if (allMyBeacons.contains(b)) {
-			int index = allMyBeacons.indexOf(b);
-			MyBeacon updateBeacon = (MyBeacon) allMyBeacons.get(index);
-			updateBeacon.addRssiAndTime(timestamp, rssi);
+		if (allMyBeacons.containsKey(b)) {
+			allMyBeacons.get(b).put(timestamp, rssi);
 			return true;
 		}
 

@@ -35,11 +35,13 @@ public class BeaconOverviewTable implements Runnable {
 		this.previousBeacons = previousBeacons;
 
 		this.rangingActivity = rangingActivity;
+
 		if (service != null) {
 			this.service = (BeaconDataService) service;
 		} else {
 			Log.d(TAG, "SERVICE IS NULL!");
 		}
+
 		this.table = (TableLayout) rangingActivity.findViewById(R.id.table);
 	}
 
@@ -111,18 +113,13 @@ public class BeaconOverviewTable implements Runnable {
 				refreshRow.addView(accuracy);
 				refreshRow.addView(distance);
 
-				// add the rssi of this beacon to its corresponding MyBeacon
+				// add the rssi of this beacon to its corresponding Beacon
 				addRssiTimestamp(b);
 
 				writeBeaconInFile(b);
 
 			}
 
-			if (this.service != null) {
-//			Log.d(TAG, "AllMyBeacons " + service.getAllMyBeacons());
-////				printAllBeaconsWithRssiOverTime();
-//			service.printAllBeaconsWithRssiOverTime();
-			}
 		}
 
 	}
@@ -136,8 +133,7 @@ public class BeaconOverviewTable implements Runnable {
 		if (service != null) {
 			// if there is no such Beacon create it and add it to the list of known Beacons.
 			if (!service.existsBeacon(b)) {
-				MyBeacon myBeacon = new MyBeacon(b);
-				service.addBeaconToList(myBeacon);
+				service.addBeaconToList(b);
 			}
 
 			// add the current time and rssi to the given or just created Beacon
