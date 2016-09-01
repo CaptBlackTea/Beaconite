@@ -39,7 +39,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".GraphActivity">
+        <activity
+            android:name=".GraphActivity"
+            android:label="Graph"
+            android:parentActivityName=".RangingActivity">
         </activity>
     </application>
 

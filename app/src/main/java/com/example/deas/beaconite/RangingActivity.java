@@ -9,6 +9,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 
 import org.altbeacon.beacon.Beacon;
@@ -99,6 +100,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ranging_table);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
@@ -221,6 +223,16 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 			}
 		});
+	}
+
+	/**
+	 * Starts the GraphActivity.
+	 *
+	 * @param view
+	 */
+	public void onGraphBtnClicked(View view) {
+		Intent myIntent = new Intent(this, GraphActivity.class);
+		this.startActivity(myIntent);
 	}
 
 //	/**

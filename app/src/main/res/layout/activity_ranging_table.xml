@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/table"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-    <TableRow
-        android:id="@+id/tableHead"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <!--<TextView-->
-            <!--android:padding="3dip"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:text="@string/RowNumberTitle"/>-->
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/UUID"
-            />
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/RSSI"/>
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/major"/>
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/minor"/>
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/accuracy"/>
-
-        <TextView
-            android:padding="3dip"
-            android:text="@string/distance"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              android:paddingLeft="2dp"
+              android:paddingRight="2dp">
 
 
-    </TableRow>
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/table"
+                 android:layout_width="match_parent"
+                 android:layout_height="0dp"
+                 android:layout_weight="1">
 
-</TableLayout>
+        <TableRow
+            android:id="@+id/tableHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/UUID"
+                />
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/RSSI"/>
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/major"/>
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/minor"/>
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/accuracy"/>
+
+            <TextView
+                android:padding="3dip"
+                android:text="@string/distance"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/graphActivity_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:onClick="onGraphBtnClicked"
+        android:text="To the Graph!"/>
+</LinearLayout>
+

@@ -126,7 +126,7 @@ public class MyBeaconsSimulator implements BeaconSimulator {
 			// seconds then it is set to a fixed value -> beacon appears
 			case 3:
 				if (seconds > 10) {
-					rssi = -55;
+					rssi = -40;
 				} else {
 					rssi = 0;
 				}
