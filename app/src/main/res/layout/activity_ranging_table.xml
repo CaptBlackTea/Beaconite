@@ -53,6 +53,6 @@
         android:layout_gravity="center"
         android:layout_weight="0"
         android:onClick="onGraphBtnClicked"
-        android:text="To the Graph!"/>
+        android:text="@string/startGraphActivity"/>
 </LinearLayout>
 

@@ -44,6 +44,11 @@
             android:label="Graph"
             android:parentActivityName=".RangingActivity">
         </activity>
+        <activity
+            android:name=".GenerateCaches"
+            android:label="@string/title_activity_generate_caches"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

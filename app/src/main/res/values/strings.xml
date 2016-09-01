@@ -17,4 +17,9 @@
     <string name="RowNumberTitle">No.</string>
     <string name="beacon_data_service_stopped">BeaconDataService has stopped.</string>
     <string name="beacon_data_service_started">BeaconDataService started.</string>
+    <string name="title_activity_generate_caches">GenerateCaches</string>
+    <string name="startCacheRecording">Start</string>
+    <string name="stopCacheRecording">Stop</string>
+    <string name="cacheRecordText">Pick \"New\" or a cache from list</string>
+    <string name="startGraphActivity">To the Graph!</string>
 </resources>
