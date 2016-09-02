@@ -10,7 +10,6 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -108,12 +107,11 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
-		// Bind to BeaconDataService
-//		Intent beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
+
 		Log.d(TAG, "mConnection is " + mConnection);
 
-		startService(beaconDataServiceIntent);
-//		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//		// start beaconDataService
+//		startService(beaconDataServiceIntent);
 
 
 //		Log.d(TAG, "SERVICE is " + mService);
@@ -215,15 +213,6 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 //		}
 //	}
 
-	private void logToDisplay(final String line) {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				EditText editText = (EditText) RangingActivity.this.findViewById(R.id.rangingText);
-				editText.append(line + "\n");
-
-			}
-		});
-	}
 
 	/**
 	 * Starts the GraphActivity.

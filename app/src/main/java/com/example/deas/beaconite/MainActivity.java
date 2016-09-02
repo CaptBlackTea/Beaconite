@@ -16,22 +16,39 @@ import android.widget.EditText;
 import org.altbeacon.beacon.BeaconManager;
 
 /**
- * Class has similar functionality as MonitoringActivityBefore, but was implemented according to the sample Code on the altBeacon site. see:
+ * Class was implemented according to the sample Code on the altBeacon site. see:
  * https://github.com/AltBeacon/android-beacon-library-reference/blob/master/app/src/main/java/org/altbeacon/beaconreference/MonitoringActivity.java
+ *
+ * TODO: Refactoring so that this is the main activity that starts/stops all important services
+ * and has the controll over them (resetting data and so on)
+ * TODO: scanning mode on/off
+ * TODO: start/stop/reset BeaconDataService
+ * TODO: use/use not/restart MyBeaconSimulator
+ * TODO: go to RangingActivity (= show table with live data)
+ * TODO: go to GraphActivity (= show collected data as graph)
+ * TODO: go to GenerateCachesActivity (= show/record caches)
+ * TODO: Exit BeaconiteApp and close all services and background scans
  *
  * @author dea 25.6.2016
  */
 
-public class MonitoringActivity extends AppCompatActivity {
-	protected static final String TAG = "MonitoringTutorial";
+public class MainActivity extends AppCompatActivity {
+	protected static final String TAG = "MainActivity";
 	private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
+	private Intent beaconDataServiceIntent;
+
+	/**
+	 * Check permissions needes for this app. Start BeaconDataService.
+	 *
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.d(TAG, "onCreate");
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_monitoring);
+		setContentView(R.layout.activity_main);
 		verifyBluetooth();
 		logToDisplay("Application just launched");
 
@@ -55,6 +72,15 @@ public class MonitoringActivity extends AppCompatActivity {
 				builder.show();
 			}
 		}
+
+		// Start the BeaconSimulator
+		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
+
+		// start beaconDataService
+		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
+		startService(beaconDataServiceIntent);
+
+
 	}
 
 	@Override
@@ -82,6 +108,10 @@ public class MonitoringActivity extends AppCompatActivity {
 		}
 	}
 
+	/**
+	 * Start the RangingActivity.
+	 * @param view
+	 */
 	public void onRangingClicked(View view) {
 		Intent myIntent = new Intent(this, RangingActivity.class);
 		this.startActivity(myIntent);
@@ -90,19 +120,21 @@ public class MonitoringActivity extends AppCompatActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		((BeaconReferenceApplication) this.getApplicationContext()).setMonitoringActivity(this);
+		// for Background detection
+//		((BeaconReferenceApplication) this.getApplicationContext()).setMainActivity(this);
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		((BeaconReferenceApplication) this.getApplicationContext()).setMonitoringActivity(null);
+		// for Background detection
+//		((BeaconReferenceApplication) this.getApplicationContext()).setMainActivity(null);
 	}
 
 	public void logToDisplay(final String line) {
 		runOnUiThread(new Runnable() {
 			public void run() {
-				EditText editText = (EditText) MonitoringActivity.this
+				EditText editText = (EditText) MainActivity.this
 						.findViewById(R.id.monitoringText);
 				editText.append(line + "\n");
 				

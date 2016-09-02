@@ -23,7 +23,7 @@ public class TimedBeaconSimulator implements BeaconSimulator {
 	 *     // If you wish to test beacon detection in the Android Emulator, you can use code like this:
 	 * Then set USE_SIMULATED_BEACONS = true to initialize the sample code in this class.
 	 * If using a Bluetooth incapable test device (i.e. Emulator), you will want to comment
-	 * out the verifyBluetooth() in MonitoringActivity.java as well.
+	 * out the verifyBluetooth() in MainActivity.java as well.
 	 *
 	 * Any simulated beacons will automatically be ignored when building for production.
 	 */
