@@ -9,7 +9,7 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-public class GenerateCaches extends AppCompatActivity {
+public class GenerateCachesActivity extends AppCompatActivity {
 
 	protected static final String TAG = "GenerateCachesActivity";
 
@@ -42,7 +42,9 @@ public class GenerateCaches extends AppCompatActivity {
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
 
-//			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
+			Log.d(TAG, "AllMyCaches " + mService.getAllMyCaches());
+
+
 
 		}
 

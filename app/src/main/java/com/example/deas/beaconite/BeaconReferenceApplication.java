@@ -16,6 +16,7 @@ import org.altbeacon.beacon.startup.BootstrapNotifier;
 import org.altbeacon.beacon.startup.RegionBootstrap;
 
 /**
+ * Currently OUT OF USE! Just here to have it in case the refactoring goes wrong and such an application comes in use.
  * Created by dea on 25/06/16.
  */
 public class BeaconReferenceApplication extends Application implements BootstrapNotifier {

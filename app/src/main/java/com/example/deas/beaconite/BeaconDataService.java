@@ -16,8 +16,10 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -38,7 +40,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	// corresponding Rssi value (int) is stored. So a it is stored how a Beacons visibility is
 	// changes over time.
 
-	//	private List<Beacon> allMyBeacons;
 	private Map<Beacon, Map<Long, Integer>> allMyBeacons;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
@@ -53,6 +54,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		}
 	};
+	private List<Cache> allMyCaches;
 
 	/**
 	 * Add all Beacons in the given Collection to the internal Datastructure.
@@ -89,6 +91,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 	}
 
+	public void resetBeaconData() {
+		allMyBeacons.clear();
+	}
+
+	public void resetCacheData() {
+		allMyCaches.clear();
+	}
+
 	/**
 	 * Class used for the client Binder.  Because we know this service always runs in the same
 	 * process as its clients, we don't need to deal with IPC.
@@ -113,6 +123,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		Toast.makeText(this, R.string.beacon_data_service_started, Toast.LENGTH_SHORT).show();
 
 		allMyBeacons = new HashMap<>();
+
+		allMyCaches = new ArrayList<>();
 
 		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
@@ -207,7 +219,44 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return false;
 	}
 
+	public void addCache(String cachename) {
+		allMyCaches.add(new Cache(cachename));
+	}
+
+	/**
+	 * If the given cache is unknown it creates a new cache with this name and adds the given timestamp pair.
+	 * If this cache exists it just adds the timestamp pair.
+	 *
+	 * @param cachename
+	 * @param startTimestamp
+	 * @param stopTimestamp
+	 */
+	public void addTimestampPairToCache(String cachename, Long startTimestamp, Long stopTimestamp) {
+		if (!allMyCaches.contains(cachename)) {
+			addCache(cachename);
+		}
+
+		int i = allMyCaches.indexOf(cachename);
+		allMyCaches.get(i).addNewTimestampPair(startTimestamp, stopTimestamp);
+	}
+
+	public List<Cache> getAllMyCaches() {
+		return allMyCaches;
+	}
+
+	/**
+	 * Traverses all currently known Caches and prints all their timestamp-pairs to the
+	 * console.
+	 */
+	public void printAllMyCaches() {
+		if (!allMyCaches.isEmpty()) {
+			for (Cache c : allMyCaches) {
+				Log.d(TAG, c.toString());
+			}
+		}
+	}
+
 	private void writeBeaconInFile(Beacon b) {
-		// TODO: implement this some day...maybe...ideas change
+		// TODO: implement this some day...
 	}
 }

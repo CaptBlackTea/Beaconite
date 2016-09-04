@@ -3,6 +3,7 @@ package com.example.deas.beaconite;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
@@ -15,31 +16,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 
 /**
  * Class was implemented according to the sample Code on the altBeacon site. see:
  * https://github.com/AltBeacon/android-beacon-library-reference/blob/master/app/src/main/java/org/altbeacon/beaconreference/MonitoringActivity.java
- *
- * TODO: Refactoring so that this is the main activity that starts/stops all important services
- * and has the controll over them (resetting data and so on)
+ * <p/>
+ * DONE: Refactoring so that this is the main activity that starts/stops all important services
+ * TODO: has the control over the services (resetting data and so on)
  * TODO: scanning mode on/off
  * TODO: start/stop/reset BeaconDataService
  * TODO: use/use not/restart MyBeaconSimulator
- * TODO: go to RangingActivity (= show table with live data)
- * TODO: go to GraphActivity (= show collected data as graph)
+ * DONE: go to RangingActivity (= show table with live data)
+ * DONE: go to GraphActivity (= show collected data as graph)
  * TODO: go to GenerateCachesActivity (= show/record caches)
- * TODO: Exit BeaconiteApp and close all services and background scans
+ * DONE: Exit BeaconiteApp and close all services and background scans
  *
  * @author dea 25.6.2016
  */
 
-public class MainActivity extends AppCompatActivity implements BeaconConsumer {
+public class MainActivity extends AppCompatActivity {
 	protected static final String TAG = "MainActivity";
 	private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
-
-//	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
 	// the Service
 	private BeaconDataService mService;
@@ -81,16 +79,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 		}
 	};
 
-//	private RangeNotifier beaconNotifier = new RangeNotifier() {
-//		@Override
-//		public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
-//
-//			if (mService != null) {
-//				mService.addAllBeacons(beacons, System.currentTimeMillis());
-//			}
-//		}
-//	};
-
 
 	/**
 	 * Check permissions needes for this app. Start BeaconDataService.
@@ -130,16 +118,19 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 		// Start the BeaconSimulator
 		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
 
-//		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
-//
-//		// bind the Beacon notifier
-//		beaconManager.bind(this);
-
 		// start beaconDataService
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 		startService(beaconDataServiceIntent);
 
 
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+
+		// Bind to BeaconDataService
+		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 	}
 
 	@Override
@@ -169,32 +160,56 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 
 	/**
 	 * Start the RangingActivity.
+	 *
 	 * @param view
 	 */
-	public void onRangingClicked(View view) {
+	public void onRangingBtnClicked(View view) {
 		Intent myIntent = new Intent(this, RangingActivity.class);
 		this.startActivity(myIntent);
 	}
 
 	@Override
-	public void onResume() {
+	protected void onResume() {
 		super.onResume();
 		// for Background detection
 //		((BeaconReferenceApplication) this.getApplicationContext()).setMainActivity(this);
 	}
 
 	@Override
-	public void onPause() {
+	protected void onStop() {
+		super.onStop();
+
+		// Unbind from the service
+		Log.d(TAG, "#### STOP: mIsBound: " + mIsBound + " mService: " + mService);
+		if (mIsBound) {
+			unbindService(mConnection);
+			mIsBound = false;
+		}
+	}
+
+	@Override
+	protected void onPause() {
 		super.onPause();
 		// for Background detection
 //		((BeaconReferenceApplication) this.getApplicationContext()).setMainActivity(null);
 	}
 
 	@Override
-	public void onDestroy() {
+	protected void onDestroy() {
 		super.onDestroy();
+
+		if (mIsBound) {
+			unbindService(mConnection);
+			mIsBound = false;
+		}
 	}
 
+
+	/**
+	 * NO LONGER IN USE: used by the BeaconReferenceApplication which is currently not used. Kept here, but has no functionality, to satisfy the Applications needs.
+	 *
+	 * @param line
+	 */
 	public void logToDisplay(final String line) {
 //		runOnUiThread(new Runnable() {
 //			public void run() {
@@ -252,20 +267,6 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 		}
 	}
 
-	@Override
-	public void onBeaconServiceConnect() {
-//		if (!beaconManager.getRangingNotifiers().contains(beaconNotifier)) {
-//			beaconManager.addRangeNotifier(beaconNotifier);
-//		}
-//		try {
-//			beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-//
-//
-//		} catch (RemoteException e) {
-//			Log.i(TAG, "------ Exception!" + e);
-//		}
-	}
-
 	/**
 	 * Starts the GraphActivity.
 	 *
@@ -274,6 +275,30 @@ public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 	public void onGraphBtnClicked(View view) {
 		Intent myIntent = new Intent(this, GraphActivity.class);
 		this.startActivity(myIntent);
+	}
+
+	/**
+	 * Starts the GenerateCachesActivity
+	 *
+	 * @param view
+	 */
+	public void onCacheActivityBtnClicked(View view) {
+		Intent myIntent = new Intent(this, GenerateCachesActivity.class);
+		this.startActivity(myIntent);
+	}
+
+	/**
+	 * Removes all beacons that were stored till now from the service (stores and manages this data).
+	 */
+	public void removeAllBeaconData() {
+		mService.resetBeaconData();
+	}
+
+	/**
+	 * Removes all caches that were stored till now from the service (stores and manages this data)
+	 */
+	public void removeAllCaches() {
+		mService.resetCacheData();
 	}
 }
 

@@ -24,6 +24,13 @@ import java.util.TreeMap;
 
 /**
  * Draws Beacons in a graph to show how their visibility (RSSI value) changes overtime.
+ *
+ * grab data from service and pull out data needed to draw the graph
+ * x-Axis: time(stamps)
+ * y-Axis: Rssi
+ * for each known Beacon a curve of its Rssi values overtime is drawn
+ * draw the graph
+ *
  * <p/>
  * Connects to the BeaconDataService to grab the data to be plotted.
  */
@@ -97,15 +104,6 @@ public class GraphActivity extends AppCompatActivity {
 		// Bind to BeaconDataService
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
-
-
-		// x-Axis: time(stamps)
-		// y-Axis: Rssi
-		// for each known Beacon a curve of its Rssi values overtime
-		// draw the graph
-
-		// grab data from service and pull out data needed to draw the graph
-
 	}
 
 	@Override

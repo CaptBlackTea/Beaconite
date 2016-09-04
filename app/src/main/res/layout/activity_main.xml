@@ -20,28 +20,12 @@
         android:layout_marginTop="17dp"
         android:text="Monitoring events and App status"/>
 
-    <!--<EditText-->
-    <!--android:id="@+id/monitoringText"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_below="@+id/textView1"-->
-    <!--android:layout_marginTop="36dp"-->
-    <!--android:background="@drawable/textview_border"-->
-    <!--android:ems="10"-->
-    <!--android:gravity="left|top"-->
-    <!--android:inputType="textMultiLine"-->
-    <!--android:padding="6dip">-->
-
-    <!--<requestFocus/>-->
-    <!--</EditText>-->
-
     <Button
         android:id="@+id/rangingActivity_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:onClick="onRangingClicked"
+        android:onClick="onRangingBtnClicked"
         android:text="@string/rangingTable"/>
 
     <Button
@@ -52,5 +36,21 @@
         android:layout_weight="0"
         android:onClick="onGraphBtnClicked"
         android:text="@string/startGraphActivity"/>
+
+    <Button
+        android:id="@+id/cachesActivity_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onCacheActivityBtnClicked"
+        android:text="@string/startCacheActivity"/>
+
+    <Button
+        android:id="@+id/exitBeaconite_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="exitBeaconite"
+        android:text="@string/exitBeaconite"/>
 
 </LinearLayout>

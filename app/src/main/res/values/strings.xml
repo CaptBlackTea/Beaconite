@@ -24,4 +24,7 @@
     <string name="startGraphActivity">To the Graph!</string>
     <string name="newCache">New Cache</string>
     <string name="rangingTable">To the table!</string>
+    <string name="exitBeaconite">Exit App</string>
+    <string name="useSimulation">Use BeaconSimulator</string>
+    <string name="startCacheActivity">Record some Caches</string>
 </resources>

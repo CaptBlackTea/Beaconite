@@ -41,7 +41,7 @@
             android:label="Graph"
             android:parentActivityName=".RangingActivity">
         </activity>
-        <activity android:name=".GenerateCaches">
+        <activity android:name=".GenerateCachesActivity">
         </activity>
     </application>
 
