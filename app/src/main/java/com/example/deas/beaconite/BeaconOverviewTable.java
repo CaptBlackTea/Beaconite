@@ -1,7 +1,6 @@
 package com.example.deas.beaconite;
 
 import android.app.Activity;
-import android.app.Service;
 import android.graphics.Color;
 import android.util.Log;
 import android.widget.TableLayout;
@@ -25,10 +24,10 @@ public class BeaconOverviewTable implements Runnable {
 
 	private Activity rangingActivity;
 	private TableLayout table;
-	private BeaconDataService service;
+//	private BeaconDataService service;
 
 	public BeaconOverviewTable(final Collection<Beacon> beacons, Collection<Beacon>
-			previousBeacons, Activity rangingActivity, Service service) {
+			previousBeacons, Activity rangingActivity) {
 
 		this.currentBeacons = beacons;
 
@@ -36,11 +35,11 @@ public class BeaconOverviewTable implements Runnable {
 
 		this.rangingActivity = rangingActivity;
 
-		if (service != null) {
-			this.service = (BeaconDataService) service;
-		} else {
-			Log.d(TAG, "SERVICE IS NULL!");
-		}
+//		if (service != null) {
+//			this.service = (BeaconDataService) service;
+//		} else {
+//			Log.d(TAG, "SERVICE IS NULL!");
+//		}
 
 		this.table = (TableLayout) rangingActivity.findViewById(R.id.table);
 	}
@@ -114,9 +113,8 @@ public class BeaconOverviewTable implements Runnable {
 				refreshRow.addView(distance);
 
 				// add the rssi of this beacon to its corresponding Beacon
-				addRssiTimestamp(b);
+//				addRssiTimestamp(b);
 
-				writeBeaconInFile(b);
 
 			}
 
@@ -129,18 +127,18 @@ public class BeaconOverviewTable implements Runnable {
 	 *
 	 * @param b the Beacon to which the rssi and timestamp is added to.
 	 */
-	private void addRssiTimestamp(Beacon b) {
-		if (service != null) {
-			// if there is no such Beacon create it and add it to the list of known Beacons.
-			if (!service.existsBeacon(b)) {
-				service.addBeaconToList(b);
-			}
-
-			// add the current time and rssi to the given or just created Beacon
-			service.addNewRssiToBeacon(b, System.currentTimeMillis(), b
-					.getRssi());
-		}
-	}
+//	private void addRssiTimestamp(Beacon b) {
+//		if (service != null) {
+//			// if there is no such Beacon create it and add it to the list of known Beacons.
+//			if (!service.existsBeacon(b)) {
+//				service.addBeaconToList(b);
+//			}
+//
+//			// add the current time and rssi to the given or just created Beacon
+//			service.addNewRssiToBeacon(b, System.currentTimeMillis(), b
+//					.getRssi());
+//		}
+//	}
 
 	/**
 	 * Takes a TableRow and removes all its child views and clears its from any set background color.
@@ -157,9 +155,7 @@ public class BeaconOverviewTable implements Runnable {
 			refreshRow.setBackgroundColor(0);
 		}
 	}
-	private void writeBeaconInFile(Beacon b) {
-		// TODO: implement this some day...maybe...ideas change
-	}
+
 
 	/**
 	 * Searches if there exists a table row with the given bUuid as tag attribute.

@@ -163,6 +163,8 @@ public class GraphActivity extends AppCompatActivity {
 
 	private LineGraphSeries<DataPoint> makeSerie(Beacon b, Map<Long, Integer> timeRssiMap) {
 		LineGraphSeries<DataPoint> beaconSerie = new LineGraphSeries<>();
+
+		// the graph library needs a sorted data structure!
 		SortedMap<Long, Integer> sortedMap = new TreeMap<>(timeRssiMap);
 
 		for (Map.Entry<Long, Integer> entry : sortedMap.entrySet()) {

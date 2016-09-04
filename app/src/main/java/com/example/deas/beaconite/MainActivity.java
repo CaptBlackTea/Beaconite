@@ -2,17 +2,20 @@ package com.example.deas.beaconite;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
+import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 
 /**
@@ -32,11 +35,62 @@ import org.altbeacon.beacon.BeaconManager;
  * @author dea 25.6.2016
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BeaconConsumer {
 	protected static final String TAG = "MainActivity";
 	private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
+//	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
+
+	// the Service
+	private BeaconDataService mService;
+	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
+
+	/**
+	 * Defines callbacks for service binding, passed to bindService()
+	 */
+	private ServiceConnection mConnection
+			= new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(ComponentName className, IBinder service) {
+			// We've bound to BeaconDataService, cast the IBinder and get BeaconDataService instance
+
+			// This is called when the connection with the service has been
+			// established, giving us the service object we can use to
+			// interact with the service.  Because we have bound to a explicit
+			// service that we know is running in our own process, we can
+			// cast its IBinder to a concrete class and directly access it.
+
+			BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
+					service;
+			mService = serviceBinder.getService();
+			mIsBound = true;
+
+			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
+					+ ", " + mIsBound);
+
+			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
+
+		}
+
+		@Override
+		public void onServiceDisconnected(ComponentName arg0) {
+			mIsBound = false;
+			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
+		}
+	};
+
+//	private RangeNotifier beaconNotifier = new RangeNotifier() {
+//		@Override
+//		public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
+//
+//			if (mService != null) {
+//				mService.addAllBeacons(beacons, System.currentTimeMillis());
+//			}
+//		}
+//	};
+
 
 	/**
 	 * Check permissions needes for this app. Start BeaconDataService.
@@ -75,6 +129,11 @@ public class MainActivity extends AppCompatActivity {
 
 		// Start the BeaconSimulator
 		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
+
+//		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
+//
+//		// bind the Beacon notifier
+//		beaconManager.bind(this);
 
 		// start beaconDataService
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
@@ -131,15 +190,33 @@ public class MainActivity extends AppCompatActivity {
 //		((BeaconReferenceApplication) this.getApplicationContext()).setMainActivity(null);
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+	}
+
 	public void logToDisplay(final String line) {
-		runOnUiThread(new Runnable() {
-			public void run() {
-				EditText editText = (EditText) MainActivity.this
-						.findViewById(R.id.monitoringText);
-				editText.append(line + "\n");
-				
-			}
-		});
+//		runOnUiThread(new Runnable() {
+//			public void run() {
+//				EditText editText = (EditText) MainActivity.this
+//						.findViewById(R.id.monitoringText);
+//				editText.append(line + "\n");
+//
+//			}
+//		});
+	}
+
+	/**
+	 * Shall be called when the Application is to be shut down:
+	 * stop all services and so on.
+	 *
+	 * @param view
+	 */
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	public void exitBeaconite(View view) {
+		mService.stopSelf();
+		// TODO: what else?
+		this.finishAndRemoveTask();
 	}
 
 	private void verifyBluetooth() {
@@ -174,4 +251,29 @@ public class MainActivity extends AppCompatActivity {
 			});
 		}
 	}
+
+	@Override
+	public void onBeaconServiceConnect() {
+//		if (!beaconManager.getRangingNotifiers().contains(beaconNotifier)) {
+//			beaconManager.addRangeNotifier(beaconNotifier);
+//		}
+//		try {
+//			beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
+//
+//
+//		} catch (RemoteException e) {
+//			Log.i(TAG, "------ Exception!" + e);
+//		}
+	}
+
+	/**
+	 * Starts the GraphActivity.
+	 *
+	 * @param view
+	 */
+	public void onGraphBtnClicked(View view) {
+		Intent myIntent = new Intent(this, GraphActivity.class);
+		this.startActivity(myIntent);
+	}
 }
+

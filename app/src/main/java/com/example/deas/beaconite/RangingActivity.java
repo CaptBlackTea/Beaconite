@@ -1,15 +1,9 @@
 package com.example.deas.beaconite;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -33,20 +27,20 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 	private Collection<Beacon> previousBeacons = null;
 
-	// the Service
-	private BeaconDataService mService;
-	private boolean mIsBound = false;
-	private Intent beaconDataServiceIntent;
+//	// the Service
+//	private BeaconDataService mService;
+//	private boolean mIsBound = false;
+//	private Intent beaconDataServiceIntent;
 
 
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
-	private ServiceConnection mConnection
-			= new ServiceConnection() {
+//	private ServiceConnection mConnection
+//			= new ServiceConnection() {
 
-		@Override
-		public void onServiceConnected(ComponentName className, IBinder service) {
+//		@Override
+//		public void onServiceConnected(ComponentName className, IBinder service) {
 			// We've bound to BeaconDataService, cast the IBinder and get BeaconDataService instance
 
 			// This is called when the connection with the service has been
@@ -55,42 +49,42 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 			// service that we know is running in our own process, we can
 			// cast its IBinder to a concrete class and directly access it.
 
-			BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
-					service;
-			mService = serviceBinder.getService();
-			mIsBound = true;
+//			BeaconDataService.BeaconDataBinder serviceBinder = (BeaconDataService.BeaconDataBinder)
+//					service;
+//			mService = serviceBinder.getService();
+//			mIsBound = true;
 
-			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
-					+ ", " + mIsBound);
+//			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
+//					+ ", " + mIsBound);
+//
+//			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
 
-			Log.d(TAG, "AllMyBeacons " + mService.getAllMyBeacons());
+//		}
 
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName arg0) {
-			mIsBound = false;
-			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
-		}
-	};
+//		@Override
+//		public void onServiceDisconnected(ComponentName arg0) {
+//			mIsBound = false;
+//			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
+//		}
+//	};
 
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
 		@Override
 		public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region
 				region) {
 			runOnUiThread(new BeaconOverviewTable(beacons, previousBeacons,
-					RangingActivity.this, mService));
+					RangingActivity.this));
 			// TODO: maybe reafactor to do above without giving the method mService -> available
 			// by RangingActivity in the created instance.
 
 			previousBeacons = beacons;
-			Log.d(TAG, "+++++ mService and mIsBound: " + mService + " ; " + mIsBound);
-
-			if (mService != null) {
-				mService.printAllBeaconsWithRssiOverTime();
+//			Log.d(TAG, "+++++ mService and mIsBound: " + mService + " ; " + mIsBound);
+//
+//			if (mService != null) {
+//				mService.printAllBeaconsWithRssiOverTime();
 			}
 //				Log.d(TAG, "Service, mService and mIsBound: " + service + " , " + mService + " ; " + mIsBound);
-		}
+//		}
 	};
 
 
@@ -105,18 +99,10 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 //		beaconManager.bind(this);
 
-		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
+//		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
 
-		Log.d(TAG, "mConnection is " + mConnection);
-
-//		// start beaconDataService
-//		startService(beaconDataServiceIntent);
-
-
-//		Log.d(TAG, "SERVICE is " + mService);
-//		Log.d(TAG, "mBOUND is " + mIsBound);
-
+//		Log.d(TAG, "mConnection is " + mConnection);
 		Log.i(TAG, "********* Ranging!");
 
 	}
@@ -130,12 +116,11 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 
 //		// Bind to BeaconDataService
 //		Intent beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
-		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
-		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
+//		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+//		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
 
 
-
-		Log.d(TAG, "SERVICE is " + mService);
+//		Log.d(TAG, "SERVICE is " + mService);
 	}
 
 	@Override
@@ -143,12 +128,12 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		super.onStop();
 
 		// Unbind from the service
-		Log.d(TAG, "#### STOP: mIsBound: " + mIsBound + " mService: " + mService);
-		if (mIsBound) {
-			unbindService(mConnection);
-//			mService.onUnbind(beaconDataServiceIntent);
-			mIsBound = false;
-		}
+//		Log.d(TAG, "#### STOP: mIsBound: " + mIsBound + " mService: " + mService);
+//		if (mIsBound) {
+//			unbindService(mConnection);
+////			mService.onUnbind(beaconDataServiceIntent);
+//			mIsBound = false;
+//		}
 	}
 
 
@@ -160,13 +145,13 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		beaconManager.removeRangeNotifier(beaconNotifier);
 		beaconManager.unbind(this);
 
-		if (mIsBound) {
-//			mService.onUnbind(beaconDataServiceIntent);
-			unbindService(mConnection);
-//			mService.stopSelf();
-			mIsBound = false;
-//			mService = null;
-		}
+//		if (mIsBound) {
+////			mService.onUnbind(beaconDataServiceIntent);
+//			unbindService(mConnection);
+////			mService.stopSelf();
+//			mIsBound = false;
+////			mService = null;
+//		}
 	}
 
 	@Override
@@ -193,7 +178,7 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 		try {
 			beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
 
-			Log.d(TAG, "#### Service?! " + mService);
+//			Log.d(TAG, "#### Service?! " + mService);
 
 		} catch (RemoteException e) {
 			Log.i(TAG, "------ Exception!" + e);
@@ -214,15 +199,15 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 //	}
 
 
-	/**
-	 * Starts the GraphActivity.
-	 *
-	 * @param view
-	 */
-	public void onGraphBtnClicked(View view) {
-		Intent myIntent = new Intent(this, GraphActivity.class);
-		this.startActivity(myIntent);
-	}
+//	/**
+//	 * Starts the GraphActivity.
+//	 *
+//	 * @param view
+//	 */
+//	public void onGraphBtnClicked(View view) {
+//		Intent myIntent = new Intent(this, GraphActivity.class);
+//		this.startActivity(myIntent);
+//	}
 
 //	/**
 //	 * Adds a given Beacon to the list of all Beacons that were seen since Activity start. Wraps the

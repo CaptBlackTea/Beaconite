@@ -46,13 +46,13 @@
 
     </TableLayout>
 
-    <Button
-        android:id="@+id/graphActivity_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="0"
-        android:onClick="onGraphBtnClicked"
-        android:text="@string/startGraphActivity"/>
+    <!--<Button-->
+    <!--android:id="@+id/graphActivity_Btn"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_weight="0"-->
+    <!--android:onClick="onGraphBtnClicked"-->
+    <!--android:text="@string/startGraphActivity"/>-->
 </LinearLayout>
 
