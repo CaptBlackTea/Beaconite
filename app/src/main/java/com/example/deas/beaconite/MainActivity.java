@@ -300,5 +300,14 @@ public class MainActivity extends AppCompatActivity {
 	public void removeAllCaches() {
 		mService.resetCacheData();
 	}
+
+	public void removeAllDataBtn(View view) {
+		removeAllBeaconData();
+		removeAllCaches();
+	}
+
+	public void restartBeaconSimulation(View view) {
+		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
+	}
 }
 

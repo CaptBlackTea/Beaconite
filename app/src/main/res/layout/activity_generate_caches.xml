@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".GenerateCachesActivity"
-    android:baselineAligned="false">
+    tools:context=".GenerateCachesActivity">
 
     <ListView
         android:id="@+id/listOfRecordedCaches"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:scrollbars="vertical"
         android:divider="@android:drawable/divider_horizontal_dark"
         android:headerDividersEnabled="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical"
         tools:listitem="@android:layout/simple_list_item_1">
 
     </ListView>
@@ -36,44 +36,42 @@
             android:id="@+id/recordThisCache"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/cacheRecordText">
+            android:hint="@string/cacheRecordText"
+            android:padding="5dp">
         </TextView>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/recordThisCache"
+            android:text="@string/DeleteThisCache"/>
 
         <Button
             android:id="@+id/makeNewCache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recordThisCache"
-            android:text="@string/newCache"
-            />
+            android:onClick="createNewCacheBtn"
+            android:text="@string/newCache"/>
 
         <Button
-            android:id="@+id/startCacheRecordBtn"
+            android:id="@+id/recordCacheBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/recordThisCache"
             android:layout_toRightOf="@id/makeNewCache"
-            android:text="@string/startCacheRecording"
-            />
-
-        <Button
-            android:id="@+id/stopCacheRecordBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/recordThisCache"
-            android:layout_toRightOf="@id/startCacheRecordBtn"
-            android:text="@string/stopCacheRecording"
+            android:enabled="false"
+            android:text="@string/startStopRecordCacheBtn"
             />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/stopCacheRecordBtn"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@id/recordCacheBtn"
             android:layout_gravity="center"
             android:onClick="onGraphBtnClicked"
-            android:text="@string/startGraphActivity"
-            android:layout_alignParentBottom="false"/>
+            android:text="@string/startGraphActivity"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -18,7 +18,7 @@
     <string name="beacon_data_service_stopped">BeaconDataService has stopped.</string>
     <string name="beacon_data_service_started">BeaconDataService started.</string>
     <string name="title_activity_generate_caches">GenerateCaches</string>
-    <string name="startCacheRecording">Start</string>
+    <string name="startStopRecordCacheBtn">Record cache</string>
     <string name="stopCacheRecording">Stop</string>
     <string name="cacheRecordText">Create a new cache or pick a cache from list</string>
     <string name="startGraphActivity">To the Graph!</string>
@@ -27,4 +27,11 @@
     <string name="exitBeaconite">Exit App</string>
     <string name="useSimulation">Use BeaconSimulator</string>
     <string name="startCacheActivity">Record some Caches</string>
+    <string name="resetDataService">Reset DataService:</string>
+    <string name="resetAllData">Reset all collected Data</string>
+    <string name="resetBeaconData">Beacons</string>
+    <string name="restartBeaconSimulation">Restart Beacon Simulation</string>
+    <string name="DeleteThisCache">Delete this cache</string>
+    <string name="noCache_message">No cache was selected! Recording not possible.</string>
+    <string name="dialog_noCache">No Cache</string>
 </resources>

@@ -39,11 +39,13 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	// idea is that it holds Beacons connected with a Map. In the map a timestamp(Long) and
 	// corresponding Rssi value (int) is stored. So a it is stored how a Beacons visibility is
 	// changes over time.
+	// Binder given to clients
+	private final IBinder mBinder = new BeaconDataBinder();
 
 	private Map<Beacon, Map<Long, Integer>> allMyBeacons;
+	private List<Cache> allMyCaches;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
-
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
 		@Override
 		public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
@@ -52,9 +54,10 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 			printAllBeaconsWithRssiOverTime();
 
+			printAllMyCaches();
+
 		}
 	};
-	private List<Cache> allMyCaches;
 
 	/**
 	 * Add all Beacons in the given Collection to the internal Datastructure.
@@ -72,10 +75,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			}
 		}
 	}
-
-
-	// Binder given to clients
-	private final IBinder mBinder = new BeaconDataBinder();
 
 	@Override
 	public void onBeaconServiceConnect() {
@@ -99,23 +98,11 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		allMyCaches.clear();
 	}
 
-	/**
-	 * Class used for the client Binder.  Because we know this service always runs in the same
-	 * process as its clients, we don't need to deal with IPC.
-	 */
-	public class BeaconDataBinder extends Binder {
-		BeaconDataService getService() {
-			// Return this instance of BeaconDataService so clients can call public methods
-			return BeaconDataService.this;
-		}
-	}
-
 	@Nullable
 	@Override
 	public IBinder onBind(Intent intent) {
 		return mBinder;
 	}
-
 
 	@Override
 	public void onCreate() {
@@ -153,16 +140,15 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		super.onRebind(intent);
 	}
 
-
 	@Override
 	public void onDestroy() {
-		super.onDestroy();
 		// Remove beaconNotifier
 		beaconManager.removeRangeNotifier(beaconNotifier);
 		beaconManager.unbind(this);
 
 		// Tell the user we stopped.
 		Toast.makeText(this, R.string.beacon_data_service_stopped, Toast.LENGTH_SHORT).show();
+		super.onDestroy();
 	}
 
 	/**
@@ -219,8 +205,10 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return false;
 	}
 
-	public void addCache(String cachename) {
-		allMyCaches.add(new Cache(cachename));
+	public Cache addCache(String cachename) {
+		Cache newCache = new Cache(cachename);
+		allMyCaches.add(newCache);
+		return newCache;
 	}
 
 	/**
@@ -232,12 +220,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * @param stopTimestamp
 	 */
 	public void addTimestampPairToCache(String cachename, Long startTimestamp, Long stopTimestamp) {
-		if (!allMyCaches.contains(cachename)) {
-			addCache(cachename);
+		Cache cache = getCacheByName(cachename);
+		if (cache == null) {
+			cache = addCache(cachename);
 		}
 
-		int i = allMyCaches.indexOf(cachename);
-		allMyCaches.get(i).addNewTimestampPair(startTimestamp, stopTimestamp);
+		cache.addNewTimestampPair(startTimestamp, stopTimestamp);
 	}
 
 	public List<Cache> getAllMyCaches() {
@@ -253,10 +241,33 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			for (Cache c : allMyCaches) {
 				Log.d(TAG, c.toString());
 			}
+		} else {
+			Log.d(TAG, "++++ No Caches to show ++++");
 		}
+	}
+
+	private Cache getCacheByName(String cachename) {
+		for (Cache c : allMyCaches) {
+			if (c.getCacheName().equals(cachename)) {
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 	private void writeBeaconInFile(Beacon b) {
 		// TODO: implement this some day...
+	}
+
+	/**
+	 * Class used for the client Binder.  Because we know this service always runs in the same
+	 * process as its clients, we don't need to deal with IPC.
+	 */
+	public class BeaconDataBinder extends Binder {
+		BeaconDataService getService() {
+			// Return this instance of BeaconDataService so clients can call public methods
+			return BeaconDataService.this;
+		}
 	}
 }

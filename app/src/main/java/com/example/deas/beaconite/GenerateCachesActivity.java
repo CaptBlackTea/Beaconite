@@ -6,18 +6,29 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class GenerateCachesActivity extends AppCompatActivity {
 
 	protected static final String TAG = "GenerateCachesActivity";
+	private int cacheCounter = 0;
+
+	private Long startTimestampForCache;
+	private Long stopTimestampForCache;
 
 	// the Service
 	private BeaconDataService mService;
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
-
+	private AdapterCache adbCache;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -39,11 +50,13 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			mService = serviceBinder.getService();
 			mIsBound = true;
 
+			setupCacheListView();
+			setupRecordCacheButton();
+
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
 
 			Log.d(TAG, "AllMyCaches " + mService.getAllMyCaches());
-
 
 
 		}
@@ -55,6 +68,21 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		}
 	};
 
+	private void setupCacheListView() {
+		adbCache = new AdapterCache(this, 0, mService.getAllMyCaches());
+		ListView cacheList = (ListView) this.findViewById(R.id.listOfRecordedCaches);
+		cacheList.setAdapter(adbCache);
+
+		cacheList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+				TextView recordThisCache = (TextView) GenerateCachesActivity.this.findViewById(R
+						.id.recordThisCache);
+				recordThisCache.setText(adbCache.getItem(i).getCacheName());
+			}
+		});
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +92,53 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
 		Log.d(TAG, "#### CREATE");
+	}
+
+	private void setupRecordCacheButton() {
+		Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
+
+		if (recordCacheBtn != null) {
+			recordCacheBtn.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+						startTimestampForCache = System.currentTimeMillis();
+					} else if (event.getAction() == MotionEvent.ACTION_UP) {
+						stopTimestampForCache = System.currentTimeMillis();
+						TextView cacheNameView = (TextView) GenerateCachesActivity.this.findViewById
+								(R.id.recordThisCache);
+
+						if (cacheNameView != null && !cacheNameView.getText().equals("")) {
+							String cacheName = cacheNameView.getText().toString();
+
+							mService.addTimestampPairToCache(cacheName, startTimestampForCache, stopTimestampForCache);
+							adbCache.notifyDataSetChanged();
+							startTimestampForCache = -1L;
+							stopTimestampForCache = -1L;
+						}
+					}
+					return true;
+				}
+			});
+
+			recordCacheBtn.setEnabled(true);
+
+		} else {
+			showAlertNoCache();
+		}
+	}
+
+	private void showAlertNoCache() {
+		// 1. Instantiate an AlertDialog.Builder with its constructor
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		// 2. Chain together various setter methods to set the dialog characteristics
+		builder.setMessage(R.string.noCache_message)
+				.setTitle(R.string.dialog_noCache);
+
+		// 3. Get the AlertDialog from create()
+		AlertDialog dialog = builder.create();
+		dialog.show();
 	}
 
 	@Override
@@ -106,4 +181,19 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
 	}
+
+
+	public void createNewCacheBtn(View view) {
+		String newCacheName = "Cache" + cacheCounter;
+		if (!mService.getAllMyCaches().contains(newCacheName)) {
+			mService.addCache(newCacheName);
+		}
+
+		TextView recordThisCache = (TextView) this.findViewById(R.id.recordThisCache);
+		recordThisCache.setText(newCacheName);
+
+		cacheCounter++;
+		adbCache.notifyDataSetChanged();
+	}
+
 }
