@@ -211,6 +211,11 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return newCache;
 	}
 
+	public boolean deleteCache(String cacheName) {
+		Cache delCache = getCacheByName(cacheName);
+		return allMyCaches.remove(delCache);
+	}
+
 	/**
 	 * If the given cache is unknown it creates a new cache with this name and adds the given timestamp pair.
 	 * If this cache exists it just adds the timestamp pair.
@@ -259,6 +264,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private void writeBeaconInFile(Beacon b) {
 		// TODO: implement this some day...
 	}
+
 
 	/**
 	 * Class used for the client Binder.  Because we know this service always runs in the same

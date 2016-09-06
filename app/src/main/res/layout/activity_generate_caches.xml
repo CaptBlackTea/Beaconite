@@ -17,8 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="5"
-        android:divider="@android:drawable/divider_horizontal_dark"
-        android:headerDividersEnabled="false"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="vertical"
         tools:listitem="@android:layout/simple_list_item_1">
@@ -33,7 +31,7 @@
 
 
         <TextView
-            android:id="@+id/recordThisCache"
+            android:id="@+id/cacheInQuestion"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:hint="@string/cacheRecordText"
@@ -43,14 +41,15 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/recordThisCache"
+            android:layout_toRightOf="@+id/cacheInQuestion"
+            android:onClick="deleteCacheBtn"
             android:text="@string/DeleteThisCache"/>
 
         <Button
             android:id="@+id/makeNewCache"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/recordThisCache"
+            android:layout_below="@id/cacheInQuestion"
             android:onClick="createNewCacheBtn"
             android:text="@string/newCache"/>
 
@@ -58,8 +57,9 @@
             android:id="@+id/recordCacheBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/recordThisCache"
+            android:layout_below="@id/cacheInQuestion"
             android:layout_toRightOf="@id/makeNewCache"
+            android:background="@color/green"
             android:enabled="false"
             android:text="@string/startStopRecordCacheBtn"
             />

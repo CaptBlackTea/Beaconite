@@ -1,9 +1,11 @@
 package com.example.deas.beaconite;
 
+import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 public class GenerateCachesActivity extends AppCompatActivity {
 
 	protected static final String TAG = "GenerateCachesActivity";
+
 	private int cacheCounter = 0;
 
 	private Long startTimestampForCache;
@@ -77,7 +80,7 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				TextView recordThisCache = (TextView) GenerateCachesActivity.this.findViewById(R
-						.id.recordThisCache);
+						.id.cacheInQuestion);
 				recordThisCache.setText(adbCache.getItem(i).getCacheName());
 			}
 		});
@@ -95,18 +98,23 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	}
 
 	private void setupRecordCacheButton() {
-		Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
+		final Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
 
 		if (recordCacheBtn != null) {
 			recordCacheBtn.setOnTouchListener(new View.OnTouchListener() {
+				@TargetApi(Build.VERSION_CODES.M)
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 						startTimestampForCache = System.currentTimeMillis();
+						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.red,
+								null));
 					} else if (event.getAction() == MotionEvent.ACTION_UP) {
+						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.green,
+								null));
 						stopTimestampForCache = System.currentTimeMillis();
 						TextView cacheNameView = (TextView) GenerateCachesActivity.this.findViewById
-								(R.id.recordThisCache);
+								(R.id.cacheInQuestion);
 
 						if (cacheNameView != null && !cacheNameView.getText().equals("")) {
 							String cacheName = cacheNameView.getText().toString();
@@ -124,17 +132,16 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			recordCacheBtn.setEnabled(true);
 
 		} else {
-			showAlertNoCache();
+			showAlertDialog(String.valueOf(R.string.noCache_message));
 		}
 	}
 
-	private void showAlertNoCache() {
+	private void showAlertDialog(String message) {
 		// 1. Instantiate an AlertDialog.Builder with its constructor
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
 		// 2. Chain together various setter methods to set the dialog characteristics
-		builder.setMessage(R.string.noCache_message)
-				.setTitle(R.string.dialog_noCache);
+		builder.setMessage(message);
 
 		// 3. Get the AlertDialog from create()
 		AlertDialog dialog = builder.create();
@@ -189,11 +196,23 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			mService.addCache(newCacheName);
 		}
 
-		TextView recordThisCache = (TextView) this.findViewById(R.id.recordThisCache);
+		TextView recordThisCache = (TextView) this.findViewById(R.id.cacheInQuestion);
 		recordThisCache.setText(newCacheName);
 
 		cacheCounter++;
 		adbCache.notifyDataSetChanged();
 	}
 
+	public void deleteCacheBtn(View view) {
+		TextView cacheToDelete = (TextView) this.findViewById(R.id.cacheInQuestion);
+		String cacheName = cacheToDelete.getText().toString();
+
+		// TODO: AlertDialog
+
+		if (mService.deleteCache(cacheName)) {
+			cacheToDelete.setText("");
+			adbCache.notifyDataSetChanged();
+		}
+
+	}
 }

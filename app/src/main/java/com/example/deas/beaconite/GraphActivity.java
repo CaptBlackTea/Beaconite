@@ -11,12 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
 import org.altbeacon.beacon.Beacon;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
@@ -39,11 +39,11 @@ public class GraphActivity extends AppCompatActivity {
 	private static final String TAG = "GraphActivity";
 	private static int[] COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN,
 			Color.MAGENTA, Color.YELLOW, Color.DKGRAY, Color.GRAY, Color.LTGRAY};
-	private List<Integer> colors = new ArrayList<>();
 	private Intent beaconDataServiceIntent = null;
 	private boolean mIsBound = false;
 	private BeaconDataService mService = null;
 	private Map<Beacon, Map<Long, Integer>> dataToPlot;
+	private List<Cache> cachesToPlot;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -140,6 +140,7 @@ public class GraphActivity extends AppCompatActivity {
 	private void drawGraph() {
 		if (mIsBound) {
 			dataToPlot = mService.getAllMyBeacons();
+			cachesToPlot = mService.getAllMyCaches();
 		}
 
 		GraphView graph = (GraphView) findViewById(R.id.graph);
@@ -149,17 +150,24 @@ public class GraphActivity extends AppCompatActivity {
 				Beacon b = entry.getKey();
 				Map<Long, Integer> timeRssiMap = entry.getValue();
 
-				LineGraphSeries<DataPoint> serie = makeSerie(b, timeRssiMap);
-				serie.setColor(getSeriesColor(colorCounter));
-				graph.addSeries(serie);
+				LineGraphSeries<DataPoint> serieBeacons = makeLineSerie(b, timeRssiMap);
+				serieBeacons.setColor(getSeriesColor(colorCounter));
+				graph.addSeries(serieBeacons);
 
 				colorCounter++;
 				Log.d(TAG, "Beacon " + b.getId2() + ": " + timeRssiMap.toString());
 			}
 		}
+
+		if (cachesToPlot != null && !cachesToPlot.isEmpty()) {
+			for (Cache c : cachesToPlot) {
+				BarGraphSeries<DataPoint> serieCaches = makeBarSerie(c);
+				graph.addSeries(serieCaches);
+			}
+		}
 	}
 
-	private LineGraphSeries<DataPoint> makeSerie(Beacon b, Map<Long, Integer> timeRssiMap) {
+	private LineGraphSeries<DataPoint> makeLineSerie(Beacon b, Map<Long, Integer> timeRssiMap) {
 		LineGraphSeries<DataPoint> beaconSerie = new LineGraphSeries<>();
 
 		// the graph library needs a sorted data structure!
@@ -176,6 +184,29 @@ public class GraphActivity extends AppCompatActivity {
 		beaconSerie.setTitle("Beacon" + b.getId2());
 
 		return beaconSerie;
+	}
+
+	private BarGraphSeries<DataPoint> makeBarSerie(Cache cache) {
+		BarGraphSeries<DataPoint> cacheSerie = new BarGraphSeries<>();
+		SortedMap<Long, Long> sortedMap;
+
+		// the graph library needs a sorted data structure!
+		if (!(cache.getTimestampPairs() instanceof SortedMap)) {
+			sortedMap = new TreeMap<>(cache.getTimestampPairs());
+		} else {
+			sortedMap = cache.getTimestampPairs();
+		}
+
+		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
+			Long startTimestamp = entry.getKey();
+			Long stopTimestamp = entry.getValue();
+			DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), stopTimestamp.doubleValue());
+			cacheSerie.appendData(dataPoint, true, 100);
+		}
+
+		cacheSerie.setTitle(cache.getCacheName());
+
+		return cacheSerie;
 	}
 
 
