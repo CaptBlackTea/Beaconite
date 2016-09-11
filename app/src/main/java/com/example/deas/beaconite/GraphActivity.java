@@ -4,7 +4,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
@@ -13,7 +15,9 @@ import android.util.Log;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import org.altbeacon.beacon.Beacon;
 
@@ -33,6 +37,11 @@ import java.util.TreeMap;
  *
  * <p/>
  * Connects to the BeaconDataService to grab the data to be plotted.
+ *
+ * Cache series are plotted on the same line due to good visibility when plotting two graphs at once
+ * -> cache series are displayed together with the beacon series.
+ * This line is set to -62,5 by default (this is the middle of possible rssi values: -25 to -100)
+ * The value is reachable and changeable via a getter and setter.
  */
 public class GraphActivity extends AppCompatActivity {
 
@@ -44,6 +53,10 @@ public class GraphActivity extends AppCompatActivity {
 	private BeaconDataService mService = null;
 	private Map<Beacon, Map<Long, Integer>> dataToPlot;
 	private List<Cache> cachesToPlot;
+
+	// value is the line all caches shall be displayed on
+	private double yValueCacheSeries = -62.5;
+
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -80,6 +93,14 @@ public class GraphActivity extends AppCompatActivity {
 			Log.d(TAG, "********** SERVICE IS DISCONNECTED!");
 		}
 	};
+
+	public double getyValueCacheSeries() {
+		return yValueCacheSeries;
+	}
+
+	public void setyValueCacheSeries(double yValueCacheSeries) {
+		this.yValueCacheSeries = yValueCacheSeries;
+	}
 
 	private static int getSeriesColor(int i) {
 		if (i >= COLORS.length) {
@@ -159,10 +180,23 @@ public class GraphActivity extends AppCompatActivity {
 			}
 		}
 
+		// make a serie out of caches
+		colorCounter = 0;
 		if (cachesToPlot != null && !cachesToPlot.isEmpty()) {
 			for (Cache c : cachesToPlot) {
-				BarGraphSeries<DataPoint> serieCaches = makeBarSerie(c);
-				graph.addSeries(serieCaches);
+				// for each cache make 2 series: first one holds all begin timestamps of this cache and all get the same symbol
+				// second one holds all end timestamps of this cache and all get the same symbol (distinct to the start symbol)
+				PointsGraphSeries<DataPoint> serieCachesBegins = makePointSerie(c, true);
+				PointsGraphSeries<DataPoint> serieCachesEnds = makePointSerie(c, false);
+
+				// but both series get the same color because they belong to the same cache
+				serieCachesBegins.setColor(getSeriesColor(colorCounter));
+				serieCachesEnds.setColor(getSeriesColor(colorCounter));
+
+				graph.addSeries(serieCachesBegins);
+				graph.addSeries(serieCachesEnds);
+
+				colorCounter++;
 			}
 		}
 	}
@@ -186,6 +220,12 @@ public class GraphActivity extends AppCompatActivity {
 		return beaconSerie;
 	}
 
+	/**
+	 * DEPRECATED! Plotting caches (begin/end timestamp) as a bar graph is impractical...remove at some point
+	 *
+	 * @param cache
+	 * @return
+	 */
 	private BarGraphSeries<DataPoint> makeBarSerie(Cache cache) {
 		BarGraphSeries<DataPoint> cacheSerie = new BarGraphSeries<>();
 		SortedMap<Long, Long> sortedMap;
@@ -210,7 +250,60 @@ public class GraphActivity extends AppCompatActivity {
 	}
 
 
+	/**
+	 * Plot a cache as a graph: x-value=timestamp, it uses the current y-value (default is -62,5: the middle of possible rssi values, range from -25 to -100)
+	 * so all points are on the same line.
+	 * A point shape is set for a start timestamp x-value and a cross shape is set for an end timestamp x-value.
+	 *
+	 * @param cache             the cache from which data (start and endtimestamps) is to be transferred to a point serie.
+	 * @param isStarttimestamp: true if this series has to express all starttimestamps of the given cache
+	 *                          false if it has to express all endtimestamps
+	 * @return a point graph serie representation of the given cache data
+	 */
+	private PointsGraphSeries<DataPoint> makePointSerie(Cache cache, boolean isStarttimestamp) {
+		PointsGraphSeries<DataPoint> cacheSerie = new PointsGraphSeries<>();
 
+		if (isStarttimestamp) {
+			cacheSerie.setShape(PointsGraphSeries.Shape.POINT);
+		} else {
+			cacheSerie.setCustomShape(makeCrossShape());
+		}
+
+		SortedMap<Long, Long> sortedMap;
+
+		// the graph library needs a sorted data structure!
+		if (!(cache.getTimestampPairs() instanceof SortedMap)) {
+			sortedMap = new TreeMap<>(cache.getTimestampPairs());
+		} else {
+			sortedMap = cache.getTimestampPairs();
+		}
+
+		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
+
+			if (isStarttimestamp) {
+				Long startTimestamp = entry.getKey();
+				DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), yValueCacheSeries);
+				cacheSerie.appendData(dataPoint, true, 100);
+			} else {
+				Long stopTimestamp = entry.getValue();
+				DataPoint dataCross = new DataPoint(stopTimestamp.doubleValue(), yValueCacheSeries);
+				cacheSerie.appendData(dataCross, true, 100);
+			}
+		}
+
+		return cacheSerie;
+	}
+
+	private PointsGraphSeries.CustomShape makeCrossShape() {
+		return new PointsGraphSeries.CustomShape() {
+			@Override
+			public void draw(Canvas canvas, Paint paint, float x, float y, DataPointInterface dataPoint) {
+				paint.setStrokeWidth(10);
+				canvas.drawLine(x - 20, y - 20, x + 20, y + 20, paint);
+				canvas.drawLine(x+20, y-20, x-20, y+20, paint);
+			}
+		};
+	}
 
 
 }

@@ -215,4 +215,9 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		}
 
 	}
+
+	public void onGraphBtnClicked(View view) {
+		Intent myIntent = new Intent(this, GraphActivity.class);
+		this.startActivity(myIntent);
+	}
 }
