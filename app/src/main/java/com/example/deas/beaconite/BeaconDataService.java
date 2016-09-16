@@ -18,10 +18,11 @@ import org.altbeacon.beacon.Region;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 
 /**
@@ -42,7 +43,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	// Binder given to clients
 	private final IBinder mBinder = new BeaconDataBinder();
 
-	private Map<Beacon, Map<Long, Integer>> allMyBeacons;
+	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
@@ -109,7 +110,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		// Tell the user we started.
 		Toast.makeText(this, R.string.beacon_data_service_started, Toast.LENGTH_SHORT).show();
 
-		allMyBeacons = new HashMap<>();
+		allMyBeacons = new BeaconMap();
 
 		allMyCaches = new ArrayList<>();
 
@@ -157,7 +158,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 */
 	public void printAllBeaconsWithRssiOverTime() {
 		if (!allMyBeacons.isEmpty()) {
-			for (Entry<Beacon, Map<Long, Integer>> entry : allMyBeacons.entrySet()) {
+			for (Entry<Beacon, SortedMap<Long, Integer>> entry : allMyBeacons.entrySet()) {
 				Beacon b = entry.getKey();
 				Map<Long, Integer> timeRssiMap = entry.getValue();
 
@@ -166,7 +167,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 	}
 
-	public Map<Beacon, Map<Long, Integer>> getAllMyBeacons() {
+	public BeaconMap getAllMyBeacons() {
 		return allMyBeacons;
 	}
 
@@ -178,7 +179,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 */
 	private void addBeaconToList(Beacon beacon) {
 		if (!allMyBeacons.containsKey(beacon)) {
-			allMyBeacons.put(beacon, new HashMap<Long, Integer>());
+			allMyBeacons.put(beacon, new TreeMap<Long, Integer>());
 		}
 	}
 
@@ -231,6 +232,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 
 		cache.addNewTimestampPair(startTimestamp, stopTimestamp);
+
+		cache.calculateFingerprint(allMyBeacons);
 	}
 
 	public List<Cache> getAllMyCaches() {
@@ -261,8 +264,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return null;
 	}
 
-	private void writeBeaconInFile(Beacon b) {
+	private void writeAllDataInFile() {
 		// TODO: implement this some day...
+		// write all Beacon and Cache Data in a File
+	}
+
+	private void loadDataFromFile() {
+		// TODO: implemnt this some day...
+		// read Beacon and Cache Data from a File
 	}
 
 

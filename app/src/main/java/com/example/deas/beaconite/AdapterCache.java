@@ -49,7 +49,7 @@ public class AdapterCache extends ArrayAdapter<Cache> {
 
 		cacheName.setText(cacheList.get(position).getCacheName());
 		numberOfRecordings
-				.setText(String.valueOf(cacheList.get(position).getTimestampPairs().size()));
+				.setText(String.valueOf(cacheList.get(position).getTimeIntervals().size()));
 
 		return itemView;
 	}

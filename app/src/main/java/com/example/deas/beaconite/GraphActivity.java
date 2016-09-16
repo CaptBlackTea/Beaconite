@@ -13,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -51,7 +50,7 @@ public class GraphActivity extends AppCompatActivity {
 	private Intent beaconDataServiceIntent = null;
 	private boolean mIsBound = false;
 	private BeaconDataService mService = null;
-	private Map<Beacon, Map<Long, Integer>> dataToPlot;
+	private BeaconMap dataToPlot;
 	private List<Cache> cachesToPlot;
 
 	// value is the line all caches shall be displayed on
@@ -94,19 +93,19 @@ public class GraphActivity extends AppCompatActivity {
 		}
 	};
 
+	private static int getSeriesColor(int i) {
+		if (i >= COLORS.length) {
+			return Color.BLACK; // Default
+		}
+		return COLORS[i];
+	}
+
 	public double getyValueCacheSeries() {
 		return yValueCacheSeries;
 	}
 
 	public void setyValueCacheSeries(double yValueCacheSeries) {
 		this.yValueCacheSeries = yValueCacheSeries;
-	}
-
-	private static int getSeriesColor(int i) {
-		if (i >= COLORS.length) {
-			return Color.BLACK; // Default
-		}
-		return COLORS[i];
 	}
 
 	@Override
@@ -167,7 +166,7 @@ public class GraphActivity extends AppCompatActivity {
 		GraphView graph = (GraphView) findViewById(R.id.graph);
 		int colorCounter = 0;
 		if (dataToPlot != null && !dataToPlot.isEmpty()) {
-			for (Map.Entry<Beacon, Map<Long, Integer>> entry : dataToPlot.entrySet()) {
+			for (Map.Entry<Beacon, SortedMap<Long, Integer>> entry : dataToPlot.entrySet()) {
 				Beacon b = entry.getKey();
 				Map<Long, Integer> timeRssiMap = entry.getValue();
 
@@ -191,7 +190,10 @@ public class GraphActivity extends AppCompatActivity {
 
 				// but both series get the same color because they belong to the same cache
 				serieCachesBegins.setColor(getSeriesColor(colorCounter));
+				serieCachesBegins.setTitle(c.getCacheName() + " Start");
+
 				serieCachesEnds.setColor(getSeriesColor(colorCounter));
+				serieCachesEnds.setTitle(c.getCacheName() + " Stop");
 
 				graph.addSeries(serieCachesBegins);
 				graph.addSeries(serieCachesEnds);
@@ -199,6 +201,20 @@ public class GraphActivity extends AppCompatActivity {
 				colorCounter++;
 			}
 		}
+
+		customizeGraphLayout(graph);
+
+	}
+
+	private void customizeGraphLayout(GraphView graph) {
+		graph.setTitle("Beacons and Caches");
+		graph.getLegendRenderer().setVisible(true);
+		graph.getLegendRenderer().setFixedPosition(0, 0);
+		graph.getGridLabelRenderer().setHorizontalAxisTitle("Time");
+		graph.getGridLabelRenderer().setVerticalAxisTitle("Rssi");
+
+		// TODO: custom label formatter to show Timestamps on x-axis in a readable way
+
 	}
 
 	private LineGraphSeries<DataPoint> makeLineSerie(Beacon b, Map<Long, Integer> timeRssiMap) {
@@ -226,28 +242,28 @@ public class GraphActivity extends AppCompatActivity {
 	 * @param cache
 	 * @return
 	 */
-	private BarGraphSeries<DataPoint> makeBarSerie(Cache cache) {
-		BarGraphSeries<DataPoint> cacheSerie = new BarGraphSeries<>();
-		SortedMap<Long, Long> sortedMap;
-
-		// the graph library needs a sorted data structure!
-		if (!(cache.getTimestampPairs() instanceof SortedMap)) {
-			sortedMap = new TreeMap<>(cache.getTimestampPairs());
-		} else {
-			sortedMap = cache.getTimestampPairs();
-		}
-
-		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
-			Long startTimestamp = entry.getKey();
-			Long stopTimestamp = entry.getValue();
-			DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), stopTimestamp.doubleValue());
-			cacheSerie.appendData(dataPoint, true, 100);
-		}
-
-		cacheSerie.setTitle(cache.getCacheName());
-
-		return cacheSerie;
-	}
+//	private BarGraphSeries<DataPoint> makeBarSerie(Cache cache) {
+//		BarGraphSeries<DataPoint> cacheSerie = new BarGraphSeries<>();
+//		SortedMap<Long, Long> sortedMap;
+//
+//		// the graph library needs a sorted data structure!
+//		if (!(cache.getTimeIntervals() instanceof SortedMap)) {
+//			sortedMap = new TreeMap<>(cache.getTimeIntervals());
+//		} else {
+//			sortedMap = cache.getTimeIntervals();
+//		}
+//
+//		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
+//			Long startTimestamp = entry.getKey();
+//			Long stopTimestamp = entry.getValue();
+//			DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), stopTimestamp.doubleValue());
+//			cacheSerie.appendData(dataPoint, true, 100);
+//		}
+//
+//		cacheSerie.setTitle(cache.getCacheName());
+//
+//		return cacheSerie;
+//	}
 
 
 	/**
@@ -269,23 +285,15 @@ public class GraphActivity extends AppCompatActivity {
 			cacheSerie.setCustomShape(makeCrossShape());
 		}
 
-		SortedMap<Long, Long> sortedMap;
-
 		// the graph library needs a sorted data structure!
-		if (!(cache.getTimestampPairs() instanceof SortedMap)) {
-			sortedMap = new TreeMap<>(cache.getTimestampPairs());
-		} else {
-			sortedMap = cache.getTimestampPairs();
-		}
-
-		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
+		for (TimeInterval t : cache.getTimeIntervals()) {
 
 			if (isStarttimestamp) {
-				Long startTimestamp = entry.getKey();
+				Long startTimestamp = t.getStartTimestamp();
 				DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), yValueCacheSeries);
 				cacheSerie.appendData(dataPoint, true, 100);
 			} else {
-				Long stopTimestamp = entry.getValue();
+				Long stopTimestamp = t.getStopTimestamp();
 				DataPoint dataCross = new DataPoint(stopTimestamp.doubleValue(), yValueCacheSeries);
 				cacheSerie.appendData(dataCross, true, 100);
 			}

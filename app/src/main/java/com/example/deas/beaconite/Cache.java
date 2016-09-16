@@ -1,7 +1,7 @@
 package com.example.deas.beaconite;
 
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A cache has two timestamps: start- and stop-record timestamp. A cache can have a lot of such timestamp pairs.
@@ -12,30 +12,40 @@ import java.util.TreeMap;
 public class Cache {
 	protected static final String TAG = "Cache";
 	private final String name;
+	private Fingerprint fingerprint;
 
 	// Collection of all time intervals associated with this cache.
-	private SortedMap<Long, Long> timestampPairs;
+	private List<TimeInterval> timeIntervals;
 
 	// Sets up the cache with an empty data structure and a name for this cache.
 	public Cache(String name) {
-		timestampPairs = new TreeMap<>();
+		timeIntervals = new ArrayList<>();
 		this.name = name;
 	}
 
 	public void addNewTimestampPair(Long startTimestamp, Long stopTimestamp) {
-		timestampPairs.put(startTimestamp, stopTimestamp);
+		timeIntervals.add(new TimeInterval(startTimestamp, stopTimestamp));
 	}
+
+	public void addNewTimeInterval(TimeInterval interval) {
+		timeIntervals.add(interval);
+	}
+
 
 	public String getCacheName() {
 		return name;
 	}
 
-	public SortedMap<Long, Long> getTimestampPairs() {
-		return timestampPairs;
+	public List<TimeInterval> getTimeIntervals() {
+		return timeIntervals;
 	}
 
 	@Override
 	public String toString() {
-		return this.name + " timestamp-intervals: " + timestampPairs.toString();
+		return this.name + " timestamp-intervals: " + timeIntervals.toString();
+	}
+
+	public void calculateFingerprint(BeaconMap allMyBeacons) {
+		fingerprint = new FingerprintMedian(allMyBeacons, timeIntervals);
 	}
 }
