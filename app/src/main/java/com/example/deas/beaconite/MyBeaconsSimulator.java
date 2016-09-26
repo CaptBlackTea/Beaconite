@@ -1,5 +1,7 @@
 package com.example.deas.beaconite;
 
+import android.util.Log;
+
 import org.altbeacon.beacon.AltBeacon;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.simulator.BeaconSimulator;
@@ -18,10 +20,13 @@ import java.util.List;
  * Developed to implement core features of the application without the need to have real beacons all
  * the time.
  * <p/>
- * <p/>
+ * <p>
  * Created by dea on 12/07/16.
  */
 public class MyBeaconsSimulator implements BeaconSimulator {
+
+	protected static final String TAG = "MyBeaconSimulator";
+
 
 	// time when an instance is first invoke
 	private long startTime;
@@ -56,6 +61,17 @@ public class MyBeaconsSimulator implements BeaconSimulator {
 	@Override
 	public List<Beacon> getBeacons() {
 		long deltaTime = System.currentTimeMillis() - startTime;
+
+		Log.d(TAG, "DeltaTime: " + deltaTime);
+
+		// restart the simulation regularly
+		if (deltaTime >= 60000) {
+			Log.d(TAG, "#### RESET START TIME!");
+			Log.d(TAG, "StartTime before reset: " + startTime);
+			// set starTime to current time so the simulation restarts
+			startTime = System.currentTimeMillis();
+			Log.d(TAG, "StartTime after reset: " + startTime);
+		}
 
 		updateSignalStrength((int) deltaTime / 1000);
 
@@ -156,13 +172,12 @@ public class MyBeaconsSimulator implements BeaconSimulator {
 
 	/**
 	 * Builds a number of AltBeacons and adds them to a list. Each beacon has a UUID (Id1), Major
-	 * (Id2) and Minor(Id3). Also the TxPower is set to -55 for all beacons.
-	 * Id1: will be unique. Last part of the Id is used as a counter. Starting with
-	 * DF7E1C79-43E9-44FF-886F-100000000001 for the first beacon constructed and counting upwards
-	 * to the number given.
-	 *
-	 * Id2: will behave in the same way. First beacon constructed will have Major 1, second Major
-	 * 2 and so on.
+	 * (Id2) and Minor(Id3). Also the TxPower is set to -55 for all beacons. Id1: will be unique.
+	 * Last part of the Id is used as a counter. Starting with DF7E1C79-43E9-44FF-886F-100000000001
+	 * for the first beacon constructed and counting upwards to the number given.
+	 * <p>
+	 * Id2: will behave in the same way. First beacon constructed will have Major 1, second Major 2
+	 * and so on.
 	 *
 	 * @param number the number of beacons that will be constructed and put in a list.
 	 * @return a list with configured beacons.

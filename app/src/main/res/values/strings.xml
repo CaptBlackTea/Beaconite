@@ -34,4 +34,5 @@
     <string name="DeleteThisCache">Delete this cache</string>
     <string name="noCache_message">No cache was selected! Recording not possible.</string>
     <string name="dialog_noCache">No Cache</string>
+    <string name="whereAmI">Where am I?</string>
 </resources>

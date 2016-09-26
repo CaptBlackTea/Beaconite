@@ -309,5 +309,15 @@ public class MainActivity extends AppCompatActivity {
 	public void restartBeaconSimulation(View view) {
 		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
 	}
+
+	/**
+	 * Starts the activity that tries to recognize if a caches is being entered.
+	 *
+	 * @param view
+	 */
+	public void onWhereAmIBtnClicked(View view) {
+		Intent myIntent = new Intent(this, LocalizeMeActivity.class);
+		this.startActivity(myIntent);
+	}
 }
 

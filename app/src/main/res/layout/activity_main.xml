@@ -61,6 +61,14 @@
         android:text="@string/startCacheActivity"/>
 
     <Button
+        android:id="@+id/whereAmI_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onWhereAmIBtnClicked"
+        android:text="@string/whereAmI"/>
+
+    <Button
         android:id="@+id/exitBeaconite_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

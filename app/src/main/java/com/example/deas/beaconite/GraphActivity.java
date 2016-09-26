@@ -236,7 +236,7 @@ public class GraphActivity extends AppCompatActivity {
 			Long timestamp = entry.getKey();
 			Integer rssi = entry.getValue();
 			DataPoint dataPoint = new DataPoint(timestamp.doubleValue(), rssi.doubleValue());
-			beaconSerie.appendData(dataPoint, true, 100);
+			beaconSerie.appendData(dataPoint, true, 1000);
 		}
 
 		beaconSerie.setDrawDataPoints(true);

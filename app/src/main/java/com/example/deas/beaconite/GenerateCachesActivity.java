@@ -32,6 +32,8 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
 	private AdapterCache adbCache;
+
+
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
