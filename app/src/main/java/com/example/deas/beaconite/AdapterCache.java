@@ -10,6 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 /**
+ * Helper class to implement a list view of Caches.
+ *
  * Created by deas on 05/09/16.
  */
 public class AdapterCache extends ArrayAdapter<Cache> {

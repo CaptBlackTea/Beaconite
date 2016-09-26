@@ -27,19 +27,27 @@ import java.util.TreeMap;
 
 /**
  * A BoundService to store all known Beacons and data connected to them. Currently: Beacons and
- * their Rssi values over time
- * Holds all recoded Caches.
- * Holds a connection to a BeaconConsumer so it can fill its data structures by itself.
+ * their Rssi values over time Holds all recoded Caches. Holds a connection to a BeaconConsumer so
+ * it can fill its data structures by itself.
  * <p/>
+ *
+ * Collects all data needed for fingerprinting and localization and such. That means for
+ * now Beacons that were seen since Activity start and recorded Caches;
+ * Idea is that it stores all Beacons in a data structure connected to timestamp(Long) and
+ * corresponding Rssi value (int). That means it is stored how a Beacons visibility changes over
+ * time.
+ *
+ * This service represents roughly the model. All activities etc can bind to it and ask for the
+ * currently stored data.
+ *
+ * TODO: implement permanent data storage to a file!
+ *
  * Created by deas on 26/08/16.
  */
 public class BeaconDataService extends Service implements BeaconConsumer {
 	protected static final String TAG = "BeaconDataService";
 
-	// Collects all Beacons that were seen since Activity start
-	// idea is that it holds Beacons connected with a Map. In the map a timestamp(Long) and
-	// corresponding Rssi value (int) is stored. So a it is stored how a Beacons visibility is
-	// changes over time.
+
 	// Binder given to clients
 	private final IBinder mBinder = new BeaconDataBinder();
 
@@ -175,7 +183,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * Adds a given Beacon to the list of all Beacons that were seen since Activity start.
 	 *
 	 * @param beacon the Beacon to add to the list of all Beacons.
-	 *
 	 */
 	private void addBeaconToList(Beacon beacon) {
 		if (!allMyBeacons.containsKey(beacon)) {
@@ -218,8 +225,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	}
 
 	/**
-	 * If the given cache is unknown it creates a new cache with this name and adds the given timestamp pair.
-	 * If this cache exists it just adds the timestamp pair.
+	 * If the given cache is unknown it creates a new cache with this name and adds the given
+	 * timestamp pair. If this cache exists it just adds the timestamp pair.
 	 *
 	 * @param cachename
 	 * @param startTimestamp
@@ -241,8 +248,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	}
 
 	/**
-	 * Traverses all currently known Caches and prints all their timestamp-pairs to the
-	 * console.
+	 * Traverses all currently known Caches and prints all their timestamp-pairs to the console.
 	 */
 	public void printAllMyCaches() {
 		if (!allMyCaches.isEmpty()) {

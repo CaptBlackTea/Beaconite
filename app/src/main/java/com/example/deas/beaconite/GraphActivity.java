@@ -27,20 +27,17 @@ import java.util.TreeMap;
 
 /**
  * Draws Beacons in a graph to show how their visibility (RSSI value) changes overtime.
- *
- * grab data from service and pull out data needed to draw the graph
- * x-Axis: time(stamps)
- * y-Axis: Rssi
- * for each known Beacon a curve of its Rssi values overtime is drawn
- * draw the graph
- *
+ * <p>
+ * grab data from service and pull out data needed to draw the graph x-Axis: time(stamps) y-Axis:
+ * Rssi for each known Beacon a curve of its Rssi values overtime is drawn draw the graph
+ * <p>
  * <p/>
  * Connects to the BeaconDataService to grab the data to be plotted.
- *
+ * <p>
  * Cache series are plotted on the same line due to good visibility when plotting two graphs at once
- * -> cache series are displayed together with the beacon series.
- * This line is set to -62,5 by default (this is the middle of possible rssi values: -25 to -100)
- * The value is reachable and changeable via a getter and setter.
+ * -> cache series are displayed together with the beacon series. This line is set to -62,5 by
+ * default (this is the middle of possible rssi values: -25 to -100) The value is reachable and
+ * changeable via a getter and setter.
  */
 public class GraphActivity extends AppCompatActivity {
 
@@ -100,10 +97,22 @@ public class GraphActivity extends AppCompatActivity {
 		return COLORS[i];
 	}
 
+	/**
+	 * Getter for the current constant y value used for drawing a series of caches. Caches have just
+	 * time values (x axis), but no y values. Therefore a constant y value is applied to all caches
+	 * to display them in one line, which makes the graph more readable.
+	 *
+	 * @return the currently set y value;
+	 */
 	public double getyValueCacheSeries() {
 		return yValueCacheSeries;
 	}
 
+	/**
+	 * Setter for the y value of cache series.
+	 *
+	 * @param yValueCacheSeries
+	 */
 	public void setyValueCacheSeries(double yValueCacheSeries) {
 		this.yValueCacheSeries = yValueCacheSeries;
 	}
@@ -237,43 +246,15 @@ public class GraphActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * DEPRECATED! Plotting caches (begin/end timestamp) as a bar graph is impractical...remove at some point
+	 * Plot a cache as a graph: x-value=timestamp, it uses the current y-value (default is -62,5:
+	 * the middle of possible rssi values, range from -25 to -100) so all points are on the same
+	 * line. A point shape is set for a start timestamp x-value and a cross shape is set for an end
+	 * timestamp x-value.
 	 *
-	 * @param cache
-	 * @return
-	 */
-//	private BarGraphSeries<DataPoint> makeBarSerie(Cache cache) {
-//		BarGraphSeries<DataPoint> cacheSerie = new BarGraphSeries<>();
-//		SortedMap<Long, Long> sortedMap;
-//
-//		// the graph library needs a sorted data structure!
-//		if (!(cache.getTimeIntervals() instanceof SortedMap)) {
-//			sortedMap = new TreeMap<>(cache.getTimeIntervals());
-//		} else {
-//			sortedMap = cache.getTimeIntervals();
-//		}
-//
-//		for (Map.Entry<Long, Long> entry : sortedMap.entrySet()) {
-//			Long startTimestamp = entry.getKey();
-//			Long stopTimestamp = entry.getValue();
-//			DataPoint dataPoint = new DataPoint(startTimestamp.doubleValue(), stopTimestamp.doubleValue());
-//			cacheSerie.appendData(dataPoint, true, 100);
-//		}
-//
-//		cacheSerie.setTitle(cache.getCacheName());
-//
-//		return cacheSerie;
-//	}
-
-
-	/**
-	 * Plot a cache as a graph: x-value=timestamp, it uses the current y-value (default is -62,5: the middle of possible rssi values, range from -25 to -100)
-	 * so all points are on the same line.
-	 * A point shape is set for a start timestamp x-value and a cross shape is set for an end timestamp x-value.
-	 *
-	 * @param cache             the cache from which data (start and endtimestamps) is to be transferred to a point serie.
-	 * @param isStarttimestamp: true if this series has to express all starttimestamps of the given cache
-	 *                          false if it has to express all endtimestamps
+	 * @param cache             the cache from which data (start and endtimestamps) is to be
+	 *                          transferred to a point serie.
+	 * @param isStarttimestamp: true if this series has to express all starttimestamps of the given
+	 *                          cache false if it has to express all endtimestamps
 	 * @return a point graph serie representation of the given cache data
 	 */
 	private PointsGraphSeries<DataPoint> makePointSerie(Cache cache, boolean isStarttimestamp) {
@@ -308,7 +289,7 @@ public class GraphActivity extends AppCompatActivity {
 			public void draw(Canvas canvas, Paint paint, float x, float y, DataPointInterface dataPoint) {
 				paint.setStrokeWidth(10);
 				canvas.drawLine(x - 20, y - 20, x + 20, y + 20, paint);
-				canvas.drawLine(x+20, y-20, x-20, y+20, paint);
+				canvas.drawLine(x + 20, y - 20, x - 20, y + 20, paint);
 			}
 		};
 	}
