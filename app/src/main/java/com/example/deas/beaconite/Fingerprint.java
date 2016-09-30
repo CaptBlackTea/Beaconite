@@ -1,6 +1,12 @@
 package com.example.deas.beaconite;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.altbeacon.beacon.Beacon;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides some methods needed to calculate a fingerprint.
@@ -12,8 +18,13 @@ import java.util.List;
  */
 public abstract class Fingerprint {
 
+	@JsonIgnore
 	protected BeaconMap allBeacons;
+	@JsonIgnore
 	protected List<TimeInterval> timeIntervals;
+
+	// moved here from FingerprintMedian!
+	protected Map<Beacon, FingerprintMedian.BeaconFingerPrint> beacons = new HashMap<>();
 
 	/**
 	 * Creates a Fingerprint of given Beacons and a given list of time intervals.
@@ -34,4 +45,15 @@ public abstract class Fingerprint {
 	 */
 	protected abstract void calculateFingerprint();
 
+	public Map<Beacon, FingerprintMedian.BeaconFingerPrint> getBeacons() {
+		return beacons;
+	}
+
+	@Override
+	public String toString() {
+		return "Fingerprint{" +
+				"allBeacons=" + allBeacons +
+				", timeIntervals=" + timeIntervals +
+				'}';
+	}
 }

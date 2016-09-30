@@ -1,11 +1,11 @@
 package com.example.deas.beaconite;
 
+import android.util.Log;
+
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Implements that a fingerprint as calculated as a median of the given data.
@@ -13,11 +13,16 @@ import java.util.Map;
  * Created by deas on 16/09/16.
  */
 public class FingerprintMedian extends Fingerprint {
-	private Map<Beacon, BeaconFingerPrint> beacons = new HashMap<>();
+	protected static final String TAG = "FingerprintMedian";
+
+//	private Map<Beacon, BeaconFingerPrint> beacons = new HashMap<>();
 
 	public FingerprintMedian(BeaconMap allBeacons, List<TimeInterval> timeIntervals) {
 		super(allBeacons, timeIntervals);
+
+		Log.d(TAG, "Beacons Map after Constructor call: " + beacons);
 	}
+
 
 	/**
 	 * Traverses all Beacons, given via the constructor, and generates a fingerprint for each
@@ -27,17 +32,34 @@ public class FingerprintMedian extends Fingerprint {
 	 */
 	@Override
 	protected void calculateFingerprint() {
-		for (Beacon b : allBeacons.keySet()) {
-			BeaconFingerPrint bfp = new BeaconFingerPrint(allBeacons.rssisForTimeintervals(b,
-					timeIntervals));
-			beacons.put(b, bfp);
+		if (allBeacons != null && !allBeacons.isEmpty()) {
+			for (Beacon b : allBeacons.keySet()) {
+				BeaconFingerPrint bfp = new BeaconFingerPrint(allBeacons.rssisForTimeintervals(b,
+						timeIntervals));
+
+				Log.d(TAG, "Beacons: " + beacons);
+				Log.d(TAG, "B: " + b);
+				Log.d(TAG, "BFP: " + bfp);
+
+				if (beacons != null) {
+					beacons.put(b, bfp);
+				}
+			}
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "FingerprintMedian{" +
+				"beacons=" + beacons +
+				'}';
 	}
 
 	/**
 	 * Generates a fingerprint for an individual Beacon.
 	 */
 	class BeaconFingerPrint {
+		// FIXME: some calculations result in NaN!!
 		// default values for invisible Beacons
 		// -200 because -100 is the lowest possible Rssi value (very far away)
 		final Integer INVISIBLE = -200;
@@ -57,6 +79,32 @@ public class FingerprintMedian extends Fingerprint {
 				calcMedian(rssis);
 				calcCorridor(rssis);
 			}
+		}
+
+		public Integer getINVISIBLE() {
+			return INVISIBLE;
+		}
+
+		public Integer getMedian() {
+			return median;
+		}
+
+		public double getUpperLimit() {
+			return upperLimit;
+		}
+
+		public double getLowerLimit() {
+			return lowerLimit;
+		}
+
+		@Override
+		public String toString() {
+			return "BeaconFingerPrint{" +
+					"INVISIBLE=" + INVISIBLE +
+					", median=" + median +
+					", upperLimit=" + upperLimit +
+					", lowerLimit=" + lowerLimit +
+					'}';
 		}
 
 		/**

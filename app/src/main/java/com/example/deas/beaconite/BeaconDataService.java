@@ -3,11 +3,16 @@ package com.example.deas.beaconite;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -16,6 +21,10 @@ import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,18 +39,17 @@ import java.util.TreeMap;
  * their Rssi values over time Holds all recoded Caches. Holds a connection to a BeaconConsumer so
  * it can fill its data structures by itself.
  * <p/>
- *
- * Collects all data needed for fingerprinting and localization and such. That means for
- * now Beacons that were seen since Activity start and recorded Caches;
- * Idea is that it stores all Beacons in a data structure connected to timestamp(Long) and
- * corresponding Rssi value (int). That means it is stored how a Beacons visibility changes over
- * time.
- *
+ * <p>
+ * Collects all data needed for fingerprinting and localization and such. That means for now Beacons
+ * that were seen since Activity start and recorded Caches; Idea is that it stores all Beacons in a
+ * data structure connected to timestamp(Long) and corresponding Rssi value (int). That means it is
+ * stored how a Beacons visibility changes over time.
+ * <p>
  * This service represents roughly the model. All activities etc can bind to it and ask for the
  * currently stored data.
- *
+ * <p>
  * TODO: implement permanent data storage to a file!
- *
+ * <p>
  * Created by deas on 26/08/16.
  */
 public class BeaconDataService extends Service implements BeaconConsumer {
@@ -241,6 +249,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		cache.addNewTimestampPair(startTimestamp, stopTimestamp);
 
 		cache.calculateFingerprint(allMyBeacons);
+
+		// FIXME: Exception handling!
+		try {
+			writeAllCachesInFile();
+			Log.d(TAG, "############ WROTE FILE");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public List<Cache> getAllMyCaches() {
@@ -270,14 +286,82 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return null;
 	}
 
-	private void writeAllDataInFile() {
-		// TODO: implement this some day...
-		// write all Beacon and Cache Data in a File
+	private void writeAllCachesInFile() throws JsonGenerationException, JsonMappingException,
+			IOException {
+
+		// Create the file.
+		String filename = "allCaches.json";
+		File file;
+
+		// check if writable on external, if not write to internal storage!
+		if (isExternalStorageWritable()) {
+
+			// TODO: extract to some better place, needs to be created only once!
+			String path =
+					this.getExternalFilesDir(null) + File.separator +
+							"Beaconite-Data";
+			// Create the folder.
+			File folder = new File(path);
+			folder.mkdirs();
+
+			file = new File(folder, filename);
+
+		} else {
+			file = new File(this.getFilesDir(), filename);
+		}
+
+		Log.d(TAG, "CacheFile Path: " + file.getAbsolutePath());
+		Log.d(TAG, "CacheFile Path Canonical: " + file.getCanonicalPath());
+
+		// write all Cache Data in a File
+		ObjectMapper mapper = new ObjectMapper();
+//
+//		try {
+//			String test = "test test";
+////			mapper.writeValue(file, allMyCaches);
+//			mapper.writeValue(new File(filename), test);
+//			String testString = mapper.writeValueAsString(allMyCaches);
+//			Log.d(TAG, testString);
+//
+//		} catch (JsonMappingException jme) {
+//			jme.printStackTrace();
+//		} catch (JsonGenerationException jge) {
+//			jge.printStackTrace();
+//		}
+
+		// Map the data with Jackson, write file not with Jackson
+		// writing file with Android native tools
+		try {
+			String jsonAsString = mapper.writeValueAsString(allMyCaches);
+
+			file.createNewFile();
+			FileOutputStream fOut = new FileOutputStream(file);
+			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
+//			myOutWriter.append(jsonAsString);
+			mapper.writeValue(fOut, allMyCaches);
+
+			myOutWriter.close();
+
+			fOut.flush();
+			fOut.close();
+		} catch (IOException e) {
+			Log.e("Exception", "File write failed: " + e.toString());
+		}
 	}
 
-	private void loadDataFromFile() {
+	/* Checks if external storage is available for read and write */
+	public boolean isExternalStorageWritable() {
+		String state = Environment.getExternalStorageState();
+		if (Environment.MEDIA_MOUNTED.equals(state)) {
+			return true;
+		}
+		return false;
+	}
+
+
+	private void loadCachesFromFile() {
 		// TODO: implemnt this some day...
-		// read Beacon and Cache Data from a File
+		// read Cache Data from a File
 	}
 
 

@@ -15,7 +15,6 @@ public class Cache {
 	protected static final String TAG = "Cache";
 	private final String name;
 	private Fingerprint fingerprint;
-
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
 
@@ -25,6 +24,13 @@ public class Cache {
 	public Cache(String name) {
 		timeIntervals = new ArrayList<>();
 		this.name = name;
+
+		// FIXME: initial Fingerprint?
+		calculateFingerprint(null);
+	}
+
+	public Fingerprint getFingerprint() {
+		return fingerprint;
 	}
 
 	/**
@@ -43,6 +49,7 @@ public class Cache {
 
 	/**
 	 * Takes a interval of the type TimeInterval and adds it to the caches time intervals.
+	 *
 	 * @param interval the time interval to add to i.e. associate with this cache.
 	 */
 	public void addNewTimeInterval(TimeInterval interval) {
@@ -52,6 +59,7 @@ public class Cache {
 
 	/**
 	 * Returns the name of this cache.
+	 *
 	 * @return the name of this cache as a string.
 	 */
 	public String getCacheName() {
@@ -60,6 +68,7 @@ public class Cache {
 
 	/**
 	 * Returns all time intervals associated with this cache.
+	 *
 	 * @return a list of TimeInterval objects stored for this cache.
 	 */
 	public List<TimeInterval> getTimeIntervals() {
@@ -68,11 +77,13 @@ public class Cache {
 
 	@Override
 	public String toString() {
-		return this.name + " timestamp-intervals: " + timeIntervals.toString();
+		return this.name + " timestamp-intervals: " + timeIntervals.toString() + "; Beacons for " +
+				"FP: " + fingerprint;
 	}
 
 	/**
 	 * Calculates a fingerprint for this cache.
+	 *
 	 * @param allMyBeacons the data of which the fingerprint is created. Here all known Beacons.
 	 */
 	public void calculateFingerprint(BeaconMap allMyBeacons) {

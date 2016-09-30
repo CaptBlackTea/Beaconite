@@ -52,4 +52,12 @@ public class TimeInterval {
 	public boolean isCovered(Long timestamp) {
 		return (timestamp >= startTimestamp) && (timestamp <= stopTimestamp);
 	}
+
+	@Override
+	public String toString() {
+		return "TimeInterval{" +
+				"stopTimestamp=" + stopTimestamp +
+				", startTimestamp=" + startTimestamp +
+				'}';
+	}
 }
