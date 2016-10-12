@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
@@ -23,9 +21,6 @@ import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,10 +51,10 @@ import java.util.TreeMap;
  */
 public class BeaconDataService extends Service implements BeaconConsumer {
 	protected static final String TAG = "BeaconDataService";
-	// Mapper for JSON (de-)serialization
-	private final ObjectMapper jsonMapper = new ObjectMapper();
+
 	// Binder given to clients
 	private final IBinder mBinder = new BeaconDataBinder();
+	private FileSupervisor fileSupervisor;
 	// the file to where the Caches are written to and read from on the Android Device
 	private File fileForCaches;
 	private BeaconMap allMyBeacons;
@@ -140,7 +135,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		beaconManager.bind(this);
 
 		// setup file for writing and reading the Cache data to/from
-		setUpFileForCaches("allCaches.json");
+		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"));
 
 	}
 
@@ -296,98 +291,26 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private void writeAllCachesInFile() throws JsonGenerationException, JsonMappingException,
 			IOException {
 
-//		// Create the file.
-//		String filename = "allCaches.json";
-//		File fileForCaches;
-//
-//		// check if writable on external, if not write to internal storage!
-//		if (isExternalStorageWritable()) {
-//
-//			// TODO: extract to some better place, needs to be created only once!
-//			String path =
-//					this.getExternalFilesDir(null) + File.separator +
-//							"Beaconite-Data";
-//			// Create the folder.
-//			File folder = new File(path);
-//			folder.mkdirs();
-//
-//			fileForCaches = new File(folder, filename);
-//
-//		} else {
-//			fileForCaches = new File(this.getFilesDir(), filename);
-//		}
-//
-//		Log.d(TAG, "CacheFile Path: " + fileForCaches.getAbsolutePath());
-//		Log.d(TAG, "CacheFile Path Canonical: " + fileForCaches.getCanonicalPath());
+		// Create the file.
 
-		// write all Cache Data in a File
-//		ObjectMapper mapper = new ObjectMapper();
-//
-//		try {
-//			String test = "test test";
-////			jsonMapper.writeValue(fileForCaches, allMyCaches);
-//			jsonMapper.writeValue(new File(filename), test);
-//			String testString = jsonMapper.writeValueAsString(allMyCaches);
-//			Log.d(TAG, testString);
-//
-//		} catch (JsonMappingException jme) {
-//			jme.printStackTrace();
-//		} catch (JsonGenerationException jge) {
-//			jge.printStackTrace();
-//		}
-
-		// Map the data with Jackson, write file not with Jackson
-		// writing file with Android native tools
-		try (FileOutputStream fOut = new FileOutputStream(fileForCaches)) {
-			String jsonAsString = jsonMapper.writeValueAsString(allMyCaches);
-
-			fileForCaches.createNewFile();
-//			FileOutputStream fOut = new FileOutputStream(fileForCaches);
-//			OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-//			myOutWriter.append(jsonAsString);
-
-			// make JSON pretty ^^ then write it in a file
-			jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
-			jsonMapper.writeValue(fOut, allMyCaches);
-
-//			myOutWriter.close();
-
-		} catch (IOException e) {
-			Log.e("Exception", "File write failed: " + e.toString());
-		}
+		fileSupervisor.writeAllCachesInFile(allMyCaches);
 	}
 
 
-	private void loadCachesFromFile() {
-		// TODO: implemnt this some day...
-
-		// read Cache Data from a File with inputstream and mapper
-		try (FileInputStream fIn = new FileInputStream(fileForCaches)) {
-
-//		List<Cache> mapFromFile = jsonMapper.readValue(fIn, Cache.class);
-
-
-//			String test = "test test";
-////			jsonMapper.writeValue(fileForCaches, allMyCaches);
-//			jsonMapper.writeValue(new File(filename), test);
-//			String testString = jsonMapper.writeValueAsString(allMyCaches);
-//			Log.d(TAG, testString);
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	// FIXME: do correct stuff here!
+	// FIXME: Handle Exception!
+	private void loadCachesFromFile() throws IOException {
 
 		//JSON from file to Object
-		//Staff obj = jsonMapper.readValue(new File("c:\\fileForCaches.json"), Staff.class);
+
+		allMyCaches = fileSupervisor.loadCachesFromFile();
 	}
 
 	/**
 	 * Generates a file, to which the caches are written and read, at the Applications public
 	 * folder.
 	 */
-	private void setUpFileForCaches(String filename) {
+	private File setUpFileForCaches(String filename) {
 
 		// check if writable on external, if not write to internal storage!
 		if (isExternalStorageWritable()) {
@@ -408,6 +331,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 
 		Log.d(TAG, "FileForCaches absolute Path: " + fileForCaches.getAbsolutePath());
+
+		return fileForCaches;
 	}
 
 	/* Checks if external storage is available for read and write */

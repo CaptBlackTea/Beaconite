@@ -56,4 +56,20 @@ public abstract class Fingerprint {
 				", timeIntervals=" + timeIntervals +
 				'}';
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Fingerprint that = (Fingerprint) o;
+
+		return beacons.equals(that.beacons);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return beacons.hashCode();
+	}
 }

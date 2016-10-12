@@ -20,8 +20,18 @@ public class Cache {
 
 	/**
 	 * Sets up the cache with an empty data structure for time intervals and a name for this cache.
+	 * Name must not be null or empty: throws IllegalArgumentException otherwise.
+	 *
+	 * @param name must not be null or an empty String. The name of the cache and it cannot be
+	 *             changed (final field).
+	 * @throws IllegalArgumentException if name was null or empty
 	 */
-	public Cache(String name) {
+	public Cache(String name) throws IllegalArgumentException {
+
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+
 		timeIntervals = new ArrayList<>();
 		this.name = name;
 
