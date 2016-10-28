@@ -1,153 +1,131 @@
 [
-  [
-    "com.example.deas.beaconite.Cache",
-    {
-      "fingerprint": [
-        "com.example.deas.beaconite.FingerprintMedian",
-        {
-          "beacons": [
-            "java.util.HashMap",
-            {
-              "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
-                "lowerLimit": -86.5524865872714,
-                "median": -77,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
-                "lowerLimit": -44.19238815542512,
-                "median": -35,
-                "upperLimit": -34.0,
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -40,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -55,
-                "upperLimit": "NaN",
-                "invisible": -200
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache0",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -85.5876848714134,
+          "median": -80,
+          "upperLimit": -79.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -41.39547135207955,
+          "median": -36,
+          "upperLimit": -35.292893218813454
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -40,
+          "upperLimit": "NaN"
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -55,
+          "upperLimit": "NaN"
       }
-            }
-          ]
-        }
-      ],
-      "timeIntervals": [
-        "java.util.ArrayList",
-        [
-          {
-            "startTimestamp": 1476797504661,
-            "stopTimestamp": 1476797506861
-          },
-          {
-            "startTimestamp": 1476797535094,
-            "stopTimestamp": 1476797538304
-          }
-        ]
-      ],
-      "cacheName": "Cache0"
     }
-  ],
-  [
-    "com.example.deas.beaconite.Cache",
-    {
-      "fingerprint": [
-        "com.example.deas.beaconite.FingerprintMedian",
-        {
-          "beacons": [
-            "java.util.HashMap",
-            {
-              "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -74,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -51,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -40,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -55,
-                "upperLimit": "NaN",
-                "invisible": -200
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1477669727275,
+        "stopTimestamp": 1477669730045
+      },
+      {
+        "startTimestamp": 1477669747646,
+        "stopTimestamp": 1477669750518
       }
-            }
-          ]
-        }
-      ],
-      "timeIntervals": [
-        "java.util.ArrayList",
-        [
-          {
-            "startTimestamp": 1476797543015,
-            "stopTimestamp": 1476797545414
-          }
-        ]
-      ],
-      "cacheName": "Cache1"
+    ]
+  },
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache1",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -86.1180339887499,
+          "median": -85,
+          "upperLimit": -80.56528843478331
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -44.43471156521669,
+          "median": -40,
+          "upperLimit": -38.88196601125011
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -40,
+          "upperLimit": "NaN"
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -55,
+          "upperLimit": "NaN"
+      }
     }
-  ],
-  [
-    "com.example.deas.beaconite.Cache",
-    {
-      "fingerprint": [
-        "com.example.deas.beaconite.FingerprintMedian",
-        {
-          "beacons": [
-            "java.util.HashMap",
-            {
-              "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -72,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -53,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -40,
-                "upperLimit": "NaN",
-                "invisible": -200
-              },
-              "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
-                "lowerLimit": "NaN",
-                "median": -55,
-                "upperLimit": "NaN",
-                "invisible": -200
-              }
-            }
-          ]
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1477669732143,
+        "stopTimestamp": 1477669734609
+      },
+      {
+        "startTimestamp": 1477669736605,
+        "stopTimestamp": 1477669738738
+      },
+      {
+        "startTimestamp": 1477669754601,
+        "stopTimestamp": 1477669757225
+      }
+    ]
+  },
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache2",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -83.0,
+          "median": -82,
+          "upperLimit": "NaN"
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": -43.0,
+          "median": -42,
+          "upperLimit": "NaN"
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -40,
+          "upperLimit": "NaN"
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "lowerLimit": "NaN",
+          "median": -55,
+          "upperLimit": "NaN"
         }
-      ],
-      "timeIntervals": [
-        "java.util.ArrayList",
-        [
-          {
-            "startTimestamp": 1476797550103,
-            "stopTimestamp": 1476797552908
-          }
-        ]
-      ],
-      "cacheName": "Cache2"
     }
-  ]
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1477669741352,
+        "stopTimestamp": 1477669743602
+      }
+    ]
+  }
 ]

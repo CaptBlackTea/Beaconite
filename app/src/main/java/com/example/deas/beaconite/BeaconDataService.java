@@ -10,9 +10,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -288,8 +285,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return null;
 	}
 
-	private void writeAllCachesInFile() throws JsonGenerationException, JsonMappingException,
-			IOException {
+	private void writeAllCachesInFile() throws IOException {
 
 		// Create the file.
 

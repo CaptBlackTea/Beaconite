@@ -5,7 +5,6 @@ import android.util.Log;
 import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import junit.framework.Assert;
 
@@ -35,10 +34,11 @@ public class FileSupervisorTest {
 
 	private final ObjectMapper jsonMapper = new BeaconMapper();
 	private FileSupervisor fileSupervisor;
-	private File jsonFile = new File("/home/deas/Development/Beaconite/app/src/test/res/allCaches.json");
-	private File jsonFileExtendedInfo = new File
-			("/home/deas/Development/Beaconite/app/src/test/res" +
-					"/allCaches_extendedInformation.json");
+	// contains data created by a application run
+	private File jsonFile = new File("src/test/res/allCaches.json");
+	// contains valid data created by this test
+	private File generatedDataFile = new File("src/test/res/generatedDataFile.json");
+	// empty to test writing to a file
 	private File emptyFile;
 
 	// TODO: better mocking or is real Data better
@@ -89,10 +89,8 @@ public class FileSupervisorTest {
 	@Before
 	public void setUp() throws Exception {
 		PowerMockito.mockStatic(Log.class);
-		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-//		jsonMapper.enableDefaultTyping();
 
-		emptyFile = new File("/home/deas/Development/Beaconite/app/src/test/res" +
+		emptyFile = new File("src/test/res" +
 				"/emptyFile.json");
 	}
 
@@ -100,7 +98,7 @@ public class FileSupervisorTest {
 	public void tearDown() throws Exception {
 
 		//TODO: use again! but now the output is needed.... m)
-//		emptyFile.delete();
+		emptyFile.delete();
 	}
 
 	@Test
@@ -125,14 +123,37 @@ public class FileSupervisorTest {
 	}
 
 	@Test
-	public void loadCachesFromFile() throws Exception {
-//		fileSupervisor = new FileSupervisor(jsonFile);
-		fileSupervisor = new FileSupervisor(emptyFile);
+	public void writeThenReadJsonTest() throws Exception {
+
+		List<Cache> expectedCacheList = createListWithCaches();
+
+		FileSupervisor fileSupEmptyFile = new FileSupervisor(emptyFile);
+		fileSupEmptyFile.writeAllCachesInFile(expectedCacheList);
+
+		fileSupEmptyFile.loadCachesFromFile();
+
+		List<Cache> actualCacheList = fileSupEmptyFile.loadCachesFromFile();
+
+		Assert.assertEquals("List contains not the expected Cache data.", expectedCacheList, actualCacheList);
+	}
+
+	@Test
+	public void loadGeneratedCachesFromFile() throws Exception {
+		fileSupervisor = new FileSupervisor(generatedDataFile);
+
 		List<Cache> expectedCacheList = createListWithCaches();
 
 		List<Cache> actualCacheList = fileSupervisor.loadCachesFromFile();
 
 		Assert.assertEquals("List contains not the expected Cache data.", expectedCacheList, actualCacheList);
+	}
+
+	@Test
+	public void loadRealCachesFromFile() throws Exception {
+		fileSupervisor = new FileSupervisor(jsonFile);
+
+		fileSupervisor.loadCachesFromFile();
+
 	}
 
 }

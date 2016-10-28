@@ -3,14 +3,11 @@ package com.example.deas.beaconite;
 import android.util.Log;
 
 import com.example.deas.beaconite.dataIO.BeaconMapper;
-import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -34,9 +31,8 @@ public class FileSupervisor {
 //		jsonMapper.enableDefaultTyping();
 	}
 
-	public void writeAllCachesInFile(List<Cache> allMyCaches) throws JsonGenerationException,
-			JsonMappingException,
-			IOException {
+	public void writeAllCachesInFile(List<Cache> allMyCaches) throws IOException {
+		// FIXME: Exceptions
 
 		// Map the data with Jackson, write file not with Jackson
 		// writing file with Android native tools
@@ -55,7 +51,7 @@ public class FileSupervisor {
 		}
 	}
 
-	public List<Cache> loadCachesFromFile() throws IOException, FileNotFoundException {
+	public List<Cache> loadCachesFromFile() throws IOException {
 		// TODO: implemnt this some day...
 
 		// read Cache Data from a File with inputstream and mapper

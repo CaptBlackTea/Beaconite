@@ -1,0 +1,174 @@
+[
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache0",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        }
+      }
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1475583764019,
+        "stopTimestamp": 1475583766547
+      },
+      {
+        "startTimestamp": 1475583764019,
+        "stopTimestamp": 1475583766547
+      }
+    ]
+  },
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache1",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        }
+      }
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1475583764020,
+        "stopTimestamp": 1475583766548
+      },
+      {
+        "startTimestamp": 1475583764020,
+        "stopTimestamp": 1475583766548
+      }
+    ]
+  },
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache2",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        }
+      }
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1475583764021,
+        "stopTimestamp": 1475583766549
+      },
+      {
+        "startTimestamp": 1475583764021,
+        "stopTimestamp": 1475583766549
+      }
+    ]
+  },
+  {
+    "@class": "com.example.deas.beaconite.Cache",
+    "cacheName": "Cache3",
+    "fingerprint": {
+      "@class": "com.example.deas.beaconite.FingerprintMedian",
+      "beacons": {
+        "id1: df7e1c79-43e9-44ff-886f-100000000003 id2: 3 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000004 id2: 4 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000001 id2: 1 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        },
+        "id1: df7e1c79-43e9-44ff-886f-100000000002 id2: 2 id3: 1": {
+          "@class": "com.example.deas.beaconite.FingerprintMedian$BeaconFingerPrint",
+          "median": -200,
+          "upperLimit": -200.0,
+          "lowerLimit": -200.0
+        }
+      }
+    },
+    "timeIntervals": [
+      {
+        "startTimestamp": 1475583764022,
+        "stopTimestamp": 1475583766550
+      },
+      {
+        "startTimestamp": 1475583764022,
+        "stopTimestamp": 1475583766550
+      }
+    ]
+  }
+]
