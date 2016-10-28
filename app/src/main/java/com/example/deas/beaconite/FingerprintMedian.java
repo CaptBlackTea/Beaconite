@@ -2,6 +2,9 @@ package com.example.deas.beaconite;
 
 import android.util.Log;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Collections;
@@ -17,7 +20,9 @@ public class FingerprintMedian extends Fingerprint {
 
 //	private Map<Beacon, BeaconFingerPrint> beacons = new HashMap<>();
 
-	public FingerprintMedian(BeaconMap allBeacons, List<TimeInterval> timeIntervals) {
+	@JsonCreator
+	public FingerprintMedian(@JsonProperty("allBeacons") BeaconMap allBeacons, @JsonProperty("timeIntervals")
+			List<TimeInterval> timeIntervals) {
 		super(allBeacons, timeIntervals);
 
 		Log.d(TAG, "Beacons Map after Constructor call: " + beacons);

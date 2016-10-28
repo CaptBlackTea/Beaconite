@@ -1,7 +1,13 @@
 package com.example.deas.beaconite;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * A cache has two timestamps: start- and stop-record timestamp. A cache can have many of such
@@ -11,6 +17,7 @@ import java.util.List;
  * <p>
  * Created by dea on 04.09.2016.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Cache {
 	protected static final String TAG = "Cache";
 	private final String name;
@@ -26,7 +33,8 @@ public class Cache {
 	 *             changed (final field).
 	 * @throws IllegalArgumentException if name was null or empty
 	 */
-	public Cache(String name) throws IllegalArgumentException {
+	@JsonCreator
+	public Cache(@JsonProperty("name") String name) throws IllegalArgumentException {
 
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException();
@@ -41,6 +49,10 @@ public class Cache {
 
 	public Fingerprint getFingerprint() {
 		return fingerprint;
+	}
+
+	private void setFingerprint(Fingerprint fingerprint) {
+		this.fingerprint = fingerprint;
 	}
 
 	/**
@@ -62,10 +74,10 @@ public class Cache {
 	 *
 	 * @param interval the time interval to add to i.e. associate with this cache.
 	 */
+	@JsonSetter("timeInterval")
 	public void addNewTimeInterval(TimeInterval interval) {
 		timeIntervals.add(interval);
 	}
-
 
 	/**
 	 * Returns the name of this cache.

@@ -20,18 +20,18 @@ public class FileSupervisor {
 	// Mapper for JSON (de-)serialization
 	private final ObjectMapper jsonMapper = new ObjectMapper();
 	private File file;
+	private String jsonAsString;
 
 	// FIXME: Exceptions
 	public FileSupervisor(File fileToAccess) throws IllegalArgumentException {
 		if (fileToAccess == null) {
 			throw new NullPointerException();
-		} else if (!fileToAccess.canWrite()) {
-			throw new IllegalArgumentException("File is not writeable!");
 		} else {
 			this.file = fileToAccess;
 		}
 		// make JSON pretty ^^ then write it in a file
-		jsonMapper.enable(SerializationFeature.INDENT_OUTPUT);
+		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+//		jsonMapper.enableDefaultTyping();
 	}
 
 	public void writeAllCachesInFile(List<Cache> allMyCaches) throws JsonGenerationException,
@@ -41,12 +41,14 @@ public class FileSupervisor {
 		// Map the data with Jackson, write file not with Jackson
 		// writing file with Android native tools
 		try (FileOutputStream fOut = new FileOutputStream(file)) {
-			String jsonAsString = jsonMapper.writeValueAsString(allMyCaches);
+			jsonAsString = jsonMapper.writerFor(new TypeReference<List<Cache>>() {
+			}).writeValueAsString(allMyCaches);
 
 			file.createNewFile();
 
-			jsonMapper.writeValue(fOut, allMyCaches);
 
+			jsonMapper.writerFor(new TypeReference<List<Cache>>() {
+			}).writeValue(fOut, allMyCaches);
 
 		} catch (IOException e) {
 			Log.e("Exception", "File write failed: " + e.toString());
@@ -71,5 +73,17 @@ public class FileSupervisor {
 		}
 
 
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public ObjectMapper getJsonMapper() {
+		return jsonMapper;
+	}
+
+	public String getJsonString() {
+		return jsonAsString;
 	}
 }

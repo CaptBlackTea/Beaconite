@@ -1,0 +1,2385 @@
+[
+  "java.util.ArrayList",
+  [
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766547,
+                "startTimestamp": 1475583764019
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766547,
+                "startTimestamp": 1475583764019
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache0"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766548,
+                "startTimestamp": 1475583764020
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766548,
+                "startTimestamp": 1475583764020
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache1"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766549,
+                "startTimestamp": 1475583764021
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766549,
+                "startTimestamp": 1475583764021
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache2"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766550,
+                "startTimestamp": 1475583764022
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766550,
+                "startTimestamp": 1475583764022
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache3"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766551,
+                "startTimestamp": 1475583764023
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766551,
+                "startTimestamp": 1475583764023
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache4"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766552,
+                "startTimestamp": 1475583764024
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766552,
+                "startTimestamp": 1475583764024
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache5"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766553,
+                "startTimestamp": 1475583764025
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766553,
+                "startTimestamp": 1475583764025
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache6"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766554,
+                "startTimestamp": 1475583764026
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766554,
+                "startTimestamp": 1475583764026
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache7"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766555,
+                "startTimestamp": 1475583764027
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766555,
+                "startTimestamp": 1475583764027
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache8"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766556,
+                "startTimestamp": 1475583764028
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766556,
+                "startTimestamp": 1475583764028
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache9"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766557,
+                "startTimestamp": 1475583764029
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766557,
+                "startTimestamp": 1475583764029
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache10"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766558,
+                "startTimestamp": 1475583764030
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766558,
+                "startTimestamp": 1475583764030
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache11"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766559,
+                "startTimestamp": 1475583764031
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766559,
+                "startTimestamp": 1475583764031
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache12"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766560,
+                "startTimestamp": 1475583764032
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766560,
+                "startTimestamp": 1475583764032
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache13"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766561,
+                "startTimestamp": 1475583764033
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766561,
+                "startTimestamp": 1475583764033
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache14"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766562,
+                "startTimestamp": 1475583764034
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766562,
+                "startTimestamp": 1475583764034
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache15"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766563,
+                "startTimestamp": 1475583764035
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766563,
+                "startTimestamp": 1475583764035
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache16"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766564,
+                "startTimestamp": 1475583764036
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766564,
+                "startTimestamp": 1475583764036
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache17"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766565,
+                "startTimestamp": 1475583764037
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766565,
+                "startTimestamp": 1475583764037
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache18"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766566,
+                "startTimestamp": 1475583764038
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766566,
+                "startTimestamp": 1475583764038
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache19"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766567,
+                "startTimestamp": 1475583764039
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766567,
+                "startTimestamp": 1475583764039
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache20"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766568,
+                "startTimestamp": 1475583764040
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766568,
+                "startTimestamp": 1475583764040
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache21"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766569,
+                "startTimestamp": 1475583764041
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766569,
+                "startTimestamp": 1475583764041
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache22"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766570,
+                "startTimestamp": 1475583764042
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766570,
+                "startTimestamp": 1475583764042
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache23"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766571,
+                "startTimestamp": 1475583764043
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766571,
+                "startTimestamp": 1475583764043
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache24"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766572,
+                "startTimestamp": 1475583764044
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766572,
+                "startTimestamp": 1475583764044
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache25"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766573,
+                "startTimestamp": 1475583764045
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766573,
+                "startTimestamp": 1475583764045
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache26"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766574,
+                "startTimestamp": 1475583764046
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766574,
+                "startTimestamp": 1475583764046
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache27"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766575,
+                "startTimestamp": 1475583764047
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766575,
+                "startTimestamp": 1475583764047
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache28"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766576,
+                "startTimestamp": 1475583764048
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766576,
+                "startTimestamp": 1475583764048
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache29"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766577,
+                "startTimestamp": 1475583764049
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766577,
+                "startTimestamp": 1475583764049
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache30"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766578,
+                "startTimestamp": 1475583764050
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766578,
+                "startTimestamp": 1475583764050
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache31"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766579,
+                "startTimestamp": 1475583764051
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766579,
+                "startTimestamp": 1475583764051
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache32"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766580,
+                "startTimestamp": 1475583764052
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766580,
+                "startTimestamp": 1475583764052
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache33"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766581,
+                "startTimestamp": 1475583764053
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766581,
+                "startTimestamp": 1475583764053
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache34"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766582,
+                "startTimestamp": 1475583764054
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766582,
+                "startTimestamp": 1475583764054
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache35"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766583,
+                "startTimestamp": 1475583764055
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766583,
+                "startTimestamp": 1475583764055
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache36"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766584,
+                "startTimestamp": 1475583764056
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766584,
+                "startTimestamp": 1475583764056
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache37"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766585,
+                "startTimestamp": 1475583764057
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766585,
+                "startTimestamp": 1475583764057
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache38"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766586,
+                "startTimestamp": 1475583764058
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766586,
+                "startTimestamp": 1475583764058
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache39"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766587,
+                "startTimestamp": 1475583764059
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766587,
+                "startTimestamp": 1475583764059
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache40"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766588,
+                "startTimestamp": 1475583764060
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766588,
+                "startTimestamp": 1475583764060
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache41"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766589,
+                "startTimestamp": 1475583764061
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766589,
+                "startTimestamp": 1475583764061
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache42"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766590,
+                "startTimestamp": 1475583764062
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766590,
+                "startTimestamp": 1475583764062
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache43"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766591,
+                "startTimestamp": 1475583764063
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766591,
+                "startTimestamp": 1475583764063
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache44"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766592,
+                "startTimestamp": 1475583764064
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766592,
+                "startTimestamp": 1475583764064
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache45"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766593,
+                "startTimestamp": 1475583764065
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766593,
+                "startTimestamp": 1475583764065
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache46"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766594,
+                "startTimestamp": 1475583764066
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766594,
+                "startTimestamp": 1475583764066
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache47"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766595,
+                "startTimestamp": 1475583764067
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766595,
+                "startTimestamp": 1475583764067
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache48"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766596,
+                "startTimestamp": 1475583764068
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766596,
+                "startTimestamp": 1475583764068
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache49"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766597,
+                "startTimestamp": 1475583764069
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766597,
+                "startTimestamp": 1475583764069
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache50"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766598,
+                "startTimestamp": 1475583764070
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766598,
+                "startTimestamp": 1475583764070
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache51"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766599,
+                "startTimestamp": 1475583764071
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766599,
+                "startTimestamp": 1475583764071
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache52"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766600,
+                "startTimestamp": 1475583764072
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766600,
+                "startTimestamp": 1475583764072
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache53"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766601,
+                "startTimestamp": 1475583764073
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766601,
+                "startTimestamp": 1475583764073
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache54"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766602,
+                "startTimestamp": 1475583764074
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766602,
+                "startTimestamp": 1475583764074
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache55"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766603,
+                "startTimestamp": 1475583764075
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766603,
+                "startTimestamp": 1475583764075
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache56"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766604,
+                "startTimestamp": 1475583764076
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766604,
+                "startTimestamp": 1475583764076
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache57"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766605,
+                "startTimestamp": 1475583764077
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766605,
+                "startTimestamp": 1475583764077
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache58"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766606,
+                "startTimestamp": 1475583764078
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766606,
+                "startTimestamp": 1475583764078
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache59"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766607,
+                "startTimestamp": 1475583764079
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766607,
+                "startTimestamp": 1475583764079
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache60"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766608,
+                "startTimestamp": 1475583764080
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766608,
+                "startTimestamp": 1475583764080
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache61"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766609,
+                "startTimestamp": 1475583764081
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766609,
+                "startTimestamp": 1475583764081
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache62"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766610,
+                "startTimestamp": 1475583764082
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766610,
+                "startTimestamp": 1475583764082
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache63"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766611,
+                "startTimestamp": 1475583764083
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766611,
+                "startTimestamp": 1475583764083
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache64"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766612,
+                "startTimestamp": 1475583764084
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766612,
+                "startTimestamp": 1475583764084
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache65"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766613,
+                "startTimestamp": 1475583764085
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766613,
+                "startTimestamp": 1475583764085
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache66"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766614,
+                "startTimestamp": 1475583764086
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766614,
+                "startTimestamp": 1475583764086
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache67"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766615,
+                "startTimestamp": 1475583764087
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766615,
+                "startTimestamp": 1475583764087
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache68"
+      }
+    ],
+    [
+      "com.example.deas.beaconite.Cache",
+      {
+        "fingerprint": [
+          "com.example.deas.beaconite.FingerprintMedian",
+          {
+            "beacons": [
+              "java.util.HashMap",
+              {}
+            ]
+          }
+        ],
+        "timeIntervals": [
+          "java.util.ArrayList",
+          [
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766616,
+                "startTimestamp": 1475583764088
+              }
+            ],
+            [
+              "com.example.deas.beaconite.TimeInterval",
+              {
+                "stopTimestamp": 1475583766616,
+                "startTimestamp": 1475583764088
+              }
+            ]
+          ]
+        ],
+        "cacheName": "Cache69"
+      }
+    ]
+  ]
+]

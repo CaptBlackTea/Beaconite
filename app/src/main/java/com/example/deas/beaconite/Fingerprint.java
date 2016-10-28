@@ -1,6 +1,8 @@
 package com.example.deas.beaconite;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import org.altbeacon.beacon.Beacon;
 
@@ -16,6 +18,14 @@ import java.util.Map;
  * <p/>
  * Created by deas on 16/09/16.
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
+		include = JsonTypeInfo.As.PROPERTY,
+		property = "@class")
+
+// all known subtypes, separate by comma if there is more than one.
+@JsonSubTypes({
+		@JsonSubTypes.Type(value = FingerprintMedian.class)
+})
 public abstract class Fingerprint {
 
 	@JsonIgnore
