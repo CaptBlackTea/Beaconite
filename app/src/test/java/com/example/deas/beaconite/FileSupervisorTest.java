@@ -2,6 +2,7 @@ package com.example.deas.beaconite;
 
 import android.util.Log;
 
+import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -32,7 +33,7 @@ import java.util.TreeMap;
 @PrepareForTest({Log.class})
 public class FileSupervisorTest {
 
-	private final ObjectMapper jsonMapper = new ObjectMapper();
+	private final ObjectMapper jsonMapper = new BeaconMapper();
 	private FileSupervisor fileSupervisor;
 	private File jsonFile = new File("/home/deas/Development/Beaconite/app/src/test/res/allCaches.json");
 	private File jsonFileExtendedInfo = new File

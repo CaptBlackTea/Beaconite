@@ -4,11 +4,13 @@ import android.util.Log;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Implements that a fingerprint as calculated as a median of the given data.
@@ -22,11 +24,13 @@ public class FingerprintMedian extends Fingerprint {
 
 	@JsonCreator
 	public FingerprintMedian(@JsonProperty("allBeacons") BeaconMap allBeacons, @JsonProperty("timeIntervals")
-			List<TimeInterval> timeIntervals) {
+			List<TimeInterval> timeIntervals, @JsonProperty("beacons") Map<String, FingerprintMedian.BeaconFingerPrint> beaconInput) {
 		super(allBeacons, timeIntervals);
 
+		setBeacons(beaconInput);
 		Log.d(TAG, "Beacons Map after Constructor call: " + beacons);
 	}
+
 
 
 	/**
@@ -37,7 +41,7 @@ public class FingerprintMedian extends Fingerprint {
 	 */
 	@Override
 	protected void calculateFingerprint() {
-		if (allBeacons != null && !allBeacons.isEmpty()) {
+		if (allBeacons != null) {
 			for (Beacon b : allBeacons.keySet()) {
 				BeaconFingerPrint bfp = new BeaconFingerPrint(allBeacons.rssisForTimeintervals(b,
 						timeIntervals));
@@ -62,15 +66,23 @@ public class FingerprintMedian extends Fingerprint {
 
 	/**
 	 * Generates a fingerprint for an individual Beacon.
+	 *
+	 * !!!: is static due to (de-)serializing problems in Jackson
+	 * -> TODO: maybe refactor to a normal class in a separate file, not static then ;)
 	 */
-	class BeaconFingerPrint {
+	@JsonTypeInfo(use = JsonTypeInfo.Id.CLASS,
+			include = JsonTypeInfo.As.PROPERTY,
+			property = "@class",
+			defaultImpl = FingerprintMedian.BeaconFingerPrint.class)
+	static class BeaconFingerPrint {
 		// FIXME: some calculations result in NaN!!
-		// default values for invisible Beacons
-		// -200 because -100 is the lowest possible Rssi value (very far away)
-		final Integer INVISIBLE = -200;
 		private Integer median = INVISIBLE;
 		private double upperLimit = INVISIBLE;
 		private double lowerLimit = INVISIBLE;
+
+		@JsonCreator
+		private BeaconFingerPrint() {
+		}
 
 		/**
 		 * Takes a list of Integer rssi values. Sorts the list, if not empty, and calculates a
@@ -86,20 +98,53 @@ public class FingerprintMedian extends Fingerprint {
 			}
 		}
 
-		public Integer getINVISIBLE() {
-			return INVISIBLE;
+		@Override
+		public boolean equals(Object o) {
+			if (this == o) return true;
+			if (o == null || getClass() != o.getClass()) return false;
+
+			BeaconFingerPrint that = (BeaconFingerPrint) o;
+
+			if (Double.compare(that.upperLimit, upperLimit) != 0) return false;
+			if (Double.compare(that.lowerLimit, lowerLimit) != 0) return false;
+			return median != null ? median.equals(that.median) : that.median == null;
+
 		}
 
-		public Integer getMedian() {
+		@Override
+		public int hashCode() {
+			int result;
+			long temp;
+			result = median != null ? median.hashCode() : 0;
+			temp = Double.doubleToLongBits(upperLimit);
+			result = 31 * result + (int) (temp ^ (temp >>> 32));
+			temp = Double.doubleToLongBits(lowerLimit);
+			result = 31 * result + (int) (temp ^ (temp >>> 32));
+			return result;
+		}
+
+		public int getMedian() {
 			return median;
+		}
+
+		public void setMedian(int median) {
+			this.median = median;
 		}
 
 		public double getUpperLimit() {
 			return upperLimit;
 		}
 
+		public void setUpperLimit(double upperLimit) {
+			this.upperLimit = upperLimit;
+		}
+
 		public double getLowerLimit() {
 			return lowerLimit;
+		}
+
+		public void setLowerLimit(double lowerLimit) {
+			this.lowerLimit = lowerLimit;
 		}
 
 		@Override

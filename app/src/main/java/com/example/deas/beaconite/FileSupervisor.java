@@ -2,11 +2,11 @@ package com.example.deas.beaconite;
 
 import android.util.Log;
 
+import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +18,7 @@ import java.util.List;
 public class FileSupervisor {
 
 	// Mapper for JSON (de-)serialization
-	private final ObjectMapper jsonMapper = new ObjectMapper();
+	private final ObjectMapper jsonMapper = new BeaconMapper();
 	private File file;
 	private String jsonAsString;
 
@@ -30,7 +30,7 @@ public class FileSupervisor {
 			this.file = fileToAccess;
 		}
 		// make JSON pretty ^^ then write it in a file
-		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+//		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
 //		jsonMapper.enableDefaultTyping();
 	}
 
@@ -64,7 +64,7 @@ public class FileSupervisor {
 			};
 
 			List<Cache> jsonToCacheList = jsonMapper.readValue(fIn, mapType);
-			System.out.println("\n2. Convert JSON to List of person objects :");
+			System.out.println("\n2. Convert JSON to List of cache objects :");
 
 			//Print list of person objects output using Java 8
 			System.out.println(jsonToCacheList);

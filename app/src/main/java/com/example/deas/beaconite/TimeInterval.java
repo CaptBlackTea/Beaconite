@@ -1,5 +1,8 @@
 package com.example.deas.beaconite;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a time interval with a start and stop time.
  * <p>
@@ -17,7 +20,9 @@ public class TimeInterval {
 	 * @param startTimestamp lower boundary of the time interval
 	 * @param stopTimestamp  upper boundary of the time interval
 	 */
-	public TimeInterval(Long startTimestamp, Long stopTimestamp) {
+	@JsonCreator
+	public TimeInterval(@JsonProperty("startTimestamp") Long startTimestamp, @JsonProperty("stopTimestamp") Long
+			stopTimestamp) {
 		// TODO: maybe ask if the stopTime is bigger then the startTime?
 		this.startTimestamp = startTimestamp;
 		this.stopTimestamp = stopTimestamp;
@@ -59,5 +64,25 @@ public class TimeInterval {
 				"stopTimestamp=" + stopTimestamp +
 				", startTimestamp=" + startTimestamp +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		TimeInterval that = (TimeInterval) o;
+
+		if (stopTimestamp != null ? !stopTimestamp.equals(that.stopTimestamp) : that.stopTimestamp != null)
+			return false;
+		return startTimestamp != null ? startTimestamp.equals(that.startTimestamp) : that.startTimestamp == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = stopTimestamp != null ? stopTimestamp.hashCode() : 0;
+		result = 31 * result + (startTimestamp != null ? startTimestamp.hashCode() : 0);
+		return result;
 	}
 }

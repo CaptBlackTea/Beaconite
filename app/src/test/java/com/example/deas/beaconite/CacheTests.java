@@ -52,7 +52,8 @@ public class CacheTests {
 	public void createCacheWithCorrectValuesTest() {
 		String expectedCacheName = cacheName;
 		List<TimeInterval> expectedTimeIntervalsList = new ArrayList<>();
-		Fingerprint expectedFingerprint = new FingerprintMedian(null, expectedTimeIntervalsList);
+		Fingerprint expectedFingerprint = new FingerprintMedian(null, expectedTimeIntervalsList,
+				null);
 
 		Assert.assertNotNull("Cache name was null.", cache.getCacheName());
 		Assert.assertFalse("Cache has name was empty.", cache.getCacheName().isEmpty());

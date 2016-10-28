@@ -24,7 +24,6 @@ public class Cache {
 	private Fingerprint fingerprint;
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
-
 	/**
 	 * Sets up the cache with an empty data structure for time intervals and a name for this cache.
 	 * Name must not be null or empty: throws IllegalArgumentException otherwise.
@@ -34,7 +33,7 @@ public class Cache {
 	 * @throws IllegalArgumentException if name was null or empty
 	 */
 	@JsonCreator
-	public Cache(@JsonProperty("name") String name) throws IllegalArgumentException {
+	public Cache(@JsonProperty("cacheName") String name) throws IllegalArgumentException {
 
 		if (name == null || name.isEmpty()) {
 			throw new IllegalArgumentException();
@@ -45,6 +44,28 @@ public class Cache {
 
 		// FIXME: initial Fingerprint?
 		calculateFingerprint(null);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+
+		Cache cache = (Cache) o;
+
+		if (!name.equals(cache.name)) return false;
+		if (fingerprint != null ? !fingerprint.equals(cache.fingerprint) : cache.fingerprint != null)
+			return false;
+		return timeIntervals != null ? timeIntervals.equals(cache.timeIntervals) : cache.timeIntervals == null;
+
+	}
+
+	@Override
+	public int hashCode() {
+		int result = name.hashCode();
+		result = 31 * result + (fingerprint != null ? fingerprint.hashCode() : 0);
+		result = 31 * result + (timeIntervals != null ? timeIntervals.hashCode() : 0);
+		return result;
 	}
 
 	public Fingerprint getFingerprint() {
@@ -109,6 +130,6 @@ public class Cache {
 	 * @param allMyBeacons the data of which the fingerprint is created. Here all known Beacons.
 	 */
 	public void calculateFingerprint(BeaconMap allMyBeacons) {
-		fingerprint = new FingerprintMedian(allMyBeacons, timeIntervals);
+		fingerprint = new FingerprintMedian(allMyBeacons, timeIntervals, null);
 	}
 }
