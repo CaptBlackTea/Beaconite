@@ -18,6 +18,8 @@ import android.view.View;
 
 import org.altbeacon.beacon.BeaconManager;
 
+import java.io.IOException;
+
 /**
  * Class was implemented according to the sample Code on the altBeacon site. see:
  * https://github.com/AltBeacon/android-beacon-library-reference/blob/master/app/src/main/java/org/altbeacon/beaconreference/MonitoringActivity.java
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 	/**
-	 * Check permissions needes for this app. Start BeaconDataService.
+	 * Check permissions needs for this app. Start BeaconDataService.
 	 *
 	 * @param savedInstanceState
 	 */
@@ -318,6 +320,14 @@ public class MainActivity extends AppCompatActivity {
 	public void onWhereAmIBtnClicked(View view) {
 		Intent myIntent = new Intent(this, LocalizeMeActivity.class);
 		this.startActivity(myIntent);
+	}
+
+	public void onLoadCachesFromFileBtnClicked(View view) {
+		try {
+			mService.loadCachesFromFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

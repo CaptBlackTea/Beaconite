@@ -61,6 +61,14 @@
         android:text="@string/startCacheActivity"/>
 
     <Button
+        android:id="@+id/loadCaches_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onLoadCachesFromFileBtnClicked"
+        android:text="@string/loadCaches"/>
+
+    <Button
         android:id="@+id/whereAmI_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

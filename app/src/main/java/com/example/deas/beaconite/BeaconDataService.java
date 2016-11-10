@@ -131,6 +131,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		// bind the Beacon notifier
 		beaconManager.bind(this);
 
+		// TODO: make read/load file changeable
 		// setup file for writing and reading the Cache data to/from
 		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"));
 
@@ -295,11 +296,19 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	// FIXME: do correct stuff here!
 	// FIXME: Handle Exception!
-	private void loadCachesFromFile() throws IOException {
+	public void loadCachesFromFile() throws IOException {
 
 		//JSON from file to Object
 
 		allMyCaches = fileSupervisor.loadCachesFromFile();
+
+		// TODO: check if the loading was successful; e.g. introduce a variable
+		// Tell the user that caches were loaded
+		int numberOfCurrentCaches = allMyCaches.size();
+		Toast.makeText(this, "Cache data loaded; Currently there are" +
+				" " +
+				numberOfCurrentCaches + " caches.", Toast
+				.LENGTH_SHORT).show();
 	}
 
 	/**

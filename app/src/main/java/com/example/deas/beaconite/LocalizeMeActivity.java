@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
 /**
  * Connects to the data service and reports if a cache was entered. Does this by using
@@ -46,6 +47,8 @@ public class LocalizeMeActivity extends AppCompatActivity {
 			mIsBound = true;
 
 			// TODO: do stuff with Service data here
+			fillCacheList();
+
 			// TODO: grab cache fingerprints from the service
 			// TODO: make tmpFingerPrints every second or so and compare those to the cache FPs
 			// TODO: report/print if a cache was entered/FP matches together with useful debug data.
@@ -115,5 +118,19 @@ public class LocalizeMeActivity extends AppCompatActivity {
 		// Bind to BeaconDataService
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
+
+	}
+
+	private void fillCacheList() {
+
+		TextView cacheListTextView = (TextView) findViewById(R.id.recodedCachesForMatch);
+
+		if (mIsBound) {
+//			cacheListTextView.append(mService.getAllMyCaches().toString());
+
+			for (Cache c : mService.getAllMyCaches()) {
+				cacheListTextView.append(c.getCacheName() + " \n");
+			}
+		}
 	}
 }
