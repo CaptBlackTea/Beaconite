@@ -57,6 +57,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
 
+	private BeaconPositionCallback beaconPositionCallback;
+
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
 		@Override
@@ -67,6 +69,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			printAllBeaconsWithRssiOverTime();
 
 			printAllMyCaches();
+
+			// transition from external service(onBeaconServiceConnect) to own implementation
+			// therefore the callback; alternative: directly connect to BeaconService;
+			if (beaconPositionCallback != null) {
+				beaconPositionCallback.update(beacons);
+			}
 
 		}
 	};
@@ -347,6 +355,26 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Set a callback instance for listenting to position updates.
+	 *
+	 * @param callback if null callback is deactivated; else it is called frequently.
+	 */
+	public void setBeaconPositionCallback(BeaconPositionCallback callback) {
+		this.beaconPositionCallback = callback;
+	}
+
+	/**
+	 * Not SO Pretty! but...
+	 * <p>
+	 * Inner interface to update the position based on currently scanned beacons.
+	 */
+	public interface BeaconPositionCallback {
+
+		void update(Collection<Beacon> beacons);
+
 	}
 
 	/**

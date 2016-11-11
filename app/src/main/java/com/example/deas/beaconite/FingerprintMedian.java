@@ -93,7 +93,7 @@ public class FingerprintMedian extends Fingerprint {
 		public BeaconFingerPrint(List<Integer> rssis) {
 			if (!rssis.isEmpty()) {
 				Collections.sort(rssis);
-				calcMedian(rssis);
+				this.median = calcMedian(rssis);
 				calcCorridor(rssis);
 			}
 		}
@@ -157,6 +157,7 @@ public class FingerprintMedian extends Fingerprint {
 					'}';
 		}
 
+		// TODO: change return value to an array with upper and lower limit
 		/**
 		 * A corridor for given rssi values. The corridor represents the margin of deviation from
 		 * the calculated Median for these rssi values.
@@ -164,29 +165,62 @@ public class FingerprintMedian extends Fingerprint {
 		 * @param rssis
 		 */
 		private void calcCorridor(List<Integer> rssis) {
+
+			if (this.median == INVISIBLE) {
+				return; // TODO: return an array with INVISIBLE/INVISIBLE for upper and lower
+				// limit values
+			}
+
 			Long upperSum = 0L;
-			int upperN = 0;
+			int upperSumElementCounter = 0;
 
 			Long lowerSum = 0L;
-			int lowerN = 0;
+			int lowerSumElementCounter = 0;
 
 			for (Integer rssi : rssis) {
 				Long distance = rssi.longValue() - median;
 				if (distance > 0) {
 					upperSum += distance * distance;
-					upperN++;
+					upperSumElementCounter++;
 				} else if (distance < 0) {
 					lowerSum += distance * distance;
-					lowerN++;
+					lowerSumElementCounter++;
 				}
 			}
 
-			upperLimit = median + Math.sqrt(upperSum) / upperN;
-			lowerLimit = median - Math.sqrt(lowerSum) / lowerN;
+			upperLimit = median + calcOffset(upperSum, upperSumElementCounter);
+			lowerLimit = median - calcOffset(lowerSum, lowerSumElementCounter);
+
 		}
 
-		private void calcMedian(List<Integer> rssis) {
-			this.median = rssis.get(rssis.size() / 2);
+		//TODO: COMMENTS!!!11elf!
+		private double calcOffset(Long sum, int count) {
+			if (count == 0) {
+				return 0;
+			}
+
+			return Math.sqrt(sum) / count;
+
+		}
+
+		private Integer calcMedian(List<Integer> rssis) {
+			Integer median = rssis.get(rssis.size() / 2);
+
+			if (!validRssi(median)) {
+				median = INVISIBLE;
+			}
+
+			return median;
+		}
+
+		/**
+		 * A valid rssi value is between -100 and -25 (see Beacon specs!)
+		 *
+		 * @param median
+		 * @return
+		 */
+		private boolean validRssi(Integer median) {
+			return ((median >= -100) && (median <= -25));
 		}
 
 		/**

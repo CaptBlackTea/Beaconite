@@ -10,6 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.altbeacon.beacon.Beacon;
+
+import java.util.Collection;
+
 /**
  * Connects to the data service and reports if a cache was entered. Does this by using
  * fingerprinting. Idea is that it creates temporary fingerprints every second and compares these to
@@ -24,7 +28,7 @@ public class LocalizeMeActivity extends AppCompatActivity {
 	private BeaconDataService mService;
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
-
+	private BeaconDataService.BeaconPositionCallback beaconPositionCallback;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -58,7 +62,16 @@ public class LocalizeMeActivity extends AppCompatActivity {
 
 //			Log.d(TAG, "AllMyCaches " + mService.getAllMyCaches());
 
+			beaconPositionCallback = new BeaconDataService.BeaconPositionCallback() {
+				@Override
+				public void update(Collection<Beacon> beacons) {
+					// TODO: method or class instance to handle what to do with the beacon
+					// scan (=beacons)
+					//e.g. Toast; refresh screen; calculate position; find matching caches etc
+				}
+			};
 
+			mService.setBeaconPositionCallback(beaconPositionCallback);
 		}
 
 		@Override
@@ -67,6 +80,7 @@ public class LocalizeMeActivity extends AppCompatActivity {
 			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
 		}
 	};
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -133,4 +147,5 @@ public class LocalizeMeActivity extends AppCompatActivity {
 			}
 		}
 	}
+
 }
