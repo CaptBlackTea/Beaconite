@@ -9,10 +9,12 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.altbeacon.beacon.Beacon;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Connects to the data service and reports if a cache was entered. Does this by using
@@ -29,6 +31,7 @@ public class LocalizeMeActivity extends AppCompatActivity {
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
 	private BeaconDataService.BeaconPositionCallback beaconPositionCallback;
+	private Toast toast;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -68,6 +71,13 @@ public class LocalizeMeActivity extends AppCompatActivity {
 					// TODO: method or class instance to handle what to do with the beacon
 					// scan (=beacons)
 					//e.g. Toast; refresh screen; calculate position; find matching caches etc
+
+					List<Cache> matchingCaches = BeaconCacheMatcher.matchesAnyCache(beacons, mService
+							.getAllMyCaches());
+
+					Log.d(TAG, "Matching Caches: " + matchingCaches);
+					showMatchResult(matchingCaches);
+
 				}
 			};
 
@@ -81,6 +91,34 @@ public class LocalizeMeActivity extends AppCompatActivity {
 		}
 	};
 
+	private void showMatchResult(List<Cache> matchingCaches) {
+		Log.d(TAG, "TOAST!");
+		String cacheNames = "Matching Caches \n";
+
+		if (!matchingCaches.isEmpty()) {
+
+			for (Cache c : matchingCaches) {
+				cacheNames = cacheNames + c.getCacheName() + "\n";
+			}
+		} else {
+			cacheNames = cacheNames + "- none found; searching -";
+		}
+
+		final String finalCacheNames = cacheNames;
+
+
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (toast == null) { // Initialize toast if needed
+					toast = Toast.makeText(LocalizeMeActivity.this, "", Toast.LENGTH_SHORT);
+				}
+				toast.setText(finalCacheNames);
+				toast.show();
+			}
+		});
+	}
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +126,10 @@ public class LocalizeMeActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_localize_me);
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
+
+		if (toast == null) { // Initialize toast if needed
+			toast = Toast.makeText(LocalizeMeActivity.this, "", Toast.LENGTH_SHORT);
+		}
 
 		Log.d(TAG, "#### CREATE");
 	}
@@ -113,11 +155,15 @@ public class LocalizeMeActivity extends AppCompatActivity {
 			unbindService(mConnection);
 			mIsBound = false;
 		}
+
+		mService.setBeaconPositionCallback(null);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+
+		mService.setBeaconPositionCallback(null);
 	}
 
 	@Override
