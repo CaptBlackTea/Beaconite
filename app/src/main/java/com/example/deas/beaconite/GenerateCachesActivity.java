@@ -1,5 +1,6 @@
 package com.example.deas.beaconite;
 
+import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,6 +8,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class GenerateCachesActivity extends AppCompatActivity {
@@ -32,8 +36,7 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
 	private AdapterCache adbCache;
-
-
+	private ProgressBar bar;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -72,6 +75,9 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
 		}
 	};
+	private ObjectAnimator animation;
+	private Handler progressHandler;
+	private ProgressBar progressBarHorizontal;
 
 	private void setupCacheListView() {
 		adbCache = new AdapterCache(this, 0, mService.getAllMyCaches());
@@ -107,11 +113,22 @@ public class GenerateCachesActivity extends AppCompatActivity {
 				@TargetApi(Build.VERSION_CODES.M)
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
+
+					CountDownTimer countDownTimer = makeCountDownProgressBar();
+
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+						countDownTimer.start();
+
 						startTimestampForCache = System.currentTimeMillis();
 						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.red,
 								null));
 					} else if (event.getAction() == MotionEvent.ACTION_UP) {
+
+						if (countDownTimer != null) {
+							countDownTimer.cancel();
+						}
+
 						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.green,
 								null));
 						stopTimestampForCache = System.currentTimeMillis();
@@ -136,6 +153,73 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		} else {
 			showAlertDialog(String.valueOf(R.string.noCache_message));
 		}
+	}
+
+	private CountDownTimer makeCountDownProgressBar() {
+
+		// FIXME: set to 60!000
+		final int oneMin = 60000; // 1 minute in milli seconds
+
+		bar = (ProgressBar) findViewById(R.id.progressbar);
+		bar.setProgress(0);
+//		final int[] tick = {0};
+
+		/** CountDownTimer starts with 1 minutes and every onTick is 1 second */
+		CountDownTimer cdt = new CountDownTimer(oneMin, 1000) {
+
+			int tick = 0;
+
+			public void onTick(long millisUntilFinished) {
+				Long timePassed = ((60000 - millisUntilFinished) / 60) * 100;
+//				bar.incrementProgressBy(1);
+//				bar.setProgress(timePassed.intValue());
+
+				bar.setMax(60);
+				bar.incrementProgressBy(1);
+
+				Log.d(TAG, "60 000 - millisUntil: " + (60000 - millisUntilFinished));
+				Log.d(TAG, "TimePassed: " + timePassed);
+				Log.d(TAG, "Millis till finish: " + millisUntilFinished);
+				Log.d(TAG, "Tick: " + tick);
+				Log.d(TAG, "Progress: " + bar.getProgress());
+
+
+				tick++;
+			}
+
+			public void onFinish() {
+				// DO something when 1 minute is up
+				bar.incrementProgressBy(1);
+			}
+		};
+
+		return cdt;
+//
+//		ProgressBar mProgressBar;
+//		CountDownTimer mCountDownTimer;
+//		int i=0;
+//
+//		mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
+//		mProgressBar.setProgress(i);
+//		mCountDownTimer=new CountDownTimer(5000,1000) {
+//
+//			@Override
+//			public void onTick(long millisUntilFinished) {
+//				Log.v("Log_tag", "Tick of Progress"+ i+ millisUntilFinished);
+//				i++;
+//				mProgressBar.setProgress(i);
+//
+//			}
+//
+//			@Override
+//			public void onFinish() {
+//				//Do what you want
+//				i++;
+//				mProgressBar.setProgress(i);
+//			}
+//		};
+//		mCountDownTimer.start();
+
 	}
 
 	private void showAlertDialog(String message) {
