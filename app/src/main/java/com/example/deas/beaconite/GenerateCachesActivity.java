@@ -6,6 +6,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -37,6 +39,10 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	private Intent beaconDataServiceIntent;
 	private AdapterCache adbCache;
 	private ProgressBar bar;
+	private ObjectAnimator animation;
+	private Handler progressHandler;
+	private ProgressBar progressBarHorizontal;
+	private CountDownTimer countDownTimer;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -59,6 +65,9 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			mIsBound = true;
 
 			setupCacheListView();
+
+			countDownTimer = makeCountDownProgressBar();
+
 			setupRecordCacheButton();
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
@@ -75,9 +84,6 @@ public class GenerateCachesActivity extends AppCompatActivity {
 			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
 		}
 	};
-	private ObjectAnimator animation;
-	private Handler progressHandler;
-	private ProgressBar progressBarHorizontal;
 
 	private void setupCacheListView() {
 		adbCache = new AdapterCache(this, 0, mService.getAllMyCaches());
@@ -114,8 +120,6 @@ public class GenerateCachesActivity extends AppCompatActivity {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 
-					CountDownTimer countDownTimer = makeCountDownProgressBar();
-
 					if (event.getAction() == MotionEvent.ACTION_DOWN) {
 
 						countDownTimer.start();
@@ -127,6 +131,7 @@ public class GenerateCachesActivity extends AppCompatActivity {
 
 						if (countDownTimer != null) {
 							countDownTimer.cancel();
+							resetCountDownTimer();
 						}
 
 						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.green,
@@ -155,6 +160,13 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		}
 	}
 
+	private void resetCountDownTimer() {
+		bar = (ProgressBar) findViewById(R.id.progressbar);
+		bar.setProgress(0);
+		bar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+
+	}
+
 	private CountDownTimer makeCountDownProgressBar() {
 
 		// FIXME: set to 60!000
@@ -162,64 +174,44 @@ public class GenerateCachesActivity extends AppCompatActivity {
 
 		bar = (ProgressBar) findViewById(R.id.progressbar);
 		bar.setProgress(0);
+		bar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 //		final int[] tick = {0};
 
 		/** CountDownTimer starts with 1 minutes and every onTick is 1 second */
-		CountDownTimer cdt = new CountDownTimer(oneMin, 1000) {
-
-			int tick = 0;
-
+		/**
+		 * http://stackoverflow.com/questions/8857590/android-countdowntimer-skips-last-ontick?noredirect=1&lq=1
+		 *
+		 * At the start of every tick, before onTick() is called, the remaining time until the
+		 * end of the countdown is calculated. If this time is smaller than the countdown time
+		 * interval, onTick is not called anymore. Instead only the next tick (where the onFinish
+		 * () method will be called) is scheduled. Given the fact that hardware clocks are not
+		 * always super precise, that there may be other processes in the background that delay
+		 * the thread running CountDownTimer plus that Android itself will probably create a
+		 * small delay when calling the message handler of CountDownTimer it is more than likely
+		 * that the call for the last tick before the end of the count down will be at least one
+		 * millisecond late and therefore onTick() will not be called.
+		 *
+		 * I noticed on my device there is a 6ms delay. So countDownTime+200 should solve it in
+		 * most cases and make it almost unrecognizable to the user.
+		 *
+		 * For applications where the length of the interval time is critical, the other
+		 * solutions posted here are probably the best.
+		 */
+		CountDownTimer cdt = new CountDownTimer(oneMin + 200, 1000) {
 			public void onTick(long millisUntilFinished) {
-				Long timePassed = ((60000 - millisUntilFinished) / 60) * 100;
-//				bar.incrementProgressBy(1);
-//				bar.setProgress(timePassed.intValue());
-
 				bar.setMax(60);
 				bar.incrementProgressBy(1);
 
-				Log.d(TAG, "60 000 - millisUntil: " + (60000 - millisUntilFinished));
-				Log.d(TAG, "TimePassed: " + timePassed);
-				Log.d(TAG, "Millis till finish: " + millisUntilFinished);
-				Log.d(TAG, "Tick: " + tick);
 				Log.d(TAG, "Progress: " + bar.getProgress());
-
-
-				tick++;
 			}
 
 			public void onFinish() {
 				// DO something when 1 minute is up
-				bar.incrementProgressBy(1);
+				bar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
 			}
 		};
 
 		return cdt;
-//
-//		ProgressBar mProgressBar;
-//		CountDownTimer mCountDownTimer;
-//		int i=0;
-//
-//		mProgressBar=(ProgressBar)findViewById(R.id.progressbar);
-//		mProgressBar.setProgress(i);
-//		mCountDownTimer=new CountDownTimer(5000,1000) {
-//
-//			@Override
-//			public void onTick(long millisUntilFinished) {
-//				Log.v("Log_tag", "Tick of Progress"+ i+ millisUntilFinished);
-//				i++;
-//				mProgressBar.setProgress(i);
-//
-//			}
-//
-//			@Override
-//			public void onFinish() {
-//				//Do what you want
-//				i++;
-//				mProgressBar.setProgress(i);
-//			}
-//		};
-//		mCountDownTimer.start();
-
 	}
 
 	private void showAlertDialog(String message) {
