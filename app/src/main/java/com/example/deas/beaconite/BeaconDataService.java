@@ -64,6 +64,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		@Override
 		public void didRangeBeaconsInRegion(final Collection<Beacon> beacons, Region region) {
 
+			Log.d(TAG, " DID RANGE BEACONS IN REGION - Start");
 			addAllBeacons(beacons, System.currentTimeMillis());
 
 			printAllBeaconsWithRssiOverTime();
@@ -74,7 +75,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			// therefore the callback; alternative: directly connect to BeaconService;
 			if (beaconPositionCallback != null) {
 				beaconPositionCallback.update(beacons);
+
+				Log.d(TAG, " DID RANGE BEACONS IN REGION - Callback");
 			}
+
+
+			Log.d(TAG, " DID RANGE BEACONS IN REGION - End");
 
 		}
 	};
@@ -104,7 +110,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 		try {
 			beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
-
+			Log.d(TAG, " ON BEACON SERVICE CONNECT");
 
 		} catch (RemoteException e) {
 			Log.i(TAG, "------ Exception!" + e);
@@ -122,6 +128,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	@Nullable
 	@Override
 	public IBinder onBind(Intent intent) {
+		Log.d(TAG, " ON BIND");
 		return mBinder;
 	}
 
@@ -143,12 +150,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		// setup file for writing and reading the Cache data to/from
 		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"));
 
+		Log.d(TAG, " ON CREATE");
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i(TAG, "Received start id " + startId + ": " + intent);
 
+		Log.d(TAG, " ON START CMD");
 		// We want this service to continue running until it is explicitly
 		// stopped, so return sticky.
 		return START_STICKY;
@@ -157,12 +166,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	@Override
 	public boolean onUnbind(Intent intent) {
 		super.onUnbind(intent);
+		Log.d(TAG, " ON UNBIND");
 		return true;
 	}
 
 	@Override
 	public void onRebind(Intent intent) {
 		super.onRebind(intent);
+		Log.d(TAG, " ON REBIND");
 	}
 
 	@Override
@@ -171,6 +182,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		beaconManager.removeRangeNotifier(beaconNotifier);
 		beaconManager.unbind(this);
 
+		Log.d(TAG, " ON DESTROY");
 		// Tell the user we stopped.
 		Toast.makeText(this, R.string.beacon_data_service_stopped, Toast.LENGTH_SHORT).show();
 		super.onDestroy();

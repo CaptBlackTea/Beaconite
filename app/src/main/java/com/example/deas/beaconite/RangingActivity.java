@@ -62,6 +62,9 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	@Override
 	protected void onStop() {
 		super.onStop();
+		// Remove beaconNotifier
+		beaconManager.removeRangeNotifier(beaconNotifier);
+		beaconManager.unbind(this);
 
 	}
 
@@ -70,9 +73,6 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	protected void onDestroy() {
 		super.onDestroy();
 
-		// Remove beaconNotifier
-		beaconManager.removeRangeNotifier(beaconNotifier);
-		beaconManager.unbind(this);
 
 	}
 
@@ -80,14 +80,14 @@ public class RangingActivity extends AppCompatActivity implements BeaconConsumer
 	protected void onPause() {
 		super.onPause();
 		// TODO: is BackgroundMode on/off needed for this Activity??
-		if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
+//		if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(true);
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
 		// TODO: is BackgroundMode on/off needed for this Activity??
-		if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
+//		if (beaconManager.isBound(this)) beaconManager.setBackgroundMode(false);
 	}
 
 	@Override

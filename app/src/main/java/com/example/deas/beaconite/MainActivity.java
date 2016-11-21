@@ -132,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
 		super.onStart();
 
 		// Bind to BeaconDataService
-		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+		boolean bound = bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
+
+		Log.d(TAG, "----- bind Service: " + bound);
 	}
 
 	@Override
