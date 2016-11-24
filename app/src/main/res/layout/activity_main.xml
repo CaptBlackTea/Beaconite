@@ -20,37 +20,65 @@
         android:layout_marginTop="17dp"
         android:text="Monitoring events and App status"/>
 
-    <Button
-        android:id="@+id/restartBeaconSimulation"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="restartBeaconSimulation"
-        android:text="@string/restartBeaconSimulation"/>
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/restartBeaconSimulation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="restartBeaconSimulation"
+            android:text="@string/restartBeaconSimulation"/>
 
     <Button
         android:id="@+id/resetAllDataService"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:onClick="removeAllDataBtn"
         android:text="@string/resetAllData"/>
 
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/rangingActivity_Btn"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:onClick="onRangingBtnClicked"
-        android:text="@string/rangingTable"/>
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/tableActivity_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:onClick="onTableBtnClicked"
+        android:text="@string/tableBtnText"/>
 
     <Button
         android:id="@+id/graphActivity_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_weight="0"
+        android:layout_weight="1"
         android:onClick="onGraphBtnClicked"
         android:text="@string/startGraphActivity"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/cachesActivity_Btn"
@@ -75,6 +103,13 @@
         android:layout_gravity="center"
         android:onClick="onWhereAmIBtnClicked"
         android:text="@string/whereAmI"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/exitBeaconite_Btn"

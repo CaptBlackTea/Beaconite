@@ -80,4 +80,8 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-core:2.8.3'
     compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.3'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.3'
+
+    // graph data structure
+    // note: new version require Java 8 so do not use!
+    compile 'org.jgrapht:jgrapht-core:0.9.0'
 }

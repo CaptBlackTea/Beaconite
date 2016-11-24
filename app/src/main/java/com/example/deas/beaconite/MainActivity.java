@@ -29,7 +29,7 @@ import java.io.IOException;
  * TODO: scanning mode on/off
  * TODO: start/stop/reset BeaconDataService
  * TODO: use/use not/restart MyBeaconSimulator
- * DONE: go to RangingActivity (= show table with live data)
+ * DONE: go to TableActivity (= show table with live data)
  * DONE: go to GraphActivity (= show collected data as graph)
  * TODO: go to GenerateCachesActivity (= show/record caches)
  * DONE: Exit BeaconiteApp and close all services and background scans
@@ -163,12 +163,12 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Start the RangingActivity.
+	 * Start the TableActivity.
 	 *
 	 * @param view
 	 */
-	public void onRangingBtnClicked(View view) {
-		Intent myIntent = new Intent(this, RangingActivity.class);
+	public void onTableBtnClicked(View view) {
+		Intent myIntent = new Intent(this, TableActivity.class);
 		this.startActivity(myIntent);
 	}
 

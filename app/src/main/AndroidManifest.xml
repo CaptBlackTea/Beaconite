@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RangingActivity"
+            android:name=".TableActivity"
             android:label="@string/title_activity_ranging"
             android:parentActivityName=".MainActivity">
             <meta-data
@@ -40,7 +40,7 @@
         <activity
             android:name=".GraphActivity"
             android:label="Graph"
-            android:parentActivityName=".RangingActivity">
+            android:parentActivityName=".TableActivity">
         </activity>
         <activity android:name=".GenerateCachesActivity">
         </activity>
