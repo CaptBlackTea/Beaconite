@@ -1,4 +1,4 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.activities;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -16,6 +16,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.deas.beaconite.BeaconDataService;
+import com.example.deas.beaconite.MyBeaconsSimulator;
+import com.example.deas.beaconite.R;
+
 import org.altbeacon.beacon.BeaconManager;
 
 import java.io.IOException;
@@ -30,7 +34,7 @@ import java.io.IOException;
  * TODO: start/stop/reset BeaconDataService
  * TODO: use/use not/restart MyBeaconSimulator
  * DONE: go to TableActivity (= show table with live data)
- * DONE: go to GraphActivity (= show collected data as graph)
+ * DONE: go to ChartActivity (= show collected data as graph)
  * TODO: go to GenerateCachesActivity (= show/record caches)
  * DONE: Exit BeaconiteApp and close all services and background scans
  *
@@ -272,12 +276,12 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	/**
-	 * Starts the GraphActivity.
+	 * Starts the ChartActivity.
 	 *
 	 * @param view
 	 */
 	public void onGraphBtnClicked(View view) {
-		Intent myIntent = new Intent(this, GraphActivity.class);
+		Intent myIntent = new Intent(this, ChartActivity.class);
 		this.startActivity(myIntent);
 	}
 

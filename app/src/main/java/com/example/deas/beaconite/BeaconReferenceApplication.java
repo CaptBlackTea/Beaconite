@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.deas.beaconite.activities.MainActivity;
+
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.Region;
 import org.altbeacon.beacon.powersave.BackgroundPowerSaver;

@@ -1,5 +1,7 @@
 package com.example.deas.beaconite.graphStuff;
 
+import com.example.deas.beaconite.Cache;
+
 /**
  * A vertex is a node in a graph. It stores which edges belong to it.
  * <p>
@@ -9,6 +11,9 @@ package com.example.deas.beaconite.graphStuff;
 public class Vertex {
 
 	private String name;
+
+	// TODO! implement!
+	private Cache cache;
 
 	public Vertex(String name) {
 		this.name = name;

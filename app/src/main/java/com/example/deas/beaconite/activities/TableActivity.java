@@ -1,9 +1,11 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.activities;
 
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import com.example.deas.beaconite.R;
 
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;

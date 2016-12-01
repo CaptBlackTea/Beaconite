@@ -1,4 +1,4 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.activities;
 
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
@@ -23,6 +23,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.example.deas.beaconite.AdapterCache;
+import com.example.deas.beaconite.BeaconDataService;
+import com.example.deas.beaconite.R;
 
 public class GenerateCachesActivity extends AppCompatActivity {
 
@@ -295,7 +299,7 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	}
 
 	public void onGraphBtnClicked(View view) {
-		Intent myIntent = new Intent(this, GraphActivity.class);
+		Intent myIntent = new Intent(this, ChartActivity.class);
 		this.startActivity(myIntent);
 	}
 }

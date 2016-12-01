@@ -394,7 +394,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * process as its clients, we don't need to deal with IPC.
 	 */
 	public class BeaconDataBinder extends Binder {
-		BeaconDataService getService() {
+		public BeaconDataService getService() {
 			// Return this instance of BeaconDataService so clients can call public methods
 			return BeaconDataService.this;
 		}

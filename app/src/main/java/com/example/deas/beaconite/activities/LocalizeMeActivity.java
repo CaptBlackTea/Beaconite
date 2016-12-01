@@ -1,4 +1,4 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.deas.beaconite.BeaconCacheMatcher;
+import com.example.deas.beaconite.BeaconDataService;
+import com.example.deas.beaconite.Cache;
+import com.example.deas.beaconite.R;
 
 import org.altbeacon.beacon.Beacon;
 

@@ -1,4 +1,4 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.activities;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,6 +12,11 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.example.deas.beaconite.BeaconDataService;
+import com.example.deas.beaconite.BeaconMap;
+import com.example.deas.beaconite.Cache;
+import com.example.deas.beaconite.R;
+import com.example.deas.beaconite.TimeInterval;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
@@ -39,9 +44,9 @@ import java.util.TreeMap;
  * default (this is the middle of possible rssi values: -25 to -100) The value is reachable and
  * changeable via a getter and setter.
  */
-public class GraphActivity extends AppCompatActivity {
+public class ChartActivity extends AppCompatActivity {
 
-	private static final String TAG = "GraphActivity";
+	private static final String TAG = "ChartActivity";
 	private static int[] COLORS = {Color.RED, Color.GREEN, Color.BLUE, Color.CYAN,
 			Color.MAGENTA, Color.YELLOW, Color.DKGRAY, Color.GRAY, Color.LTGRAY};
 	private Intent beaconDataServiceIntent = null;
