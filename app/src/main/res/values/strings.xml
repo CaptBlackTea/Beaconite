@@ -39,4 +39,5 @@
     <string name="scanningBeaconsForMatch">Started scanning Beacon signals and trying to find matching caches.</string>
     <string name="recordedCaches">Following caches were recorded:</string>
     <string name="cache_data_loaded">Caches were loaded from file</string>
+    <string name="beaconitGraphSwitch">insert/move||edit</string>
 </resources>

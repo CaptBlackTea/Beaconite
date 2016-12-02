@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Beaconite.iml" filepath="$PROJECT_DIR$/Beaconite.iml" />
-      <module fileurl="file://$PROJECT_DIR$/androGraph/androGraph.iml" filepath="$PROJECT_DIR$/androGraph/androGraph.iml" />
+      <module fileurl="file://$PROJECT_DIR$/andrograph/andrograph.iml" filepath="$PROJECT_DIR$/andrograph/andrograph.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
