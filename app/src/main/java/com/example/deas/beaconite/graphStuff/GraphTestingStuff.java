@@ -8,8 +8,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import static com.example.deas.beaconite.graphStuff.EdgeLabel.MUSTNOT;
-import static com.example.deas.beaconite.graphStuff.EdgeLabel.REQUIRED;
+import static com.example.deas.beaconite.graphStuff.EdgeAttribute.MUSTNOT;
+import static com.example.deas.beaconite.graphStuff.EdgeAttribute.REQUIRED;
 
 /**
  * Data structure representing an undirected graph. Such a graph has vertices (v) and edges (e).
@@ -29,18 +29,17 @@ public class GraphTestingStuff {
 		System.out.println("Ahoi");
 
 
-//		UndirectedGraph<Vertex, DefaultEdge> testGraph = new SimpleGraph<>(DefaultEdge.class);
+//		UndirectedGraph<BeaconiteVertex, DefaultEdge> testGraph = new SimpleGraph<>(DefaultEdge.class);
 
-		UndirectedGraph<Vertex, LabeledEdge> testGraph = new SimpleGraph<>(new
-				ClassBasedEdgeFactory<Vertex, LabeledEdge>(LabeledEdge.class));
-
+		UndirectedGraph<BeaconiteVertex, BeaconiteEdge> testGraph = new SimpleGraph<>(new
+				ClassBasedEdgeFactory<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class));
 
 
 		// make some nodes/vertices
-		Vertex v1 = new Vertex("v1");
-		Vertex v2 = new Vertex("v2");
-		Vertex v3 = new Vertex("v3");
-		Vertex v4 = new Vertex("v4");
+		BeaconiteVertex v1 = new BeaconiteVertex("v1");
+		BeaconiteVertex v2 = new BeaconiteVertex("v2");
+		BeaconiteVertex v3 = new BeaconiteVertex("v3");
+		BeaconiteVertex v4 = new BeaconiteVertex("v4");
 
 		// put vertices in the graph
 		testGraph.addVertex(v1);
@@ -50,29 +49,29 @@ public class GraphTestingStuff {
 
 
 		// make edges between vertices
-		testGraph.addEdge(v1, v2, new LabeledEdge(v1, v2));
-		testGraph.addEdge(v1, v4, new LabeledEdge(v1, v4, MUSTNOT));
-		testGraph.addEdge(v2, v4, new LabeledEdge(v2, v4, REQUIRED));
-		testGraph.addEdge(v2, v3, new LabeledEdge(v2, v3));
+		testGraph.addEdge(v1, v2, new BeaconiteEdge(v1, v2));
+		testGraph.addEdge(v1, v4, new BeaconiteEdge(v1, v4, MUSTNOT));
+		testGraph.addEdge(v2, v4, new BeaconiteEdge(v2, v4, REQUIRED));
+		testGraph.addEdge(v2, v3, new BeaconiteEdge(v2, v3));
 
 		System.out.println(testGraph);
-		plotTestGraph(testGraph);
+		graphToDotFile(testGraph);
 
 	}
 
 
-	public static void plotTestGraph(UndirectedGraph<Vertex, LabeledEdge> graph) {
+	public static void graphToDotFile(UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("graph {");
 
-		for (LabeledEdge de : graph.edgeSet()) {
+		for (BeaconiteEdge de : graph.edgeSet()) {
 			sb.append(graph.getEdgeSource(de).getName());
 			sb.append(" -- ");
 			sb.append(graph.getEdgeTarget(de).getName());
 
 			// for labeling the edges
-			sb.append(" [label=" + de.getLabel());
-			sb.append(" color=" + chooseEdgeColor(de.getLabel()));
+			sb.append(" [label=" + de.getAttribute());
+			sb.append(" color=" + chooseEdgeColor(de.getAttribute()));
 			sb.append("];");
 
 			sb.append("\n");
@@ -94,10 +93,10 @@ public class GraphTestingStuff {
 
 		String colorString;
 
-		if (label.equals(EdgeLabel.REQUIRED)) {
+		if (label.equals(EdgeAttribute.REQUIRED)) {
 			colorString = "green";
 
-		} else if (label.equals(EdgeLabel.MUSTNOT)) {
+		} else if (label.equals(EdgeAttribute.MUSTNOT)) {
 			colorString = "red";
 
 		} else {
