@@ -1,1 +1,1 @@
-include ':app', ':andrograph'
+include ':app', ':andrograph-release'

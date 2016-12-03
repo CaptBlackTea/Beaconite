@@ -335,5 +335,10 @@ public class MainActivity extends AppCompatActivity {
 			e.printStackTrace();
 		}
 	}
+
+	public void onStartEditGraphBtnClicked(View view) {
+		Intent myIntent = new Intent(this, GraphEditActivity.class);
+		this.startActivity(myIntent);
+	}
 }
 

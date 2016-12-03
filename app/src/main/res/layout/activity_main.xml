@@ -69,7 +69,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:onClick="onGraphBtnClicked"
-        android:text="@string/startGraphActivity"/>
+        android:text="@string/startChartActivity"/>
 
     </LinearLayout>
 
@@ -103,6 +103,14 @@
         android:layout_gravity="center"
         android:onClick="onWhereAmIBtnClicked"
         android:text="@string/whereAmI"/>
+
+    <Button
+        android:id="@+id/startEditGraphActivity_Btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:onClick="onStartEditGraphBtnClicked"
+        android:text="@string/editGraphActivityBtn"/>
 
     <LinearLayout
         android:layout_width="match_parent"

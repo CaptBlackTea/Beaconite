@@ -8,9 +8,31 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Switch;
+import android.widget.TextView;
 
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
+
+import org.agp8x.android.lib.andrograph.model.Coordinate;
+import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
+import org.agp8x.android.lib.andrograph.model.GraphViewController;
+import org.agp8x.android.lib.andrograph.model.PermissionPolicy;
+import org.agp8x.android.lib.andrograph.model.PositionProvider;
+import org.agp8x.android.lib.andrograph.model.VertexPaintProvider;
+import org.agp8x.android.lib.andrograph.model.defaults.DefaultEdgePaintProvider;
+import org.agp8x.android.lib.andrograph.model.defaults.DefaultGraphViewController;
+import org.agp8x.android.lib.andrograph.model.defaults.DefaultPermissionPolicy;
+import org.agp8x.android.lib.andrograph.model.defaults.DefaultVertexPaintProvider;
+import org.agp8x.android.lib.andrograph.model.defaults.MapPositionProvider;
+import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
+import org.agp8x.android.lib.andrograph.test.TestData;
+import org.agp8x.android.lib.andrograph.view.GraphView;
+import org.jgrapht.VertexFactory;
+import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.graph.SimpleGraph;
 
 public class GraphEditActivity extends AppCompatActivity {
 
@@ -20,6 +42,11 @@ public class GraphEditActivity extends AppCompatActivity {
 	private BeaconDataService mService;
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
+
+	// the graph
+	private SimpleGraph<String, DefaultEdge> graph;
+	private TextView textView;
+	private GraphView<String, DefaultEdge> graphView;
 
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
@@ -39,6 +66,7 @@ public class GraphEditActivity extends AppCompatActivity {
 					service;
 			mService = serviceBinder.getService();
 			mIsBound = true;
+
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
@@ -60,6 +88,45 @@ public class GraphEditActivity extends AppCompatActivity {
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
 		Log.d(TAG, "#### CREATE");
+
+		textView = (TextView) findViewById(R.id.textview);
+
+		graph = TestData.getStringDefaultEdgeSimpleGraph();
+
+		textView.setText(TestData.graphToDot(graph));
+
+		graphView = (GraphView<String, DefaultEdge>) findViewById(R.id.graphview);
+
+		PositionProvider<String> positionProvider = new MapPositionProvider<>(TestData.getStringDefaultEdgeSimpleGraphPositions(), new Coordinate(0.5, 0.8));
+		EdgePaintProvider<DefaultEdge> epp = new DefaultEdgePaintProvider<>();
+		VertexPaintProvider<String> vpp = new DefaultVertexPaintProvider<>();
+
+		VertexFactory<String> vf = new StringVertexFactory<>();
+
+		PermissionPolicy<String, DefaultEdge> pp = new DefaultPermissionPolicy<>();
+		//pp=new RestrictedPermissionPolicy<>();
+
+		GraphViewController<String, DefaultEdge> gvc = new DefaultGraphViewController<>(graph, positionProvider, epp, vpp, vf, pp);
+
+		graphView.setController(gvc);
+
+		final Switch creationSwitch = (Switch) findViewById(R.id.graphEditSwitch);
+		creationSwitch.setChecked(true);
+		creationSwitch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				graphView.setInsertionMode(creationSwitch.isChecked());
+				creationSwitch.setChecked(graphView.isInsertionMode());
+			}
+		});
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		if (graph != null && textView != null) {
+			textView.setText(TestData.graphToDot(graph));
+		}
+		return super.onTouchEvent(event);
 	}
 
 	@Override

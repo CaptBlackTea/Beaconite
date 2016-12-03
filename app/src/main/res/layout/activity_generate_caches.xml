@@ -71,7 +71,7 @@
             android:layout_below="@id/recordCacheBtn"
             android:layout_gravity="center"
             android:onClick="onGraphBtnClicked"
-            android:text="@string/startGraphActivity"/>
+            android:text="@string/startChartActivity"/>
 
 
     </RelativeLayout>

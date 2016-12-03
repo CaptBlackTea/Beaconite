@@ -21,7 +21,7 @@
     <string name="startStopRecordCacheBtn">Record cache</string>
     <string name="stopCacheRecording">Stop</string>
     <string name="cacheRecordText">Create a new cache or pick a cache from list</string>
-    <string name="startGraphActivity">To the Graph!</string>
+    <string name="startChartActivity">To the Chart!</string>
     <string name="newCache">New Cache</string>
     <string name="tableBtnText">To the table!</string>
     <string name="exitBeaconite">Exit App</string>
@@ -40,4 +40,5 @@
     <string name="recordedCaches">Following caches were recorded:</string>
     <string name="cache_data_loaded">Caches were loaded from file</string>
     <string name="beaconitGraphSwitch">insert/move||edit</string>
+    <string name="editGraphActivityBtn">View and Edit Graph</string>
 </resources>
