@@ -10,12 +10,19 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
+import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+import com.example.deas.beaconite.graphStuff.GraphViewPositionProvider;
+
+import org.agp8x.android.lib.andrograph.model.PositionProvider;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.jgrapht.UndirectedGraph;
+import org.jgrapht.graph.SimpleGraph;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,8 +63,10 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private File fileForCaches;
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
+	private UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
 
 	private BeaconPositionCallback beaconPositionCallback;
+
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
@@ -84,6 +93,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		}
 	};
+	private PositionProvider<BeaconiteVertex> positionProvider;
 
 
 	/**
@@ -123,6 +133,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	public void resetCacheData() {
 		allMyCaches.clear();
+		graph = new SimpleGraph<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class);
 	}
 
 	@Nullable
@@ -140,6 +151,11 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		allMyBeacons = new BeaconMap();
 
 		allMyCaches = new ArrayList<>();
+
+		graph = new SimpleGraph<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class);
+
+		// TODO: persistent storage -> write to file!
+		positionProvider = new GraphViewPositionProvider<>();
 
 		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
@@ -243,8 +259,26 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	public Cache addCache(String cachename) {
 		Cache newCache = new Cache(cachename);
-		allMyCaches.add(newCache);
+
+		if (!getAllMyCaches().contains(newCache)) {
+			allMyCaches.add(newCache);
+
+			// add new Cache to graph -> wrap in vertex
+			addToGraph(newCache);
+		} else {
+			newCache = null;
+		}
+
 		return newCache;
+	}
+
+	// TODO!
+	private void addToGraph(Cache cache) {
+		// wrap in vertex
+		BeaconiteVertex newVertex = new BeaconiteVertex(cache);
+
+		// add to graph
+		this.graph.addVertex(newVertex);
 	}
 
 	public boolean deleteCache(String cacheName) {
@@ -322,6 +356,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
+		constructGraph();
+
 		// TODO: check if the loading was successful; e.g. introduce a variable
 		// Tell the user that caches were loaded
 		int numberOfCurrentCaches = allMyCaches.size();
@@ -329,6 +365,13 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 				" " +
 				numberOfCurrentCaches + " caches.", Toast
 				.LENGTH_SHORT).show();
+	}
+
+	private void constructGraph() {
+
+		for (Cache c : allMyCaches) {
+			addToGraph(c);
+		}
 	}
 
 	/**
@@ -376,6 +419,14 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 */
 	public void setBeaconPositionCallback(BeaconPositionCallback callback) {
 		this.beaconPositionCallback = callback;
+	}
+
+	public UndirectedGraph<BeaconiteVertex, BeaconiteEdge> getGraph() {
+		return this.graph;
+	}
+
+	public PositionProvider<BeaconiteVertex> getPositionProvider() {
+		return this.positionProvider;
 	}
 
 	/**

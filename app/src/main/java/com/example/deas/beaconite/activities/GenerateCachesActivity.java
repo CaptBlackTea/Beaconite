@@ -274,14 +274,22 @@ public class GenerateCachesActivity extends AppCompatActivity {
 
 	public void createNewCacheBtn(View view) {
 		String newCacheName = "Cache" + cacheCounter;
-		if (!mService.getAllMyCaches().contains(newCacheName)) {
-			mService.addCache(newCacheName);
+
+		while (mService.addCache(newCacheName) == null) {
+			cacheCounter++;
+			newCacheName = "Cache" + cacheCounter;
 		}
+//		if (!mService.getAllMyCaches().contains(newCacheName)) {
+//			mService.addCache(newCacheName);
+//
+//			Log.d(TAG, "~~~~ new cache name: " + newCacheName);
+//			Log.d(TAG, "~~~~ contains: " + mService.getAllMyCaches().contains(newCacheName));
+//			Log.d(TAG, "~~~~ allMyCaches: " + mService.getAllMyCaches());
+//		}
 
 		TextView recordThisCache = (TextView) this.findViewById(R.id.cacheInQuestion);
 		recordThisCache.setText(newCacheName);
 
-		cacheCounter++;
 		adbCache.notifyDataSetChanged();
 	}
 

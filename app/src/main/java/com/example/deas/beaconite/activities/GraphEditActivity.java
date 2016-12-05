@@ -15,20 +15,18 @@ import android.widget.TextView;
 
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
+import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
+import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
+import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 
-import org.agp8x.android.lib.andrograph.model.Coordinate;
 import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
 import org.agp8x.android.lib.andrograph.model.GraphViewController;
 import org.agp8x.android.lib.andrograph.model.PermissionPolicy;
-import org.agp8x.android.lib.andrograph.model.PositionProvider;
 import org.agp8x.android.lib.andrograph.model.VertexPaintProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.DefaultEdgePaintProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.DefaultGraphViewController;
-import org.agp8x.android.lib.andrograph.model.defaults.DefaultPermissionPolicy;
 import org.agp8x.android.lib.andrograph.model.defaults.DefaultVertexPaintProvider;
-import org.agp8x.android.lib.andrograph.model.defaults.MapPositionProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
-import org.agp8x.android.lib.andrograph.test.TestData;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
 import org.jgrapht.graph.DefaultEdge;
@@ -46,7 +44,7 @@ public class GraphEditActivity extends AppCompatActivity {
 	// the graph
 	private SimpleGraph<String, DefaultEdge> graph;
 	private TextView textView;
-	private GraphView<String, DefaultEdge> graphView;
+	private GraphView<BeaconiteVertex, BeaconiteEdge> graphView;
 
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
@@ -67,6 +65,9 @@ public class GraphEditActivity extends AppCompatActivity {
 			mService = serviceBinder.getService();
 			mIsBound = true;
 
+			// TODO
+			// setup or update graph view
+			setupGraphView();
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
@@ -79,11 +80,31 @@ public class GraphEditActivity extends AppCompatActivity {
 		}
 	};
 
+	private void setupGraphView() {
+
+//		PositionProvider<BeaconiteVertex> positionProvider =  new GraphViewPositionProvider<>();
+		EdgePaintProvider<BeaconiteEdge> epp = new DefaultEdgePaintProvider<>();
+		VertexPaintProvider<BeaconiteVertex> vpp = new DefaultVertexPaintProvider<>();
+
+		PermissionPolicy<BeaconiteVertex, BeaconiteEdge> pp = new BeaconitePermissionPolicy();
+
+		// TODO: custom permission policy or other VertexFactory
+		VertexFactory<BeaconiteVertex> vertexFactory = new StringVertexFactory<>();
+
+		GraphViewController<BeaconiteVertex, BeaconiteEdge> graphViewController = new
+				DefaultGraphViewController<>
+				(mService.getGraph(), mService.getPositionProvider(), epp, vpp, vertexFactory, pp);
+
+		graphView.setController(graphViewController);
+		graphView.invalidate();
+
+		Log.d(TAG, "#### Graph: " + mService.getGraph());
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.graph_edit_activty);
-
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
@@ -91,24 +112,24 @@ public class GraphEditActivity extends AppCompatActivity {
 
 		textView = (TextView) findViewById(R.id.textview);
 
-		graph = TestData.getStringDefaultEdgeSimpleGraph();
+//		graph = TestData.getStringDefaultEdgeSimpleGraph();
 
-		textView.setText(TestData.graphToDot(graph));
+//		textView.setText(TestData.graphToDot(graph));
 
-		graphView = (GraphView<String, DefaultEdge>) findViewById(R.id.graphview);
+		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphview);
 
-		PositionProvider<String> positionProvider = new MapPositionProvider<>(TestData.getStringDefaultEdgeSimpleGraphPositions(), new Coordinate(0.5, 0.8));
-		EdgePaintProvider<DefaultEdge> epp = new DefaultEdgePaintProvider<>();
-		VertexPaintProvider<String> vpp = new DefaultVertexPaintProvider<>();
-
-		VertexFactory<String> vf = new StringVertexFactory<>();
-
-		PermissionPolicy<String, DefaultEdge> pp = new DefaultPermissionPolicy<>();
-		//pp=new RestrictedPermissionPolicy<>();
-
-		GraphViewController<String, DefaultEdge> gvc = new DefaultGraphViewController<>(graph, positionProvider, epp, vpp, vf, pp);
-
-		graphView.setController(gvc);
+//		PositionProvider<String> positionProvider = new MapPositionProvider<>(TestData.getStringDefaultEdgeSimpleGraphPositions(), new Coordinate(0.5, 0.8));
+//		EdgePaintProvider<DefaultEdge> epp = new DefaultEdgePaintProvider<>();
+//		VertexPaintProvider<String> vpp = new DefaultVertexPaintProvider<>();
+//
+//		VertexFactory<String> vf = new StringVertexFactory<>();
+//
+//		PermissionPolicy<String, DefaultEdge> pp = new DefaultPermissionPolicy<>();
+//		//pp=new RestrictedPermissionPolicy<>();
+//
+//		GraphViewController<String, DefaultEdge> gvc = new DefaultGraphViewController<>(graph, positionProvider, epp, vpp, vf, pp);
+//
+//		graphView.setController(gvc);
 
 		final Switch creationSwitch = (Switch) findViewById(R.id.graphEditSwitch);
 		creationSwitch.setChecked(true);
@@ -123,8 +144,8 @@ public class GraphEditActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (graph != null && textView != null) {
-			textView.setText(TestData.graphToDot(graph));
+		if (mIsBound && textView != null) {
+//			textView.setText(TestData.graphToDot(mService.getGraph()));
 		}
 		return super.onTouchEvent(event);
 	}

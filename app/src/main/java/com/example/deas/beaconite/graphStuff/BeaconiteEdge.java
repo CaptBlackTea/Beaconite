@@ -9,13 +9,17 @@ public class BeaconiteEdge<V> extends DefaultEdge {
 
 	private V vertexSource;
 	private V vertexTarget;
-	// TODO: change type to more specific EdgeAttribute?
-	private Enum attribute;
+	//
+	private EdgeAttribute attribute;
 
 	public BeaconiteEdge(V vertexSource, V vertexTarget, EdgeAttribute attribute) {
 		this.vertexSource = vertexSource;
 		this.vertexTarget = vertexTarget;
 		this.attribute = attribute;
+	}
+
+	public BeaconiteEdge() {
+		this.attribute = EdgeAttribute.NONE;
 	}
 
 	public BeaconiteEdge(V vertexSource, V vertexTarget) {
@@ -32,7 +36,7 @@ public class BeaconiteEdge<V> extends DefaultEdge {
 		return vertexTarget;
 	}
 
-	public Enum getAttribute() {
+	public EdgeAttribute getAttribute() {
 		return attribute;
 	}
 

@@ -53,11 +53,12 @@ public class Cache {
 
 		Cache cache = (Cache) o;
 
-		if (!name.equals(cache.name)) return false;
-		if (fingerprint != null ? !fingerprint.equals(cache.fingerprint) : cache.fingerprint != null)
-			return false;
-		return timeIntervals != null ? timeIntervals.equals(cache.timeIntervals) : cache.timeIntervals == null;
+//		if (!name.equals(cache.name)) return false;
+//		if (fingerprint != null ? !fingerprint.equals(cache.fingerprint) : cache.fingerprint != null)
+//			return false;
+//		return timeIntervals != null ? timeIntervals.equals(cache.timeIntervals) : cache.timeIntervals == null;
 
+		return this.name.equals(cache.name);
 	}
 
 	@Override

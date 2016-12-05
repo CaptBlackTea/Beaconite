@@ -17,10 +17,8 @@ public class BeaconiteVertex implements VertexUpdater {
 	private String name;
 
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
-	// TODO: change type to more specific VertexAttribute?
-	private Enum attribute;
+	private VertexAttribute attribute;
 
-	// TODO! implement!
 	// the cache connected to this vertex
 	private Cache cache;
 
@@ -33,7 +31,12 @@ public class BeaconiteVertex implements VertexUpdater {
 	public BeaconiteVertex() {
 	}
 
-	public Enum getAttribute() {
+	public BeaconiteVertex(Cache cache) {
+		this(cache.getCacheName());
+		this.cache = cache;
+	}
+
+	public VertexAttribute getAttribute() {
 		return attribute;
 	}
 
