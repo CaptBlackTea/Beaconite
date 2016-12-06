@@ -61,6 +61,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private FileSupervisor fileSupervisor;
 	// the file to where the Caches are written to and read from on the Android Device
 	private File fileForCaches;
+	private File fileForDOTGraph;
+
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
 	private UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
@@ -94,6 +96,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 	};
 	private PositionProvider<BeaconiteVertex> positionProvider;
+
 
 
 	/**
@@ -164,10 +167,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		// TODO: make read/load file changeable
 		// setup file for writing and reading the Cache data to/from
-		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"));
+		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"),
+				setUpFileForDOTGraph("graph.dot"));
 
 		Log.d(TAG, " ON CREATE");
 	}
+
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -340,11 +345,26 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return null;
 	}
 
-	private void writeAllCachesInFile() throws IOException {
+	public void writeAllCachesInFile() throws IOException {
 
 		// Create the file.
 
 		fileSupervisor.writeAllCachesInFile(allMyCaches);
+	}
+
+	public void writeDOTGraphFile() {
+		try {
+			fileSupervisor.writeGraphToFile(graph);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void writeAllDataInFile() throws IOException {
+
+		// Create the file.
+//		fileSupervisor.writeAllCachesInFile(allMyCaches);
+		fileSupervisor.writeAllDataInFile(allMyCaches, graph);
 	}
 
 
@@ -401,6 +421,31 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		Log.d(TAG, "FileForCaches absolute Path: " + fileForCaches.getAbsolutePath());
 
 		return fileForCaches;
+	}
+
+	private File setUpFileForDOTGraph(String graphFilename) {
+
+		// check if writable on external, if not write to internal storage!
+		if (isExternalStorageWritable()) {
+
+			// this path is used for reading and writing
+			String path =
+					this.getExternalFilesDir(null) + File.separator +
+							"Beaconite-Data";
+
+			// Create the folder.
+			File folder = new File(path);
+			folder.mkdirs();
+
+			fileForDOTGraph = new File(folder, graphFilename);
+
+		} else {
+			fileForDOTGraph = new File(this.getFilesDir(), graphFilename);
+		}
+
+		Log.d(TAG, "FileForDOTGraph absolute Path: " + fileForDOTGraph.getAbsolutePath());
+
+		return fileForDOTGraph;
 	}
 
 	/* Checks if external storage is available for read and write */

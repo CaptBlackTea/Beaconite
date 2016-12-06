@@ -104,7 +104,7 @@ public class FileSupervisorTest {
 	@Test
 	public void createFileSupervisor() {
 		FileSupervisor fileSup = new FileSupervisor(emptyFile);
-		Assert.assertNotNull(fileSup.getFile());
+		Assert.assertNotNull(fileSup.getCacheFile());
 		Assert.assertNotNull(fileSup.getJsonMapper());
 	}
 

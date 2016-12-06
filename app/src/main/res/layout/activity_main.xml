@@ -80,11 +80,16 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/cachesActivity_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:onClick="onCacheActivityBtnClicked"
         android:text="@string/startCacheActivity"/>
 
@@ -93,14 +98,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:onClick="onLoadCachesFromFileBtnClicked"
         android:text="@string/loadCaches"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/whereAmI_Btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:onClick="onWhereAmIBtnClicked"
         android:text="@string/whereAmI"/>
 
@@ -109,8 +122,43 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:onClick="onStartEditGraphBtnClicked"
         android:text="@string/editGraphActivityBtn"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/saveCaches_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="saveCachesBtn"
+            android:text="@string/saveCachesBtn"/>
+
+        <Button
+            android:id="@+id/saveGraph_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="saveGraphBtn"
+            android:text="@string/saveGraphBtn"/>
+
+        <Button
+            android:id="@+id/saveAllData_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="saveAllDataBtn"
+            android:text="@string/saveAllDataBtn"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

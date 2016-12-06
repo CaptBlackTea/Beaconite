@@ -41,4 +41,7 @@
     <string name="cache_data_loaded">Caches were loaded from file</string>
     <string name="beaconitGraphSwitch">insert/move||edit</string>
     <string name="editGraphActivityBtn">View and Edit Graph</string>
+    <string name="saveCachesBtn">Save Caches</string>
+    <string name="saveGraphBtn">Save Graph</string>
+    <string name="saveAllDataBtn">Save all</string>
 </resources>

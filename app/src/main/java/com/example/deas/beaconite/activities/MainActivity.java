@@ -340,5 +340,31 @@ public class MainActivity extends AppCompatActivity {
 		Intent myIntent = new Intent(this, GraphEditActivity.class);
 		this.startActivity(myIntent);
 	}
+
+	public void saveCachesBtn(View view) {
+		if (mService != null) {
+			try {
+				mService.writeAllCachesInFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public void saveGraphBtn(View view) {
+		if (mService != null) {
+			mService.writeDOTGraphFile();
+		}
+	}
+
+	public void saveAllDataBtn(View view) {
+		if (mService != null) {
+			try {
+				mService.writeAllDataInFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
 
