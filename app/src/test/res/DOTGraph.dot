@@ -1,0 +1,14 @@
+graph G {
+  v1 [ label="v1
+NONE" attribute="NONE" ];
+  v2 [ label="v2
+NONE" attribute="NONE" ];
+  v3 [ label="v3
+NONE" attribute="NONE" ];
+  v4 [ label="v4
+NONE" attribute="NONE" ];
+  v1 -- v2 [ label="NONE" attribute="NONE" color="black" ];
+  v1 -- v4 [ label="MUSTNOT" attribute="MUSTNOT" color="red" ];
+  v2 -- v4 [ label="REQUIRED" attribute="REQUIRED" color="green" ];
+  v2 -- v3 [ label="NONE" attribute="NONE" color="black" ];
+}

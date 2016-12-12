@@ -89,7 +89,7 @@ public class GraphTestingStuff {
 		}
 	}
 
-	private static String chooseEdgeColor(Enum label) {
+	public static String chooseEdgeColor(Enum label) {
 
 		String colorString;
 

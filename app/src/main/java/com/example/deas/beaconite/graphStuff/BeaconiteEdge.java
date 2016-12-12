@@ -44,8 +44,13 @@ public class BeaconiteEdge<V> extends DefaultEdge {
 		this.attribute = attribute;
 	}
 
+	public String getName() {
+		return vertexSource + "-" + vertexTarget + ": " + attribute.toString();
+	}
+
 	public String toString() {
 		return attribute.toString();
 	}
+
 
 }

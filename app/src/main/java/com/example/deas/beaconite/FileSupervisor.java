@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -77,10 +78,11 @@ public class FileSupervisor {
 	// FIXME: functioning implementation needed!
 	public void writeGraphToFile(UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) throws
 			IOException {
-		try (FileOutputStream fOut = new FileOutputStream(graphFile)) {
-
+		try {
 			graphFile.createNewFile();
 			DOTExporter dotExporter = new DOTExporter();
+			FileWriter fileWriter = new FileWriter(graphFile);
+			dotExporter.export(fileWriter, graph);
 
 
 		} catch (FileNotFoundException e) {
