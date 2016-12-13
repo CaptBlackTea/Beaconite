@@ -1,14 +1,10 @@
 graph G {
-  v1 [ label="v1
-NONE" attribute="NONE" ];
-  v2 [ label="v2
-NONE" attribute="NONE" ];
-  v3 [ label="v3
-NONE" attribute="NONE" ];
-  v4 [ label="v4
-NONE" attribute="NONE" ];
-  v1 -- v2 [ label="NONE" attribute="NONE" color="black" ];
-  v1 -- v4 [ label="MUSTNOT" attribute="MUSTNOT" color="red" ];
-  v2 -- v4 [ label="REQUIRED" attribute="REQUIRED" color="green" ];
-  v2 -- v3 [ label="NONE" attribute="NONE" color="black" ];
+  v1724424750874401 [ label="v1" id="v1724424750874401" attribute="NONE" ];
+  v2724424750950797 [ label="v2" id="v2724424750950797" attribute="NONE" ];
+  v3724424750972416 [ label="v3" id="v3724424750972416" attribute="NONE" ];
+  v4724424750991432 [ label="v4" id="v4724424750991432" attribute="NONE" ];
+  v1724424750874401 -- v2724424750950797 [ label="NONE" attribute="NONE" color="black" ];
+  v1724424750874401 -- v4724424750991432 [ label="MUSTNOT" attribute="MUSTNOT" color="red" ];
+  v2724424750950797 -- v4724424750991432 [ label="REQUIRED" attribute="REQUIRED" color="green" ];
+  v2724424750950797 -- v3724424750972416 [ label="NONE" attribute="NONE" color="black" ];
 }

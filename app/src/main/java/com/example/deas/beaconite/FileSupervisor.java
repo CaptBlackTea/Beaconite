@@ -8,6 +8,7 @@ import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.ext.DOTExporter;
 
@@ -80,6 +81,7 @@ public class FileSupervisor {
 			IOException {
 		try {
 			graphFile.createNewFile();
+
 			DOTExporter dotExporter = new DOTExporter();
 			FileWriter fileWriter = new FileWriter(graphFile);
 			dotExporter.export(fileWriter, graph);
@@ -91,7 +93,7 @@ public class FileSupervisor {
 	}
 
 	public List<Cache> loadCachesFromFile() throws IOException {
-		// TODO: implemnt this some day...
+		// TODO: optimize this?
 
 		// read Cache Data from a File with inputstream and mapper
 		try (FileInputStream fIn = new FileInputStream(cacheFile)) {
@@ -108,6 +110,11 @@ public class FileSupervisor {
 		}
 
 
+	}
+
+	//TODO: implement
+	public Graph<BeaconiteVertex, BeaconiteEdge> loadGraphFromFile() {
+		return null;
 	}
 
 	public File getCacheFile() {

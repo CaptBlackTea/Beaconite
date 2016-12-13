@@ -2,8 +2,6 @@ package com.example.deas.beaconite.graphStuff;
 
 import com.example.deas.beaconite.Cache;
 
-import org.jgrapht.ext.VertexUpdater;
-
 import java.util.Map;
 
 /**
@@ -12,18 +10,20 @@ import java.util.Map;
  * Created by deas on 23/11/16.
  */
 
-public class BeaconiteVertex implements VertexUpdater {
+public class BeaconiteVertex {
 
 	private String name;
-
+	private String id;
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
-
 	// the cache connected to this vertex
 	private Cache cache;
 
 	public BeaconiteVertex(String name) {
 		this.name = name;
+
+		// FIXME: maybe generate id in another way somewhere else -> just for dot import testing!
+		this.id = name + System.nanoTime();
 		this.attribute = VertexAttribute.NONE;
 	}
 
@@ -34,6 +34,17 @@ public class BeaconiteVertex implements VertexUpdater {
 	public BeaconiteVertex(Cache cache) {
 		this(cache.getCacheName());
 		this.cache = cache;
+	}
+
+	// TODO: refactor the constructors so that there are less redundancies!
+	public BeaconiteVertex(String name, String id) {
+		this.name = name;
+		this.id = id;
+		this.attribute = VertexAttribute.NONE;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public VertexAttribute getAttribute() {
@@ -62,7 +73,11 @@ public class BeaconiteVertex implements VertexUpdater {
 	 * @param cache
 	 */
 	public void setCache(Cache cache) {
+		// FIXME: refactor to "connectToCache"
+		// implement: addCache and cache.setVertex
+		// make double reference when method is called so that we always have a connection!
 		this.cache = cache;
+
 	}
 
 	public String getName() {
@@ -78,10 +93,13 @@ public class BeaconiteVertex implements VertexUpdater {
 	public String toString() {
 		return "BeaconiteVertex{" +
 				"name='" + name + '\'' +
+				"id='" + id + '\'' +
+				"attribute='" + attribute + '\'' +
 				'}';
 	}
 
 
+	// FIXME: maybe equals should work with the vertex id instead of or in combination with the name
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -98,9 +116,14 @@ public class BeaconiteVertex implements VertexUpdater {
 		return name != null ? name.hashCode() : 0;
 	}
 
-	@Override
-	public void updateVertex(Object vertex, Map attributes) {
+	public void updateVertex(Map<String, String> attributes) {
 		// TODO: do something useful here later, when the vertex attributes get updated
 		// e.g. when "treasure", "danger" or "protection" is assigned to a vertex
+
+		if (attributes.containsKey("attribute")) {
+			VertexAttribute attr = VertexAttribute.valueOf(attributes.get("attribute"));
+			setAttribute(attr);
+		}
+
 	}
 }

@@ -2,6 +2,8 @@ package com.example.deas.beaconite.graphStuff;
 
 import org.jgrapht.graph.DefaultEdge;
 
+import java.util.Map;
+
 /**
  * Created by deas on 25/11/16.
  */
@@ -53,4 +55,10 @@ public class BeaconiteEdge<V> extends DefaultEdge {
 	}
 
 
+	public void updateEdgeAttributes(Map<String, String> attributes) {
+		if (attributes.containsKey("attribute")) {
+			EdgeAttribute attr = EdgeAttribute.valueOf(attributes.get("attribute"));
+			setAttribute(attr);
+		}
+	}
 }

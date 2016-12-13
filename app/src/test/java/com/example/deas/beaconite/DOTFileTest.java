@@ -10,8 +10,12 @@ import org.jgrapht.Graph;
 import org.jgrapht.UndirectedGraph;
 import org.jgrapht.ext.ComponentAttributeProvider;
 import org.jgrapht.ext.DOTExporter;
+import org.jgrapht.ext.DOTImporter;
+import org.jgrapht.ext.EdgeProvider;
+import org.jgrapht.ext.ImportException;
 import org.jgrapht.ext.StringEdgeNameProvider;
 import org.jgrapht.ext.VertexNameProvider;
+import org.jgrapht.ext.VertexProvider;
 import org.jgrapht.graph.ClassBasedEdgeFactory;
 import org.jgrapht.graph.SimpleGraph;
 import org.junit.After;
@@ -22,9 +26,14 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -137,7 +146,7 @@ public class DOTFileTest {
 		VertexNameProvider<BeaconiteVertex> vertexIDProvider = new VertexNameProvider<BeaconiteVertex>() {
 			@Override
 			public String getVertexName(BeaconiteVertex vertex) {
-				return vertex.getName();
+				return vertex.getId(); // TODO: good place?
 			}
 		};
 
@@ -147,11 +156,12 @@ public class DOTFileTest {
 
 		// name of the vertex in the graph picture (the thing in the circle)
 		// -> [label] in the dot file
+		// !!! -> when reading the file [label] is provided as identifier!
 		VertexNameProvider<BeaconiteVertex> vertexLabelProvider = new
 				VertexNameProvider<BeaconiteVertex>() {
 					@Override
 					public String getVertexName(BeaconiteVertex vertex) {
-						return vertex.getName() + "\n" + vertex.getAttribute();
+						return vertex.getName();
 					}
 				};
 
@@ -172,6 +182,7 @@ public class DOTFileTest {
 					@Override
 					public Map<String, String> getComponentAttributes(BeaconiteVertex vertex) {
 						Map<String, String> map = new LinkedHashMap<String, String>();
+						map.put("id", vertex.getId());
 						map.put("attribute", vertex.getAttribute().toString());
 						return map;
 					}
@@ -209,5 +220,84 @@ public class DOTFileTest {
 		return GraphTestingStuff.chooseEdgeColor(edge.getAttribute());
 	}
 
+	@Test
+	public void DOTImportSettings() throws FileNotFoundException, ImportException {
+		SimpleGraph<BeaconiteVertex, BeaconiteEdge> importGraph = new SimpleGraph<>(new
+				ClassBasedEdgeFactory<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class));
 
+		VertexProvider<BeaconiteVertex> vertexProvider = new VertexProvider<BeaconiteVertex>() {
+			@Override
+			public BeaconiteVertex buildVertex(String label, Map<String, String> attributes) {
+
+				BeaconiteVertex vertex;
+				System.out.println("Vertex Provider: Label and Id - " + label + " | " +
+						attributes.get("id"));
+
+				if (attributes.containsKey("id")) {
+					vertex = new BeaconiteVertex(label, attributes.get("id"));
+				} else {
+					vertex = new BeaconiteVertex(label);
+				}
+				for (Map.Entry<String, String> entry : attributes.entrySet()) {
+					System.out.println("Vertex Provider: Entryset - " + entry);
+				}
+
+				vertex.updateVertex(attributes);
+				System.out.println(vertex);
+
+				return vertex;
+			}
+		};
+
+		EdgeProvider<BeaconiteVertex, BeaconiteEdge> edgeProvider = new EdgeProvider<BeaconiteVertex, BeaconiteEdge>() {
+			@Override
+			public BeaconiteEdge buildEdge(BeaconiteVertex from, BeaconiteVertex to, String label, Map<String, String> attributes) {
+
+				BeaconiteEdge edge = new BeaconiteEdge<BeaconiteVertex>(from, to);
+
+				System.out.println("Edge Provider: Label - " + label + "; From: " + from + "; To:" +
+						" " + to);
+
+				for (Map.Entry<String, String> entry : attributes.entrySet()) {
+					System.out.println("Edge Provider: Entryset - " + entry);
+				}
+
+				edge.updateEdgeAttributes(attributes);
+
+				return edge;
+			}
+		};
+
+
+		DOTImporter<BeaconiteVertex, BeaconiteEdge> importer = new DOTImporter<BeaconiteVertex, BeaconiteEdge>
+				(vertexProvider, edgeProvider);
+
+		try (FileInputStream fin = new FileInputStream(dotFile)) {
+
+			String dotAsString = convertStreamToString(fin);
+			//Make sure you close all streams.
+
+			importer.read(dotAsString, importGraph);
+
+			System.out.println("### Imported Graph: " + importGraph);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private String convertStreamToString(InputStream is) throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				sb.append(line).append("\n");
+			}
+		}
+		return sb.toString();
+	}
 }
