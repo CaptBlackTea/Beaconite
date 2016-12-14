@@ -17,7 +17,8 @@ public class BeaconiteVertex {
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
 	// the cache connected to this vertex
-	private Cache cache;
+	private Cache cache = null;
+
 
 	public BeaconiteVertex(String name) {
 		this.name = name;
@@ -33,7 +34,8 @@ public class BeaconiteVertex {
 
 	public BeaconiteVertex(Cache cache) {
 		this(cache.getCacheName());
-		this.cache = cache;
+//		this.cache = cache;
+		connectToCache(cache);
 	}
 
 	// TODO: refactor the constructors so that there are less redundancies!
@@ -67,17 +69,56 @@ public class BeaconiteVertex {
 	}
 
 	/**
-	 * A vertex can contain a cache object. If the given cache is null the vertex is no longer
-	 * associated with a cache.
+	 * TODO: update!
 	 *
 	 * @param cache
 	 */
-	public void setCache(Cache cache) {
-		// FIXME: refactor to "connectToCache"
-		// implement: addCache and cache.setVertex
+	public void connectToCache(Cache cache) {
 		// make double reference when method is called so that we always have a connection!
-		this.cache = cache;
+		if (this.cache == null) {
+			this.cache = cache;
+			this.cache.connectToVertex(this);
+		} else if (!this.cache.equals(cache)) {
+			throw new RuntimeException("Vertex is already connected to a cache!");
+		}
 
+	}
+
+	/**
+	 * TODO: update!
+	 *
+	 * @param cache
+	 * @return true if the given cache was disconnected from this vertex false if given cache is not
+	 * the one this vertex is connected to or null
+	 */
+	public boolean disconnectFromCache(Cache cache) {
+		Cache c = this.cache;
+
+		if (c != null && c.equals(cache)) {
+			this.cache = null;
+			c.disconnectVertex(this);
+			return true;
+		}
+
+		// given cache is not the one this vertex is connected to or null
+		return false;
+	}
+
+	/**
+	 * Returns true if the given cache was the the stored cache and was deleted(set null) False if
+	 * the cache was not set null or null from the start.
+	 *
+	 * @param cache
+	 * @return
+	 */
+	public boolean removeCache(Cache cache) {
+		if (cache != null && cache.equals(this.cache)) {
+//			cache.disconnectVertex(this);
+			this.cache = null;
+			return true;
+		}
+
+		return false;
 	}
 
 	public String getName() {
@@ -126,4 +167,6 @@ public class BeaconiteVertex {
 		}
 
 	}
+
+
 }

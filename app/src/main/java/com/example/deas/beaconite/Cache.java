@@ -1,5 +1,6 @@
 package com.example.deas.beaconite;
 
+import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -24,6 +25,8 @@ public class Cache {
 	private Fingerprint fingerprint;
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
+	private BeaconiteVertex vertex;
+
 	/**
 	 * Sets up the cache with an empty data structure for time intervals and a name for this cache.
 	 * Name must not be null or empty: throws IllegalArgumentException otherwise.
@@ -133,4 +136,40 @@ public class Cache {
 	public void calculateFingerprint(BeaconMap allMyBeacons) {
 		fingerprint = new FingerprintMedian(allMyBeacons, timeIntervals, null);
 	}
+
+
+	public void connectToVertex(BeaconiteVertex vertex) {
+		if (this.vertex == null) {
+			this.vertex = vertex;
+			this.vertex.connectToCache(this);
+		} else if (!this.vertex.equals(vertex)) {
+			throw new RuntimeException("Cache is already connected to a vertex!");
+		}
+	}
+
+	/**
+	 * TODO: update!
+	 *
+	 * @param vertex
+	 * @return true if the given vertex was disconnected from this cache false if given vertex is
+	 * not the one this cache is connected to or null
+	 */
+	public boolean disconnectVertex(BeaconiteVertex vertex) {
+		BeaconiteVertex v = this.vertex;
+
+		if (v != null && v.equals(vertex)) {
+			this.vertex = null;
+			v.disconnectFromCache(this);
+			return true;
+		}
+
+		// given vertex is not the one this cache is connected to or null
+		return false;
+	}
+
+
+	public BeaconiteVertex getVertex() {
+		return this.vertex;
+	}
+
 }
