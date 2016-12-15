@@ -98,7 +98,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private PositionProvider<BeaconiteVertex> positionProvider;
 
 
-
 	/**
 	 * Add all Beacons in the given Collection to the internal Datastructure.
 	 *
@@ -262,6 +261,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return false;
 	}
 
+	// FIXME: not always when a cache is generated a vertex needs to be created!
 	public Cache addCache(String cachename) {
 		Cache newCache = new Cache(cachename);
 
@@ -286,8 +286,13 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		this.graph.addVertex(newVertex);
 	}
 
+	// FIXME!
 	public boolean deleteCache(String cacheName) {
 		Cache delCache = getCacheByName(cacheName);
+		if (delCache != null) {
+			delCache.getVertex().disconnectFromCache(delCache);
+		}
+
 		return allMyCaches.remove(delCache);
 	}
 
@@ -370,6 +375,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	// FIXME: do correct stuff here!
 	// FIXME: Handle Exception!
+
+	/**
+	 * Loads caches from a file and constructs a graph based on these caches.
+	 *
+	 * @throws IOException
+	 */
 	public void loadCachesFromFile() throws IOException {
 
 		//JSON from file to Object
@@ -392,6 +403,26 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		for (Cache c : allMyCaches) {
 			addToGraph(c);
 		}
+	}
+
+	/**
+	 * Loads a graph from a file leaves caches empty!
+	 */
+	public void loadGraphFromFile() {
+
+	}
+
+	/**
+	 * Loads caches and graph from their files. Connects the corresponding caches with their
+	 * vertices.
+	 */
+	public void loadCachesAndGraphFromFile() throws IOException {
+		allMyCaches = fileSupervisor.loadCachesFromFile();
+
+
+		this.graph = fileSupervisor.loadGraphFromFile();
+
+
 	}
 
 	/**
