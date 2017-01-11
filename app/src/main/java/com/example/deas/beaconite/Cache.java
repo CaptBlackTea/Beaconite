@@ -1,6 +1,7 @@
 package com.example.deas.beaconite;
 
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
@@ -25,6 +26,9 @@ public class Cache {
 	private Fingerprint fingerprint;
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
+
+	// @JsonBackReference is the back part of reference – it will be omitted from serialization.
+	@JsonBackReference
 	private BeaconiteVertex vertex;
 
 	/**

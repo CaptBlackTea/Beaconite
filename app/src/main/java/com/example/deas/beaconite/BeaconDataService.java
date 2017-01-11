@@ -420,7 +420,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
 
-		this.graph = fileSupervisor.loadGraphFromFile();
+//		this.graph = fileSupervisor.loadGraphFromFile();
 
 
 	}

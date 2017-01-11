@@ -1,6 +1,7 @@
 package com.example.deas.beaconite.graphStuff;
 
 import com.example.deas.beaconite.Cache;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Map;
 
@@ -16,7 +17,10 @@ public class BeaconiteVertex {
 	private String id;
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
+
 	// the cache connected to this vertex
+	// @JsonManagedReference is the forward part of reference – the one that gets serialized normally.
+	@JsonManagedReference
 	private Cache cache = null;
 
 
@@ -104,22 +108,23 @@ public class BeaconiteVertex {
 		return false;
 	}
 
-	/**
-	 * Returns true if the given cache was the the stored cache and was deleted(set null) False if
-	 * the cache was not set null or null from the start.
-	 *
-	 * @param cache
-	 * @return
-	 */
-	public boolean removeCache(Cache cache) {
-		if (cache != null && cache.equals(this.cache)) {
-//			cache.disconnectVertex(this);
-			this.cache = null;
-			return true;
-		}
-
-		return false;
-	}
+	// TODO: why?! is this still needed or does disconnect all we need??
+//	/**
+//	 * Returns true if the given cache was the the stored cache and was deleted(set null) False if
+//	 * the cache was not set null or null from the start.
+//	 *
+//	 * @param cache
+//	 * @return
+//	 */
+//	public boolean removeCache(Cache cache) {
+//		if (cache != null && cache.equals(this.cache)) {
+////			cache.disconnectVertex(this); --> not doing this is dangerous!!
+//			this.cache = null;
+//			return true;
+//		}
+//
+//		return false;
+//	}
 
 	public String getName() {
 		return name;
