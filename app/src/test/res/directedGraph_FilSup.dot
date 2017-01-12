@@ -1,0 +1,11 @@
+digraph G {
+  v1812753960997269 [ label="v1" id="v1812753960997269" attribute="PROTECTION" shape="doublecircle" ];
+  v2812753961030673 [ label="v2" id="v2812753961030673" attribute="DANGER" shape="triangle" ];
+  v3812753961046650 [ label="v3" id="v3812753961046650" attribute="TREASURE" shape="star" ];
+  v4812753961060987 [ label="v4" id="v4812753961060987" attribute="NONE" shape="circle" ];
+  v1812753960997269 -> v2812753961030673 [ label="NONE" attribute="NONE" color="black" ];
+  v2812753961030673 -> v1812753960997269 [ label="NONE" attribute="NONE" color="black" ];
+  v1812753960997269 -> v4812753961060987 [ label="MUSTNOT" attribute="MUSTNOT" color="red" ];
+  v2812753961030673 -> v4812753961060987 [ label="REQUIRED" attribute="REQUIRED" color="green" ];
+  v2812753961030673 -> v3812753961046650 [ label="NONE" attribute="NONE" color="black" ];
+}

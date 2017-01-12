@@ -1,7 +1,9 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.deprecatedTests;
 
+import android.test.suitebuilder.annotation.Suppress;
 import android.util.Log;
 
+import com.example.deas.beaconite.FileSupervisor;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.GraphTestingStuff;
@@ -20,6 +22,7 @@ import org.jgrapht.graph.ClassBasedEdgeFactory;
 import org.jgrapht.graph.SimpleGraph;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
@@ -41,9 +44,11 @@ import static com.example.deas.beaconite.graphStuff.EdgeAttribute.MUSTNOT;
 import static com.example.deas.beaconite.graphStuff.EdgeAttribute.REQUIRED;
 
 /**
+ * 12.01.2017: Deprecated, because the app requires now a directed graph
+ *
  * Created by deas on 12/10/16.
  */
-
+@Ignore
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Log.class})
 public class DOTFileTest {
@@ -195,7 +200,7 @@ public class DOTFileTest {
 			public Map<String, String> getComponentAttributes(BeaconiteEdge edge) {
 				Map<String, String> map = new LinkedHashMap<String, String>();
 				map.put("attribute", edge.getAttribute().toString());
-				map.put("color", chooseColor(edge));
+				map.put("build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.4.0/res/color", chooseColor(edge));
 				return map;
 			}
 		};

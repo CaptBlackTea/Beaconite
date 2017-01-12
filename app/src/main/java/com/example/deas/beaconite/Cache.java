@@ -1,8 +1,8 @@
 package com.example.deas.beaconite;
 
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -27,8 +27,8 @@ public class Cache {
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
 
-	// @JsonBackReference is the back part of reference – it will be omitted from serialization.
-	@JsonBackReference
+	// @JsonManagedReference is the forward part of reference – the one that gets serialized normally.
+	@JsonManagedReference
 	private BeaconiteVertex vertex;
 
 	/**

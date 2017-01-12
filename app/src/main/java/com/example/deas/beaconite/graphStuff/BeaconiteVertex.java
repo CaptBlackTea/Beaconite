@@ -1,7 +1,7 @@
 package com.example.deas.beaconite.graphStuff;
 
 import com.example.deas.beaconite.Cache;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.Map;
 
@@ -19,8 +19,8 @@ public class BeaconiteVertex {
 	private VertexAttribute attribute;
 
 	// the cache connected to this vertex
-	// @JsonManagedReference is the forward part of reference – the one that gets serialized normally.
-	@JsonManagedReference
+	// @JsonBackReference is the back part of reference – it will be omitted from serialization.
+	@JsonBackReference
 	private Cache cache = null;
 
 

@@ -21,8 +21,7 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
-import org.jgrapht.UndirectedGraph;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.io.File;
 import java.io.IOException;
@@ -65,7 +64,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
-	private UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
+	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
 
 	private BeaconPositionCallback beaconPositionCallback;
 
@@ -135,7 +134,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	public void resetCacheData() {
 		allMyCaches.clear();
-		graph = new SimpleGraph<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class);
+		graph = new SimpleDirectedGraph<>(BeaconiteEdge.class);
 	}
 
 	@Nullable
@@ -154,7 +153,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		allMyCaches = new ArrayList<>();
 
-		graph = new SimpleGraph<BeaconiteVertex, BeaconiteEdge>(BeaconiteEdge.class);
+		graph = new SimpleDirectedGraph<>(BeaconiteEdge.class);
 
 		// TODO: persistent storage -> write to file!
 		positionProvider = new GraphViewPositionProvider<>();
@@ -419,8 +418,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	public void loadCachesAndGraphFromFile() throws IOException {
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
-
-//		this.graph = fileSupervisor.loadGraphFromFile();
+		this.graph = fileSupervisor.loadGraphFromFile();
 
 
 	}
@@ -497,7 +495,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		this.beaconPositionCallback = callback;
 	}
 
-	public UndirectedGraph<BeaconiteVertex, BeaconiteEdge> getGraph() {
+	public SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> getGraph() {
 		return this.graph;
 	}
 

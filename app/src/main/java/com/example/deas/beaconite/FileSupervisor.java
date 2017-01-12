@@ -5,12 +5,15 @@ import android.util.Log;
 import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+import com.example.deas.beaconite.graphStuff.GraphStyling;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.jgrapht.Graph;
-import org.jgrapht.UndirectedGraph;
+import org.jgrapht.ext.ComponentAttributeProvider;
 import org.jgrapht.ext.DOTExporter;
+import org.jgrapht.ext.StringEdgeNameProvider;
+import org.jgrapht.ext.VertexNameProvider;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -18,7 +21,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FileSupervisor {
 
@@ -42,7 +47,7 @@ public class FileSupervisor {
 	}
 
 
-	public void writeAllDataInFile(List<Cache> allMyCaches, UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
+	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		try {
 			writeAllCachesInFile(allMyCaches);
 		} catch (IOException e) {
@@ -77,12 +82,13 @@ public class FileSupervisor {
 	}
 
 	// FIXME: functioning implementation needed!
-	public void writeGraphToFile(UndirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) throws
+	public void writeGraphToFile(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) throws
 			IOException {
 		try {
 			graphFile.createNewFile();
 
-			DOTExporter dotExporter = new DOTExporter();
+
+			DOTExporter<BeaconiteVertex, BeaconiteEdge> dotExporter = makeDOTExporter();
 			FileWriter fileWriter = new FileWriter(graphFile);
 			dotExporter.export(fileWriter, graph);
 
@@ -90,6 +96,84 @@ public class FileSupervisor {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// TODO: maybe move to another place?
+	private DOTExporter<BeaconiteVertex, BeaconiteEdge> makeDOTExporter() {
+
+		// internal hopefully unique id in the dot file -> not displayed in the graph picture!
+		VertexNameProvider<BeaconiteVertex> vertexIDProvider = new VertexNameProvider<BeaconiteVertex>() {
+			@Override
+			public String getVertexName(BeaconiteVertex vertex) {
+				return vertex.getId(); // TODO: good place?
+			}
+		};
+
+		// default implementation uses the toString of the Vertex and sets it as [label]
+//		StringNameProvider<BeaconiteVertex> vertexIDProvider = new
+//				StringNameProvider<BeaconiteVertex>();
+
+		// name of the vertex in the graph picture (the thing in the circle)
+		// -> [label] in the dot file
+		// !!! -> when reading the file [label] is provided as identifier!
+		VertexNameProvider<BeaconiteVertex> vertexLabelProvider = new
+				VertexNameProvider<BeaconiteVertex>() {
+					@Override
+					public String getVertexName(BeaconiteVertex vertex) {
+						return vertex.getName();
+					}
+				};
+
+		// default implementation uses the toString of the Edge and sets it as [label]
+		StringEdgeNameProvider<BeaconiteEdge> edgeLabelProvider = new
+				StringEdgeNameProvider<BeaconiteEdge>();
+
+//		EdgeNameProvider<BeaconiteEdge> edgeLabelProvider = new EdgeNameProvider<BeaconiteEdge>() {
+//			@Override
+//			public String getEdgeName(BeaconiteEdge edge) {
+//				return edge.getAttribute().toString();
+//			}
+//		};
+
+		// appears only in the dot file if no official dot-attribute
+		ComponentAttributeProvider<BeaconiteVertex> vertexAttributeProvider = new
+				ComponentAttributeProvider<BeaconiteVertex>() {
+					@Override
+					public Map<String, String> getComponentAttributes(BeaconiteVertex vertex) {
+						Map<String, String> map = new LinkedHashMap<String, String>();
+						map.put("id", vertex.getId());
+						map.put("attribute", vertex.getAttribute().toString());
+						map.put("shape", chooseShape(vertex));
+						return map;
+					}
+				};
+
+		// appears only in the dot file, if it is an official dot-attribute it will be displayed
+		// in the picture output
+		ComponentAttributeProvider<BeaconiteEdge> edgeAttributeProvider = new ComponentAttributeProvider<BeaconiteEdge>() {
+			@Override
+			public Map<String, String> getComponentAttributes(BeaconiteEdge edge) {
+				Map<String, String> map = new LinkedHashMap<String, String>();
+				map.put("attribute", edge.getAttribute().toString());
+				map.put("color", chooseColor(edge));
+				return map;
+			}
+		};
+
+
+		DOTExporter<BeaconiteVertex, BeaconiteEdge> exporter = new DOTExporter<>
+				(vertexIDProvider, vertexLabelProvider, edgeLabelProvider,
+						vertexAttributeProvider, edgeAttributeProvider);
+
+		return exporter;
+	}
+
+	private String chooseColor(BeaconiteEdge edge) {
+		return GraphStyling.colorEgde(edge.getAttribute());
+	}
+
+	private String chooseShape(BeaconiteVertex vertex) {
+		return GraphStyling.shapeVertex(vertex.getAttribute());
 	}
 
 	public List<Cache> loadCachesFromFile() throws IOException {
@@ -113,7 +197,7 @@ public class FileSupervisor {
 	}
 
 	//TODO: implement
-	public Graph<BeaconiteVertex, BeaconiteEdge> loadGraphFromFile() {
+	public SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> loadGraphFromFile() {
 		return null;
 	}
 
