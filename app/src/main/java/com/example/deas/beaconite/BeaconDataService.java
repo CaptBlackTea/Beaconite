@@ -21,6 +21,7 @@ import org.altbeacon.beacon.BeaconManager;
 import org.altbeacon.beacon.BeaconParser;
 import org.altbeacon.beacon.RangeNotifier;
 import org.altbeacon.beacon.Region;
+import org.jgrapht.ext.ImportException;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.io.File;
@@ -415,7 +416,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * Loads caches and graph from their files. Connects the corresponding caches with their
 	 * vertices.
 	 */
-	public void loadCachesAndGraphFromFile() throws IOException {
+	public void loadCachesAndGraphFromFile() throws IOException, ImportException {
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
 		this.graph = fileSupervisor.loadGraphFromFile();

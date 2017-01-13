@@ -4,175 +4,226 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="17dp"
-        android:text="Monitoring events and App status"/>
+    <!-- Load the toolbar here -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
 
-        <Button
-            android:id="@+id/restartBeaconSimulation"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="restartBeaconSimulation"
-            android:text="@string/restartBeaconSimulation"/>
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/resetAllDataService"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="removeAllDataBtn"
-        android:text="@string/resetAllData"/>
+            <Button
+                android:id="@+id/restartBeaconSimulation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="restartBeaconSimulation"
+                android:text="@string/restartBeaconSimulation"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/resetAllDataService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="removeAllDataBtn"
+                android:text="@string/resetAllData"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        >
+        </LinearLayout>
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/tableActivity_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:onClick="onTableBtnClicked"
-        android:text="@string/tableBtnText"/>
+            <Button
+                android:id="@+id/tableActivity_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onTableBtnClicked"
+                android:text="@string/tableBtnText"/>
 
-    <Button
-        android:id="@+id/graphActivity_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onGraphBtnClicked"
-        android:text="@string/startChartActivity"/>
+            <Button
+                android:id="@+id/graphActivity_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onGraphBtnClicked"
+                android:text="@string/startChartActivity"/>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-    <Button
-        android:id="@+id/cachesActivity_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onCacheActivityBtnClicked"
-        android:text="@string/startCacheActivity"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/loadCaches_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onLoadCachesFromFileBtnClicked"
-        android:text="@string/loadCaches"/>
-    </LinearLayout>
+            <Button
+                android:id="@+id/cachesActivity_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onCacheActivityBtnClicked"
+                android:text="@string/startCacheActivity"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+            <Button
+                android:id="@+id/startEditGraphActivity_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onStartEditGraphBtnClicked"
+                android:text="@string/editGraphActivityBtn"/>
 
-    <Button
-        android:id="@+id/whereAmI_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onWhereAmIBtnClicked"
-        android:text="@string/whereAmI"/>
 
-    <Button
-        android:id="@+id/startEditGraphActivity_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:onClick="onStartEditGraphBtnClicked"
-        android:text="@string/editGraphActivityBtn"/>
-    </LinearLayout>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/whereAmI_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onWhereAmIBtnClicked"
+                android:text="@string/whereAmI"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/saveCaches_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="saveCachesBtn"
+                android:text="@string/saveCachesBtn"/>
+
+
+            <Button
+                android:id="@+id/saveGraph_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="saveGraphBtn"
+                android:text="@string/saveGraphBtn"/>
+
+            <Button
+                android:id="@+id/saveAllData_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="saveAllDataBtn"
+                android:text="@string/saveAllDataBtn"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/loadCaches_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onLoadCachesBtnClicked"
+                android:text="@string/loadCaches"/>
+
+            <Button
+                android:id="@+id/loadGraph_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="loadGraphBtn"
+                android:text="@string/loadGraphBtn"/>
+
+            <Button
+                android:id="@+id/loadAllData_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="loadAllDataBtn"
+                android:text="@string/loadAllDataBtn"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/saveCaches_Btn"
+            android:id="@+id/exitBeaconite_Btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="saveCachesBtn"
-            android:text="@string/saveCachesBtn"/>
-
-        <Button
-            android:id="@+id/saveGraph_Btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="saveGraphBtn"
-            android:text="@string/saveGraphBtn"/>
-
-        <Button
-            android:id="@+id/saveAllData_Btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:onClick="saveAllDataBtn"
-            android:text="@string/saveAllDataBtn"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        >
+            android:onClick="exitBeaconite"
+            android:text="@string/exitBeaconite"/>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/exitBeaconite_Btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:onClick="exitBeaconite"
-        android:text="@string/exitBeaconite"/>
 
 </LinearLayout>

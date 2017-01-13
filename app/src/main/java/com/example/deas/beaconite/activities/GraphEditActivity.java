@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
@@ -43,7 +42,7 @@ public class GraphEditActivity extends AppCompatActivity {
 
 	// the graph
 	private SimpleGraph<String, DefaultEdge> graph;
-	private TextView textView;
+	//	private TextView textView;
 	private GraphView<BeaconiteVertex, BeaconiteEdge> graphView;
 
 	/**
@@ -110,7 +109,7 @@ public class GraphEditActivity extends AppCompatActivity {
 
 		Log.d(TAG, "#### CREATE");
 
-		textView = (TextView) findViewById(R.id.textview);
+//		textView = (TextView) findViewById(R.id.textview);
 
 //		graph = TestData.getStringDefaultEdgeSimpleGraph();
 
@@ -144,7 +143,8 @@ public class GraphEditActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		if (mIsBound && textView != null) {
+		if (mIsBound) { // TODO: What should be tested here??
+//		if (mIsBound && textView != null) {
 //			textView.setText(TestData.graphToDot(mService.getGraph()));
 		}
 		return super.onTouchEvent(event);
