@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Color;
@@ -22,9 +23,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.deas.beaconite.AdapterCache;
 import com.example.deas.beaconite.BeaconDataService;
@@ -49,6 +52,7 @@ public class GenerateCachesActivity extends AppCompatActivity {
 	private Handler progressHandler;
 	private ProgressBar progressBarHorizontal;
 	private CountDownTimer countDownTimer;
+	private String cacheName;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -294,38 +298,105 @@ public class GenerateCachesActivity extends AppCompatActivity {
 
 
 	public void createNewCacheBtn(View view) {
-		String newCacheName = "Cache" + cacheCounter;
 
-		while (mService.addCache(newCacheName) == null) {
-			cacheCounter++;
-			newCacheName = "Cache" + cacheCounter;
-		}
-//		if (!mService.getAllMyCaches().contains(newCacheName)) {
-//			mService.addCache(newCacheName);
-//
-//			Log.d(TAG, "~~~~ new cache name: " + newCacheName);
-//			Log.d(TAG, "~~~~ contains: " + mService.getAllMyCaches().contains(newCacheName));
-//			Log.d(TAG, "~~~~ allMyCaches: " + mService.getAllMyCaches());
-//		}
+		makeEnterCacheNameDialog();
 
 		TextView recordThisCache = (TextView) this.findViewById(R.id.cacheInQuestion);
-		recordThisCache.setText(newCacheName);
+		recordThisCache.setText(cacheName);
 
 		adbCache.notifyDataSetChanged();
 	}
 
+	private void makeEnterCacheNameDialog() {
+
+		final EditText input = new EditText(this);
+
+		final AlertDialog dialog = new AlertDialog.Builder(this)
+				.setTitle("Enter cache name")
+				.setMessage("Enter a name for this cache. Must not be empty or a name that already" +
+						" exists")
+				.setNegativeButton("Cancel", null)
+				.setPositiveButton("Ok", null)
+				.setView(input)
+				.create();
+		dialog.setOnShowListener(new DialogInterface.OnShowListener() {
+
+			@Override
+			public void onShow(DialogInterface arg0) {
+
+				Button okButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+				okButton.setOnClickListener(new View.OnClickListener() {
+
+					@Override
+					public void onClick(View arg0) {
+
+						try {
+							String newCacheName = input.getText().toString();
+							if (!newCacheName.isEmpty()) {
+
+								if (mService.addCache(newCacheName) == null) {
+									throw new IllegalArgumentException("This name already exists!");
+								}
+
+								cacheName = newCacheName;
+								dialog.dismiss();
+							} else {
+								throw new IllegalArgumentException("The name field is empty!");
+							}
+
+						} catch (IllegalArgumentException e) {
+							Toast.makeText(getBaseContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+			}
+		});
+
+		dialog.show();
+	}
+
 	public void deleteCacheBtn(View view) {
-		TextView cacheToDelete = (TextView) this.findViewById(R.id.cacheInQuestion);
-		String cacheName = cacheToDelete.getText().toString();
+		final TextView cacheToDelete = (TextView) this.findViewById(R.id.cacheInQuestion);
+		final String cacheName = cacheToDelete.getText().toString();
 
-		// TODO: AlertDialog
+		// AlertDialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-		if (mService.deleteCache(cacheName)) {
-			cacheToDelete.setText("");
-			adbCache.notifyDataSetChanged();
-		}
+		// Add the buttons
+		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK button
+				if (mService.deleteCache(cacheName)) {
+					cacheToDelete.setText("");
+					adbCache.notifyDataSetChanged();
+				} else {
+					Toast.makeText(getBaseContext(), "Error: Could not delete cache!", Toast
+							.LENGTH_LONG).show();
+					dialog.dismiss();
+				}
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User cancelled the dialog
+			}
+		});
+
+		// Set other dialog properties
+		builder.setTitle("Delete cache")
+				.setMessage("Do you really want to delete this cache?");
+
+		// Create the AlertDialog
+		AlertDialog dialog = builder.create();
+		dialog.show();
+
+//		if (mService.deleteCache(cacheName)) {
+//			cacheToDelete.setText("");
+//			adbCache.notifyDataSetChanged();
+//		}
 
 	}
+
 
 	public void onGraphBtnClicked(View view) {
 		Intent myIntent = new Intent(this, ChartActivity.class);

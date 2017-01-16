@@ -262,6 +262,15 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	}
 
 	// FIXME: not always when a cache is generated a vertex needs to be created!
+
+	/**
+	 * Creates and adds a cache with the given String as name to the data structure that holds all
+	 * caches.
+	 *
+	 * @param cachename the name the cache is associated with
+	 * @return the created cache. null: if a cache with this name already exists it is not created.
+	 * Null represents that no caches was created and added.
+	 */
 	public Cache addCache(String cachename) {
 		Cache newCache = new Cache(cachename);
 
