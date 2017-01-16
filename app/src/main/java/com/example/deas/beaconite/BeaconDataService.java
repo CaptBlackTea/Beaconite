@@ -69,6 +69,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	private BeaconPositionCallback beaconPositionCallback;
 
+	private PositionProvider<BeaconiteVertex> positionProvider;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
@@ -95,11 +96,10 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		}
 	};
-	private PositionProvider<BeaconiteVertex> positionProvider;
 
 
 	/**
-	 * Add all Beacons in the given Collection to the internal Datastructure.
+	 * Add all Beacons in the given Collection to the internal data structure.
 	 *
 	 * @param beacons
 	 * @param timestamp

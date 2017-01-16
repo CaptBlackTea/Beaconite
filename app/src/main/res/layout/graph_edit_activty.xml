@@ -10,6 +10,7 @@
     tools:context=".activities.GraphEditActivity">
     <!-- Load the toolbar here -->
     <include
+        android:id="@+id/toolbar"
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

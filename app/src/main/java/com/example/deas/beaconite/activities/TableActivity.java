@@ -47,20 +47,6 @@ public class TableActivity extends AppCompatActivity implements BeaconConsumer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_ranging_table);
-		// Find the toolbar view inside the activity layout
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-		// Sets the Toolbar to act as the ActionBar for this Activity window.
-		// Make sure the toolbar exists in the activity and is not null
-		setSupportActionBar(toolbar);
-
-		// Get a support ActionBar corresponding to this toolbar
-		ActionBar ab = getSupportActionBar();
-
-		// Enable the Up button
-		if (ab != null) {
-			ab.setDisplayHomeAsUpEnabled(true);
-		}
-
 
 		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
 		Log.i(TAG, "********* Ranging!");
@@ -71,6 +57,24 @@ public class TableActivity extends AppCompatActivity implements BeaconConsumer {
 	protected void onStart() {
 		super.onStart();
 
+		// Find the toolbar view inside the activity layout
+		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+		// Sets the Toolbar to act as the ActionBar for this Activity window.
+		// Make sure the toolbar exists in the activity and is not null
+		setSupportActionBar(toolbar);
+
+
+		Log.d(TAG, "onStart; toolbar: " + toolbar);
+
+		// Get a support ActionBar corresponding to this toolbar
+		ActionBar ab = getSupportActionBar();
+
+		Log.d(TAG, "getSupportActionBar: " + ab);
+		// Enable the Up button
+		if (ab != null) {
+			Log.d(TAG, "YAY!");
+			ab.setDisplayHomeAsUpEnabled(true);
+		}
 		// bind the Beacon notifier
 		beaconManager.bind(this);
 	}

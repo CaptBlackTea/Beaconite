@@ -39,17 +39,23 @@
 
         <activity
             android:name=".activities.ChartActivity"
-            android:label="Graph"
-            android:parentActivityName=".activities.TableActivity">
+            android:label="Chart"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
-        <activity android:name=".activities.GenerateCachesActivity">
+        <activity
+            android:name=".activities.GenerateCachesActivity"
+            android:label="Generate Caches"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
         <activity
             android:name=".activities.LocalizeMeActivity"
             android:label="Localize"
             android:parentActivityName=".activities.MainActivity">
         </activity>
-        <activity android:name=".activities.GraphEditActivity">
+        <activity
+            android:name=".activities.GraphEditActivity"
+            android:label="Edit Graph"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
     </application>
 
