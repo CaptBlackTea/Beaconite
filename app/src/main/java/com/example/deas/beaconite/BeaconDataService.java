@@ -54,8 +54,8 @@ import java.util.TreeMap;
  * Created by deas on 26/08/16.
  */
 public class BeaconDataService extends Service implements BeaconConsumer {
+	public static final long FOREGROUND_SCAN_PERIOD = 60_000L;
 	protected static final String TAG = "BeaconDataService";
-
 	// Binder given to clients
 	private final IBinder mBinder = new BeaconDataBinder();
 	private FileSupervisor fileSupervisor;
@@ -121,6 +121,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			beaconManager.addRangeNotifier(beaconNotifier);
 		}
 		try {
+//			beaconManager.setForegroundScanPeriod(FOREGROUND_SCAN_PERIOD);
 			beaconManager.startRangingBeaconsInRegion(new Region("myRangingUniqueId", null, null, null));
 			Log.d(TAG, " ON BEACON SERVICE CONNECT");
 
@@ -295,10 +296,20 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		this.graph.addVertex(newVertex);
 	}
 
-	// FIXME!
+	/**
+	 * Delete a cache and the corresponding vertex in the graph
+	 * <p>
+	 * // FIXME: Maybe this should be handeld differently, due to the use case that a cache should
+	 * be deletable without deleting the vertex, so that the vertex can be assignet to another
+	 * cache!
+	 *
+	 * @param cacheName
+	 * @return
+	 */
 	public boolean deleteCache(String cacheName) {
 		Cache delCache = getCacheByName(cacheName);
 		if (delCache != null) {
+			this.graph.removeVertex(delCache.getVertex());
 			delCache.getVertex().disconnectFromCache(delCache);
 		}
 

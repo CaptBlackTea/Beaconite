@@ -16,6 +16,7 @@ import android.widget.Switch;
 
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
+import com.example.deas.beaconite.dataIO.DOTSettings;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
@@ -30,8 +31,10 @@ import org.agp8x.android.lib.andrograph.model.defaults.DefaultVertexPaintProvide
 import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.ext.DOTExporter;
+import org.jgrapht.graph.SimpleDirectedGraph;
+
+import java.io.StringWriter;
 
 public class GraphEditActivity extends AppCompatActivity {
 
@@ -43,8 +46,8 @@ public class GraphEditActivity extends AppCompatActivity {
 	private Intent beaconDataServiceIntent;
 
 	// the graph
-	private SimpleGraph<String, DefaultEdge> graph;
-	//	private TextView textView;
+//	private SimpleGraph<String, DefaultEdge> graph;
+//	private TextView textView;
 	private GraphView<BeaconiteVertex, BeaconiteEdge> graphView;
 
 	/**
@@ -133,7 +136,7 @@ public class GraphEditActivity extends AppCompatActivity {
 
 //		graph = TestData.getStringDefaultEdgeSimpleGraph();
 
-//		textView.setText(TestData.graphToDot(graph));
+//		textView.setText(graphToDot(graph));
 
 		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphview);
 
@@ -164,10 +167,13 @@ public class GraphEditActivity extends AppCompatActivity {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (mIsBound) { // TODO: What should be tested here??
-//		if (mIsBound && textView != null) {
-//			textView.setText(TestData.graphToDot(mService.getGraph()));
+//			if (mIsBound && textView != null) {
+//				textView.setText(graphToDot(mService.getGraph()));
+//			}
 		}
 		return super.onTouchEvent(event);
+
+
 	}
 
 	@Override
@@ -209,5 +215,15 @@ public class GraphEditActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+	}
+
+	private String graphToDot(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
+
+		DOTExporter<BeaconiteVertex, BeaconiteEdge> exporter = DOTSettings.makeDOTExporter();
+		StringWriter stringWriter = new StringWriter();
+		exporter.export(stringWriter, graph);
+
+		return stringWriter.toString();
+
 	}
 }

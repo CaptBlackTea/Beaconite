@@ -37,9 +37,13 @@
                 android:padding="3dip"
                 android:text="@string/RSSI"/>
 
+            <!--<TextView-->
+            <!--android:padding="3dip"-->
+            <!--android:text="@string/major"/>-->
+
             <TextView
                 android:padding="3dip"
-                android:text="@string/major"/>
+                android:text="@string/txPower"/>
 
             <TextView
                 android:padding="3dip"

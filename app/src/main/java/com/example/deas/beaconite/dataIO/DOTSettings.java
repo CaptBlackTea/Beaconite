@@ -2,7 +2,7 @@ package com.example.deas.beaconite.dataIO;
 
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
-import com.example.deas.beaconite.graphStuff.GraphStyling;
+import com.example.deas.beaconite.graphStuff.DOTGraphStyling;
 
 import org.jgrapht.ext.ComponentAttributeProvider;
 import org.jgrapht.ext.DOTExporter;
@@ -158,10 +158,10 @@ public class DOTSettings {
 	}
 
 	private static String chooseColor(BeaconiteEdge edge) {
-		return GraphStyling.colorEgde(edge.getAttribute());
+		return DOTGraphStyling.DOTcolorEgde(edge.getAttribute());
 	}
 
 	private static String chooseShape(BeaconiteVertex vertex) {
-		return GraphStyling.shapeVertex(vertex.getAttribute());
+		return DOTGraphStyling.DOTshapeVertex(vertex.getAttribute());
 	}
 }

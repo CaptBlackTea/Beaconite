@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
-import com.example.deas.beaconite.graphStuff.GraphStyling;
+import com.example.deas.beaconite.graphStuff.DOTGraphStyling;
 import com.example.deas.beaconite.graphStuff.VertexAttribute;
 
 import org.jgrapht.ext.ComponentAttributeProvider;
@@ -216,11 +216,11 @@ public class DirectedGraphTest {
 	}
 
 	private String chooseColor(BeaconiteEdge edge) {
-		return GraphStyling.colorEgde(edge.getAttribute());
+		return DOTGraphStyling.DOTcolorEgde(edge.getAttribute());
 	}
 
 	private String chooseShape(BeaconiteVertex vertex) {
-		return GraphStyling.shapeVertex(vertex.getAttribute());
+		return DOTGraphStyling.DOTshapeVertex(vertex.getAttribute());
 	}
 
 	@Test

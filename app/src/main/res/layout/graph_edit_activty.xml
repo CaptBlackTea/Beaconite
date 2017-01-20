@@ -18,18 +18,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <Switch
-        android:id="@+id/graphEditSwitch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginEnd="82dp"
-        android:text="@string/beaconitGraphSwitch"
-        />
+
+        <!--<TextView-->
+        <!--android:id="@+id/textview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"/>-->
+
 
         <org.agp8x.android.lib.andrograph.view.GraphView
             android:id="@+id/graphview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
-</RelativeLayout>
+
+        <Switch
+            android:id="@+id/graphEditSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="82dp"
+            android:text="@string/beaconitGraphSwitch"
+            />
+    </RelativeLayout>
 </LinearLayout>

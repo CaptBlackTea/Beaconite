@@ -266,7 +266,7 @@ public class ChartActivity extends AppCompatActivity {
 		}
 
 		beaconSerie.setDrawDataPoints(true);
-		beaconSerie.setTitle("Beacon" + b.getId2());
+		beaconSerie.setTitle("Beacon" + b.getId3());
 
 		return beaconSerie;
 	}

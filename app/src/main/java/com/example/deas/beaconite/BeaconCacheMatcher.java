@@ -27,7 +27,7 @@ public final class BeaconCacheMatcher {
 	 * @param beacons
 	 * @return
 	 */
-	public static List<Cache> matchesAnyCache(Collection<Beacon> beacons, Collection<Cache>
+	public static List<Cache> matchesAllCache(Collection<Beacon> beacons, Collection<Cache>
 			caches) {
 
 		Collection<Beacon> scannedBeacons = beacons;
@@ -45,6 +45,12 @@ public final class BeaconCacheMatcher {
 
 			Log.d(TAG, "Result of contains: " + beacons.containsAll(cacheBeacons.keySet()));
 
+			for (Beacon b : cacheBeacons.keySet()) {
+				Log.d(TAG, "/t b in scanned beacons? " + scannedBeacons.contains(b) + " - Minor: " +
+						"" + b.getId3());
+			}
+
+
 			// are the Beacons associated with this Cache a subset of the given
 			// beacons Collection
 			if (scannedBeacons.containsAll(cacheBeacons.keySet())) {
@@ -60,6 +66,65 @@ public final class BeaconCacheMatcher {
 						FingerprintMedian.BeaconFingerPrint beaconFingerPrint = cacheBeacons.get(scannedBeacon);
 
 						if (beaconFingerPrint.isCovered(rssiToCheck)) {
+							if (!matchingCaches.contains(cachePotentialMatch)) {
+								matchingCaches.add(cachePotentialMatch);
+								// if not all match: next cache
+							}
+						}
+						// if no: next cache
+					}
+				}
+			}
+
+		}
+
+		Log.d(TAG, "Matching Caches: " + matchingCaches);
+
+		return matchingCaches;
+	}
+
+
+	public static List<Cache> matchesAnyCache(Collection<Beacon> beacons, Collection<Cache>
+			caches) {
+
+		Collection<Beacon> scannedBeacons = beacons;
+		List<Cache> matchingCaches = new ArrayList<>();
+
+		// traverse Caches
+		for (Cache cachePotentialMatch : caches) {
+			// for each cache: are the Beacons associated with this Cache a subset of the given
+			// beacons Collection?
+
+			Map<Beacon, FingerprintMedian.BeaconFingerPrint> cacheBeacons = cachePotentialMatch.getFingerprint().getBeacons();
+
+			Log.d(TAG, "Scanned Beacons: " + scannedBeacons + "; " + cachePotentialMatch.getCacheName() + ": Cache " +
+					"Beacons: " + cacheBeacons.keySet());
+
+			Log.d(TAG, "Result of contains: " + cacheBeacons.keySet().containsAll(scannedBeacons));
+
+			for (Beacon b : cacheBeacons.keySet()) {
+				Log.d(TAG, "/t b in scanned beacons? " + scannedBeacons.contains(b) + " - Minor: " +
+						"" + b.getId3());
+			}
+
+
+			// are the Beacons associated with this Cache a subset of the given
+			// beacons Collection
+			if (cacheBeacons.keySet().containsAll(scannedBeacons)) {
+				// if yes: traverse beacons and check if a beacon is in the fingerprint-corridor of this
+				// cache matching beacon
+				for (Beacon scannedBeacon : scannedBeacons) {
+					// if all beacons match a corridor of this caches corresponding Beacons
+					// Fingerprint: add cache to returned list
+
+					int rssiToCheck = scannedBeacon.getRssi();
+
+					if (cacheBeacons.containsKey(scannedBeacon)) {
+						FingerprintMedian.BeaconFingerPrint beaconFingerPrint = cacheBeacons.get(scannedBeacon);
+
+						boolean covered = beaconFingerPrint.isCovered(rssiToCheck);
+						Log.d(TAG, "fingerprint: " + covered);
+						if (covered) {
 							if (!matchingCaches.contains(cachePotentialMatch)) {
 								matchingCaches.add(cachePotentialMatch);
 								// if not all match: next cache

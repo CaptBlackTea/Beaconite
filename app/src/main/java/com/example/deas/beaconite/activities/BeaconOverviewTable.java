@@ -90,7 +90,8 @@ public class BeaconOverviewTable implements Runnable {
 				// create a TextView for each Beacon information: UUID, RSSI, Major, Minor, Accuracy, Distance
 				TextView uuid = new TextView(rangingActivity);
 				TextView rssi = new TextView(rangingActivity);
-				TextView major = new TextView(rangingActivity);
+//				TextView major = new TextView(rangingActivity);
+				TextView txPower = new TextView(rangingActivity);
 				TextView minor = new TextView(rangingActivity);
 				TextView accuracy = new TextView(rangingActivity);
 				TextView distance = new TextView(rangingActivity);
@@ -99,7 +100,8 @@ public class BeaconOverviewTable implements Runnable {
 				uuid.setText(b.getId1().toString());
 
 				rssi.setText("" + b.getRssi());
-				major.setText(b.getId2().toString());
+//				major.setText(b.getId2().toString());
+				txPower.setText("" + b.getTxPower());
 				minor.setText(b.getId3().toString());
 
 				accuracy.setText(calculateAccuracy(b.getDistance()));
@@ -109,7 +111,8 @@ public class BeaconOverviewTable implements Runnable {
 
 				refreshRow.addView(uuid);
 				refreshRow.addView(rssi);
-				refreshRow.addView(major);
+//				refreshRow.addView(major);
+				refreshRow.addView(txPower);
 				refreshRow.addView(minor);
 				refreshRow.addView(accuracy);
 				refreshRow.addView(distance);

@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 		}
 
 		// Start the BeaconSimulator
-		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
+//		BeaconManager.setBeaconSimulator(new MyBeaconsSimulator(4));
 
 		// start beaconDataService
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);

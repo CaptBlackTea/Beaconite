@@ -4,10 +4,10 @@ package com.example.deas.beaconite.graphStuff;
  * Created by deas on 12/01/17.
  */
 
-public class GraphStyling {
+public class DOTGraphStyling {
 
 
-	public static String colorEgde(Enum label) {
+	public static String DOTcolorEgde(Enum label) {
 
 		if (label.equals(EdgeAttribute.REQUIRED))
 
@@ -26,7 +26,7 @@ public class GraphStyling {
 		}
 	}
 
-	public static String shapeVertex(Enum attribute) {
+	public static String DOTshapeVertex(Enum attribute) {
 
 		if (attribute.equals(VertexAttribute.TREASURE)) {
 			return "star";
