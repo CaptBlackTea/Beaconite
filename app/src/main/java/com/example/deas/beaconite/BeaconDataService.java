@@ -96,6 +96,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		}
 	};
+	private File fileForGraphPosition;
 
 
 	/**
@@ -167,8 +168,12 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		// TODO: make read/load file changeable
 		// setup file for writing and reading the Cache data to/from
-		fileSupervisor = new FileSupervisor(setUpFileForCaches("allCaches.json"),
-				setUpFileForDOTGraph("graph.dot"));
+		this.fileForCaches = setUpFile("allCaches.json");
+		this.fileForDOTGraph = setUpFile("graph.dot");
+		this.fileForGraphPosition = setUpFile("graphPosition.json");
+
+		fileSupervisor = new FileSupervisor(fileForCaches,
+				fileForDOTGraph, fileForGraphPosition);
 
 		Log.d(TAG, " ON CREATE");
 	}
@@ -380,6 +385,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	public void writeDOTGraphFile() {
 		try {
 			fileSupervisor.writeGraphToFile(graph);
+			// TODO: rename method and add writePositionProviderToFile OR make own method for it?
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -389,7 +395,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		// Create the file.
 //		fileSupervisor.writeAllCachesInFile(allMyCaches);
-		fileSupervisor.writeAllDataInFile(allMyCaches, graph);
+		fileSupervisor.writeAllDataInFile(allMyCaches, graph, positionProvider);
 	}
 
 
@@ -441,6 +447,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		this.graph = fileSupervisor.loadGraphFromFile();
 
+		this.positionProvider = fileSupervisor.loadPositionProviderFromFile();
+
 
 	}
 
@@ -448,7 +456,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * Generates a file, to which the caches are written and read, at the Applications public
 	 * folder.
 	 */
-	private File setUpFileForCaches(String filename) {
+	private File setUpFile(String filename) {
+		File file;
 
 		// check if writable on external, if not write to internal storage!
 		if (isExternalStorageWritable()) {
@@ -462,41 +471,45 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 			File folder = new File(path);
 			folder.mkdirs();
 
-			fileForCaches = new File(folder, filename);
+			file = new File(folder, filename);
 
 		} else {
-			fileForCaches = new File(this.getFilesDir(), filename);
+			file = new File(this.getFilesDir(), filename);
 		}
 
-		Log.d(TAG, "FileForCaches absolute Path: " + fileForCaches.getAbsolutePath());
+		Log.d(TAG, "FileForCaches absolute Path: " + file.getAbsolutePath());
 
-		return fileForCaches;
+		return file;
 	}
 
-	private File setUpFileForDOTGraph(String graphFilename) {
-
-		// check if writable on external, if not write to internal storage!
-		if (isExternalStorageWritable()) {
-
-			// this path is used for reading and writing
-			String path =
-					this.getExternalFilesDir(null) + File.separator +
-							"Beaconite-Data";
-
-			// Create the folder.
-			File folder = new File(path);
-			folder.mkdirs();
-
-			fileForDOTGraph = new File(folder, graphFilename);
-
-		} else {
-			fileForDOTGraph = new File(this.getFilesDir(), graphFilename);
-		}
-
-		Log.d(TAG, "FileForDOTGraph absolute Path: " + fileForDOTGraph.getAbsolutePath());
-
-		return fileForDOTGraph;
-	}
+//	private File setUpFileForDOTGraph(String graphFilename) {
+//
+//		// check if writable on external, if not write to internal storage!
+//		if (isExternalStorageWritable()) {
+//
+//			// this path is used for reading and writing
+//			String path =
+//					this.getExternalFilesDir(null) + File.separator +
+//							"Beaconite-Data";
+//
+//			// Create the folder.
+//			File folder = new File(path);
+//			folder.mkdirs();
+//
+//			fileForDOTGraph = new File(folder, graphFilename);
+//
+//		} else {
+//			fileForDOTGraph = new File(this.getFilesDir(), graphFilename);
+//		}
+//
+//		Log.d(TAG, "FileForDOTGraph absolute Path: " + fileForDOTGraph.getAbsolutePath());
+//
+//		return fileForDOTGraph;
+//	}
+//
+//	private File setUpFileForGraphPosition(String filename) {
+//		return null;
+//	}
 
 	/* Checks if external storage is available for read and write */
 	public boolean isExternalStorageWritable() {

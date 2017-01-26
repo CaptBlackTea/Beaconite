@@ -6,9 +6,11 @@ import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.example.deas.beaconite.dataIO.DOTSettings;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+import com.example.deas.beaconite.graphStuff.GraphViewPositionProvider;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.agp8x.android.lib.andrograph.model.PositionProvider;
 import org.jgrapht.ext.DOTExporter;
 import org.jgrapht.ext.DOTImporter;
 import org.jgrapht.ext.ImportException;
@@ -30,17 +32,19 @@ public class FileSupervisor {
 
 	// Mapper for JSON (de-)serialization
 	private final ObjectMapper jsonMapper = new BeaconMapper();
+	private final File graphPositionFile;
 	private File cacheFile;
 	private File graphFile;
 	private String jsonAsString;
 
 	// FIXME: Exceptions
-	public FileSupervisor(File cacheFile, File graphFile) throws IllegalArgumentException {
+	public FileSupervisor(File cacheFile, File graphFile, File graphPoistionFile) throws IllegalArgumentException {
 		if (cacheFile == null && graphFile == null) {
 			throw new NullPointerException();
 		} else {
 			this.cacheFile = cacheFile;
 			this.graphFile = graphFile;
+			this.graphPositionFile = graphPoistionFile;
 		}
 		// make JSON pretty ^^ then write it in a cacheFile
 //		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -48,17 +52,31 @@ public class FileSupervisor {
 	}
 
 
-	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
+	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph, PositionProvider<BeaconiteVertex> positionProvider) {
 		try {
 			writeAllCachesInFile(allMyCaches);
+			writeGraphToFile(graph);
+			writeGraphPositionToFile(positionProvider);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
 
-		try {
-			writeGraphToFile(graph);
+	private void writeGraphPositionToFile(PositionProvider<BeaconiteVertex> positionProvider) {
+		// FIXME: Exceptions
+
+		// Map the data with Jackson, write cacheFile not with Jackson
+		// writing cacheFile with Android native tools
+		try (FileOutputStream fOut = new FileOutputStream(graphPositionFile)) {
+//			jsonAsString = jsonMapper.writeValueAsString(positionProvider);
+
+//			graphPositionFile.createNewFile();
+
+
+			jsonMapper.writeValue(fOut, positionProvider);
+
 		} catch (IOException e) {
-			e.printStackTrace();
+			Log.e("Exception", "File write failed: " + e.toString());
 		}
 	}
 
@@ -69,7 +87,7 @@ public class FileSupervisor {
 		// writing cacheFile with Android native tools
 		try (FileOutputStream fOut = new FileOutputStream(cacheFile)) {
 			jsonAsString = jsonMapper.writerFor(new TypeReference<List<Cache>>() {
-			}).writeValueAsString(allMyCaches);
+			}).writeValueAsString(allMyCaches); // TODO: remove string maker? needed?
 
 			cacheFile.createNewFile();
 
@@ -117,6 +135,25 @@ public class FileSupervisor {
 			return jsonToCacheList;
 		}
 
+
+	}
+
+	public PositionProvider<BeaconiteVertex> loadPositionProviderFromFile() throws IOException {
+
+		// TODO: optimize this?
+
+		// read Cache Data from a File with inputstream and mapper
+		try (FileInputStream fIn = new FileInputStream(graphPositionFile)) {
+
+			GraphViewPositionProvider<BeaconiteVertex> positionProviderFromFile = jsonMapper
+					.readValue(fIn, GraphViewPositionProvider.class);
+			System.out.println("\n2. Convert JSON to PostitionProvider object :");
+
+			//Print list of person objects output using Java 8
+			System.out.println(positionProviderFromFile.getPositionMap());
+
+			return positionProviderFromFile;
+		}
 
 	}
 
@@ -171,5 +208,6 @@ public class FileSupervisor {
 	public String getJsonString() {
 		return jsonAsString;
 	}
+
 
 }

@@ -107,17 +107,5 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
 
-	private void calculateArrow(Pair<Float, Float> source, Pair<Float, Float> target) {
-		// l = |targetCoordinates - sourceCoordinates| -> l = number
-		// r = 1/l * (targetCoordinates - sourceCoordinates) -> r = (rx, ry)
-
-		// rOrthogonal = (ry, -rx)
-		// U = targetCoordinates - r -> U = (ux, uy)
-
-		// V = U + rOrthogonal -> V = (vx, vy)
-		// W = U - rOrthogonal -> W = (wx, wy)
-
-
-	}
 
 }

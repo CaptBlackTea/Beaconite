@@ -55,7 +55,11 @@ public class DirectedGraphTest {
 	private File directedGraphJSON = new File("src/test/res" +
 			"/directedGraph.json");
 
-	private FileSupervisor fileSupervisor = new FileSupervisor(directedGraphJSON, directedGraphDOT);
+	private File directedGraphPositionProviderJSON = new File("src/test/res" +
+			"/directedGraphPositionProvider.json");
+
+	private FileSupervisor fileSupervisor = new FileSupervisor(directedGraphJSON,
+			directedGraphDOT, directedGraphPositionProviderJSON);
 	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
 
 	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> makeTestGraph() {
@@ -110,7 +114,9 @@ public class DirectedGraphTest {
 		File graphJSON = new File("src/test/res" +
 				"/directedGraph_FilSup.json");
 
-		FileSupervisor fileSupervisor = new FileSupervisor(graphJSON, graphDOT);
+		File directedGraphPositionProviderJSON = new File("src/test/res" +
+				"/directedGraphPositionProvider.json");
+		FileSupervisor fileSupervisor = new FileSupervisor(graphJSON, graphDOT, directedGraphPositionProviderJSON);
 
 		graph = makeTestGraph();
 
