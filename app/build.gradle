@@ -79,8 +79,7 @@ dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.8.3'
     // graph data structure
     // note: new version require Java 8 so do not use!
-    compile 'org.jgrapht:jgrapht-core:0.9.0'
+    compile 'org.jgrapht:jgrapht-core:0.9.2'
     compile 'org.jgrapht:jgrapht-ext:0.9.2'
-
-    compile project(':andrograph-release')
+    compile(name: 'andrograph-release', ext: 'aar')
 }

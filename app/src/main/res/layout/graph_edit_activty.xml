@@ -26,10 +26,17 @@
         <!--android:text="Hello World!"/>-->
 
 
-        <org.agp8x.android.lib.andrograph.view.GraphView
+        <!--<org.agp8x.android.lib.andrograph.view.GraphView-->
+        <!--android:id="@+id/graphview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteGraphView
             android:id="@+id/graphview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
+
 
         <Switch
             android:id="@+id/graphEditSwitch"

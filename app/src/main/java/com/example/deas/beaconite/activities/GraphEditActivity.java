@@ -138,6 +138,7 @@ public class GraphEditActivity extends AppCompatActivity {
 
 //		textView.setText(graphToDot(graph));
 
+//		graphView = (BeaconiteGraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphview);
 		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphview);
 
 //		PositionProvider<String> positionProvider = new MapPositionProvider<>(TestData.getStringDefaultEdgeSimpleGraphPositions(), new Coordinate(0.5, 0.8));
