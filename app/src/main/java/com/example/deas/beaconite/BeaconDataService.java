@@ -69,7 +69,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	private BeaconPositionCallback beaconPositionCallback;
 
-	private PositionProvider<BeaconiteVertex> positionProvider;
+	private GraphViewPositionProvider<BeaconiteVertex> positionProvider;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private RangeNotifier beaconNotifier = new RangeNotifier() {

@@ -10,7 +10,6 @@ import com.example.deas.beaconite.graphStuff.GraphViewPositionProvider;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.agp8x.android.lib.andrograph.model.PositionProvider;
 import org.jgrapht.ext.DOTExporter;
 import org.jgrapht.ext.DOTImporter;
 import org.jgrapht.ext.ImportException;
@@ -29,6 +28,7 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 public class FileSupervisor {
+	protected static final String TAG = "FileSupervisor";
 
 	// Mapper for JSON (de-)serialization
 	private final ObjectMapper jsonMapper = new BeaconMapper();
@@ -52,7 +52,7 @@ public class FileSupervisor {
 	}
 
 
-	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph, PositionProvider<BeaconiteVertex> positionProvider) {
+	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph, GraphViewPositionProvider<BeaconiteVertex> positionProvider) {
 		try {
 			writeAllCachesInFile(allMyCaches);
 			writeGraphToFile(graph);
@@ -62,7 +62,7 @@ public class FileSupervisor {
 		}
 	}
 
-	private void writeGraphPositionToFile(PositionProvider<BeaconiteVertex> positionProvider) {
+	private void writeGraphPositionToFile(GraphViewPositionProvider<BeaconiteVertex> positionProvider) {
 		// FIXME: Exceptions
 
 		// Map the data with Jackson, write cacheFile not with Jackson
@@ -70,6 +70,7 @@ public class FileSupervisor {
 		try (FileOutputStream fOut = new FileOutputStream(graphPositionFile)) {
 //			jsonAsString = jsonMapper.writeValueAsString(positionProvider);
 
+			Log.d(TAG, "--- PositionProvider: " + positionProvider.getPositionMap());
 //			graphPositionFile.createNewFile();
 
 
@@ -138,7 +139,7 @@ public class FileSupervisor {
 
 	}
 
-	public PositionProvider<BeaconiteVertex> loadPositionProviderFromFile() throws IOException {
+	public GraphViewPositionProvider<BeaconiteVertex> loadPositionProviderFromFile() throws IOException {
 
 		// TODO: optimize this?
 
