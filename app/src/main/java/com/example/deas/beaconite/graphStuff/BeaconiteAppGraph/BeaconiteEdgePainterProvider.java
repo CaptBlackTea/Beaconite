@@ -11,6 +11,7 @@ import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
 
 public class BeaconiteEdgePainterProvider<E> implements EdgePaintProvider<E> {
 	Paint fallback;
+	Paint currentColor;
 
 	public BeaconiteEdgePainterProvider() {
 		fallback = new Paint();
@@ -24,6 +25,6 @@ public class BeaconiteEdgePainterProvider<E> implements EdgePaintProvider<E> {
 	}
 
 	public void setEdgePaint(Paint paint) {
-
+		currentColor = paint;
 	}
 }

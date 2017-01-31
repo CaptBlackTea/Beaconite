@@ -30,6 +30,14 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 		drawDirectedEdge(canvas, edge, edgeSource, edgeTarget);
 	}
 
+	/**
+	 * Draws an edge with an arrow at the target vertex.
+	 *
+	 * @param canvas
+	 * @param edge
+	 * @param edgeSource
+	 * @param edgeTarget
+	 */
 	public void drawDirectedEdge(Canvas canvas, E edge, V edgeSource, V edgeTarget) {
 		// draw the edge
 		super.drawEdge(canvas, edge, edgeSource, edgeTarget);
