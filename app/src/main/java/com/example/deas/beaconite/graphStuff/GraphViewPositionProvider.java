@@ -20,6 +20,7 @@ public class GraphViewPositionProvider<BeaconiteVertex> extends
 	private Double defaultX;
 	private Double defaultY;
 	private Double defaultOffset;
+	private Map<String, Coordinate> jacksonPositionMap;
 
 	public GraphViewPositionProvider() {
 		super(new HashMap<BeaconiteVertex, Coordinate>(), null);
@@ -31,9 +32,15 @@ public class GraphViewPositionProvider<BeaconiteVertex> extends
 
 	}
 
+	public Map<String, Coordinate> getJacksonPositionMap() {
+		return jacksonPositionMap;
+	}
+
 	// makes that the vertices in the graphView are displayed beneath each other
 	@Override
 	public Coordinate getPosition(BeaconiteVertex vertex) {
+		convertJacksonEntry(vertex);
+
 		Coordinate coordinate = super.getPosition(vertex);
 
 		if (coordinate == null) {
@@ -47,16 +54,38 @@ public class GraphViewPositionProvider<BeaconiteVertex> extends
 		return coordinate;
 	}
 
-	// setter
-	@JsonSetter("positionMap")
-	public void setAllPositions(Map<BeaconiteVertex, Coordinate> positionMap) {
-		this.positionMap = positionMap;
+	private void convertJacksonEntry(BeaconiteVertex vertex) {
+		if (jacksonPositionMap != null) {
+			String vertexName = ((com.example.deas.beaconite.graphStuff
+					.BeaconiteVertex) vertex).getName();
+			if (jacksonPositionMap.containsKey(vertexName)) {
+				setPosition(vertex, jacksonPositionMap.remove(vertexName));
+			}
+
+			if (jacksonPositionMap.isEmpty()) {
+				jacksonPositionMap = null;
+			}
+
+		}
 	}
 
-	// getter with Jackson annotation
-	// returns a complete map
+	@JsonSetter("positionMap")
+	public void setAllPositions(Map<String, Coordinate> positionMap) {
+		this.jacksonPositionMap = positionMap;
+	}
+
+	/**
+	 * getter with Jackson annotation; returns a complete map TODO: fix docu!!
+	 */
 	@JsonGetter("positionMap")
-	public Map<BeaconiteVertex, Coordinate> getPositionMap() {
-		return null;
+	public Map<String, Coordinate> getPositionMap() {
+
+		HashMap<String, Coordinate> jacksonPosMap = new HashMap<>();
+		for (Map.Entry<BeaconiteVertex, Coordinate> entry : positionMap.entrySet()) {
+
+			jacksonPosMap.put(((com.example.deas.beaconite.graphStuff.BeaconiteVertex) entry.getKey
+					()).getName(), entry.getValue());
+		}
+		return jacksonPosMap;
 	}
 }

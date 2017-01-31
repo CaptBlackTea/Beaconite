@@ -14,7 +14,6 @@ import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.GraphViewPositionProvider;
 
-import org.agp8x.android.lib.andrograph.model.PositionProvider;
 import org.altbeacon.beacon.Beacon;
 import org.altbeacon.beacon.BeaconConsumer;
 import org.altbeacon.beacon.BeaconManager;
@@ -160,6 +159,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		// TODO: persistent storage -> write to file!
 		positionProvider = new GraphViewPositionProvider<>();
+		Log.d(TAG, "OnCreate PositionProvider: " + positionProvider);
+		Log.d(TAG, "OnCreate PositionProvider Map: " + positionProvider.getPositionMap());
 
 		beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout("m:0-3=4c000215,i:4-19,i:20-21,i:22-23,p:24-24"));
 
@@ -395,6 +396,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		// Create the file.
 //		fileSupervisor.writeAllCachesInFile(allMyCaches);
+		Log.d(TAG, "#### PositionProvider: " + positionProvider.getPositionMap());
 		fileSupervisor.writeAllDataInFile(allMyCaches, graph, positionProvider);
 	}
 
@@ -447,8 +449,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		this.graph = fileSupervisor.loadGraphFromFile();
 
-		this.positionProvider = fileSupervisor.loadPositionProviderFromFile();
-
+		this.positionProvider.setAllPositions(fileSupervisor.loadPositionProviderFromFile().getJacksonPositionMap());
 
 	}
 
@@ -482,34 +483,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return file;
 	}
 
-//	private File setUpFileForDOTGraph(String graphFilename) {
-//
-//		// check if writable on external, if not write to internal storage!
-//		if (isExternalStorageWritable()) {
-//
-//			// this path is used for reading and writing
-//			String path =
-//					this.getExternalFilesDir(null) + File.separator +
-//							"Beaconite-Data";
-//
-//			// Create the folder.
-//			File folder = new File(path);
-//			folder.mkdirs();
-//
-//			fileForDOTGraph = new File(folder, graphFilename);
-//
-//		} else {
-//			fileForDOTGraph = new File(this.getFilesDir(), graphFilename);
-//		}
-//
-//		Log.d(TAG, "FileForDOTGraph absolute Path: " + fileForDOTGraph.getAbsolutePath());
-//
-//		return fileForDOTGraph;
-//	}
-//
-//	private File setUpFileForGraphPosition(String filename) {
-//		return null;
-//	}
 
 	/* Checks if external storage is available for read and write */
 	public boolean isExternalStorageWritable() {
@@ -533,7 +506,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return this.graph;
 	}
 
-	public PositionProvider<BeaconiteVertex> getPositionProvider() {
+	public GraphViewPositionProvider<BeaconiteVertex> getPositionProvider() {
 		return this.positionProvider;
 	}
 

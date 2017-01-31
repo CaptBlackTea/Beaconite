@@ -64,6 +64,7 @@ public class FileSupervisor {
 
 	private void writeGraphPositionToFile(GraphViewPositionProvider<BeaconiteVertex> positionProvider) {
 		// FIXME: Exceptions
+		Log.d(TAG, "--- PositionProvider: " + positionProvider.getPositionMap());
 
 		// Map the data with Jackson, write cacheFile not with Jackson
 		// writing cacheFile with Android native tools
