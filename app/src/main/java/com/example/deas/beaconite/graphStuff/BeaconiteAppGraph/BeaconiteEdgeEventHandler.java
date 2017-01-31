@@ -2,7 +2,7 @@ package com.example.deas.beaconite.graphStuff.BeaconiteAppGraph;
 
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 
-import org.agp8x.android.lib.andrograph.model.defaults.EdgeEvent;
+import org.agp8x.android.lib.andrograph.model.EdgeEvent;
 
 /**
  * Created by deas on 31/01/17.
