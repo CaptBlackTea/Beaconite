@@ -49,4 +49,8 @@
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
     <string name="txPower">Tx:</string>
+    <string name="modeMove">Move vertices</string>
+    <string name="modeEditEdges">Edit edges</string>
+    <string name="modeAnnotateEdges">Annotate edges</string>
+    <string name="chooseAnnotation">Annotate selected edge:</string>
 </resources>

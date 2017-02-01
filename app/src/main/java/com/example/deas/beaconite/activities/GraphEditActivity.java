@@ -13,10 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Switch;
+import android.widget.RadioButton;
 
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
+import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgeEventHandler;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgePainterProvider;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
@@ -46,6 +47,7 @@ public class GraphEditActivity extends AppCompatActivity {
 
 	// the graph
 	private GraphView<BeaconiteVertex, BeaconiteEdge> graphView;
+	private DefaultGraphViewController<BeaconiteVertex, BeaconiteEdge> graphViewController;
 
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
@@ -79,9 +81,11 @@ public class GraphEditActivity extends AppCompatActivity {
 		}
 	};
 
+
 	private void setupGraphView() {
 
 		Map<EdgeAttribute, Paint> edgePaintMap = makeEdgePaintMap();
+//		makeEdgeColorLegend(edgePaintMap);
 
 //		PositionProvider<BeaconiteVertex> positionProvider =  new GraphViewPositionProvider<>();
 		EdgePaintProvider<BeaconiteEdge> epp = new BeaconiteEdgePainterProvider<>(edgePaintMap);
@@ -92,18 +96,35 @@ public class GraphEditActivity extends AppCompatActivity {
 		// TODO: custom permission policy or other VertexFactory
 		VertexFactory<BeaconiteVertex> vertexFactory = new StringVertexFactory<>();
 
-		DefaultGraphViewController<BeaconiteVertex, BeaconiteEdge> graphViewController = new
-				DefaultGraphViewController<>
+		graphViewController = new DefaultGraphViewController<>
 				(mService.getGraph(), mService.getPositionProvider(), epp, vpp, vertexFactory, pp);
-
-		// TODO: make switch(?) and set eventHanlder to own implementation or null for default
-		// -> makes it possible to change how to interact with edges
 
 		graphView.setController(graphViewController);
 		graphView.invalidate();
 
 		Log.d(TAG, "#### Graph: " + mService.getGraph());
 	}
+
+//	private void makeEdgeColorLegend(Map<EdgeAttribute, Paint> edgePaintMap) {
+//		// Find the ListView resource.
+//		ListView legend = (ListView) findViewById(R.id.edgeAttributesLegend);
+//
+//		// Create and populate the list with the edge attribute enums
+//		Enum[] attributes = EdgeAttribute.values();
+//
+//		// Create ArrayAdapter using the array.
+//		int colors;
+//		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.edgecolors_legend, colors,
+//				attributes);
+//
+//		// If you passed a String[] instead of a List<String>
+//		// into the ArrayAdapter constructor, you must not add more items.
+//		// Otherwise an exception will occur.
+//
+//		// Set the ArrayAdapter as the ListView's adapter.
+//		legend.setAdapter( listAdapter );
+//	}
+
 
 	@NonNull
 	private Map<EdgeAttribute, Paint> makeEdgePaintMap() {
@@ -119,6 +140,7 @@ public class GraphEditActivity extends AppCompatActivity {
 	private Paint makePaint(int color) {
 		Paint paint = new Paint();
 		paint.setColor(this.getResources().getColor(color));
+		paint.setStrokeWidth(5);
 		return paint;
 	}
 
@@ -151,15 +173,16 @@ public class GraphEditActivity extends AppCompatActivity {
 
 		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphview);
 
-		final Switch creationSwitch = (Switch) findViewById(R.id.graphEditSwitch);
-		creationSwitch.setChecked(true);
-		creationSwitch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				graphView.setInsertionMode(creationSwitch.isChecked());
-				creationSwitch.setChecked(graphView.isInsertionMode());
-			}
-		});
+//		final Switch creationSwitch = (Switch) findViewById(R.id.graphEditSwitch);
+//		creationSwitch.setChecked(true);
+//		creationSwitch.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View view) {
+//				graphView.setInsertionMode(creationSwitch.isChecked());
+//				creationSwitch.setChecked(graphView.isInsertionMode());
+//			}
+//		});
+
 	}
 
 	@Override
@@ -202,5 +225,45 @@ public class GraphEditActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+	}
+
+
+	// TODO: use RadioGroup and set eventHanlder to own implementation or null for default
+	// -> makes it possible to change how to interact with edges
+	public void onRadioButtonClicked(View view) {
+
+		// Is the button now checked?
+		boolean checked = ((RadioButton) view).isChecked();
+
+		// Check which radio button was clicked
+		switch (view.getId()) {
+			case R.id.modeMove:
+				if (checked) {
+					// vertices can be moved
+					graphView.setInsertionMode(true);
+					// just in case: reset the Handler to the default behaviour.
+					graphViewController.setEdgeEventHandler(null);
+				}
+				break;
+			case R.id.modeEditEdges:
+				if (checked) {
+					// make / delete edges
+					graphView.setInsertionMode(false);
+					// reset the edgeEventHandler to the default. adds/deletes edges if selected
+					graphViewController.setEdgeEventHandler(null);
+				}
+				break;
+			case R.id.modeAnnotateEdges:
+				if (checked) {
+					// annotate edges
+					graphView.setInsertionMode(false);
+
+					// use own EventHandler to manage the behaviour when an edge is selected in this
+					// mode
+					graphViewController.setEdgeEventHandler(new BeaconiteEdgeEventHandler(this));
+				}
+				break;
+		}
+
 	}
 }

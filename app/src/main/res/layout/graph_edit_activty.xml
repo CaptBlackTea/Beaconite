@@ -38,13 +38,50 @@
             />
 
 
-        <Switch
-            android:id="@+id/graphEditSwitch"
+        <!--<Switch-->
+        <!--android:id="@+id/graphEditSwitch"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginEnd="82dp"-->
+        <!--android:text="@string/beaconitGraphSwitch"-->
+        <!--/>-->
+
+        <RadioGroup
+            android:id="@+id/changeEditMode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginEnd="82dp"
-            android:text="@string/beaconitGraphSwitch"
-            />
+            android:checkedButton="@+id/modeMove"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/modeMove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/modeMove"/>
+
+            <RadioButton
+                android:id="@+id/modeEditEdges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/modeEditEdges"/>
+
+            <RadioButton
+                android:id="@+id/modeAnnotateEdges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/modeAnnotateEdges"/>
+
+        </RadioGroup>
     </RelativeLayout>
+
+    <ListView
+        android:id="@+id/edgeAttributesLegend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ListView>
 </LinearLayout>
