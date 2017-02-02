@@ -40,7 +40,7 @@ public class BeaconiteVertexPaintProvider<V> implements
 		labelPaint.setTextSize(25);
 		labelPaint.setStrokeWidth(2);
 
-		offset = new Coordinate(-0.01, 0.01);
+		offset = new Coordinate(0.02, 0.03);
 	}
 
 	@Override

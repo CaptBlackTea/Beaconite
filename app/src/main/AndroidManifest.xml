@@ -57,6 +57,10 @@
             android:label="Edit Graph"
             android:parentActivityName=".activities.MainActivity">
         </activity>
+        <activity
+            android:name=".activities.Relocation"
+            android:parentActivityName=".activities.MainActivity">
+        </activity>
     </application>
 
 </manifest>

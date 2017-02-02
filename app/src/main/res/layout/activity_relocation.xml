@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_relocation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.deas.beaconite.activities.Relocation">
+
+    <!-- Load the toolbar here -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/separateCacheVertex_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onSeparateCacheVertexBtnClicked"
+                android:text="@string/seperateBtnText"/>
+
+            <Button
+                android:id="@+id/recordNewCaches_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onRecordNewCachesBtnClicked"
+                android:text="@string/recordNewCachesBtnText"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/relocatedGraphActivity_Btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:onClick="onRelocatedGraphBtnClicked"
+                android:text="@string/startRelocatedGraphActivity"/>
+            <!--<Button-->
+            <!--android:id="@+id/relocatedGraphActivity_Btn"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:onClick="onRelocatedGraphBtnClicked"-->
+            <!--android:text="@string/startRelocatedGraphActivity"/>-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            >
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<Button-->
+        <!--android:id="@+id/saveCaches_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="saveCachesBtn"-->
+        <!--android:text="@string/saveCachesBtn"/>-->
+
+
+        <!--<Button-->
+        <!--android:id="@+id/saveGraph_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="saveGraphBtn"-->
+        <!--android:text="@string/saveGraphBtn"/>-->
+
+        <!--<Button-->
+        <!--android:id="@+id/saveAllData_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="saveAllDataBtn"-->
+        <!--android:text="@string/saveAllDataBtn"/>-->
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="20dp"-->
+        <!--&gt;-->
+
+        <!--</LinearLayout>-->
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<Button-->
+        <!--android:id="@+id/loadCaches_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="onLoadCachesBtnClicked"-->
+        <!--android:text="@string/loadCaches"/>-->
+
+        <!--<Button-->
+        <!--android:id="@+id/loadGraph_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="loadGraphBtn"-->
+        <!--android:text="@string/loadGraphBtn"/>-->
+
+        <!--<Button-->
+        <!--android:id="@+id/loadAllData_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="loadAllDataBtn"-->
+        <!--android:text="@string/loadAllDataBtn"/>-->
+        <!--</LinearLayout>-->
+
+    </LinearLayout>
+
+</LinearLayout>

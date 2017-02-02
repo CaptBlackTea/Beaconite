@@ -247,8 +247,6 @@ public class GraphEditActivity extends AppCompatActivity {
 	}
 
 
-	// TODO: use RadioGroup and set eventHanlder to own implementation or null for default
-	// -> makes it possible to change how to interact with edges
 	public void onRadioButtonClicked(View view) {
 
 		// Is the button now checked?
