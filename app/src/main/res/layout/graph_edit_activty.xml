@@ -49,39 +49,52 @@
 
         <RadioGroup
             android:id="@+id/changeEditMode"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:checkedButton="@+id/modeMove"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="2dp">
 
             <RadioButton
                 android:id="@+id/modeMove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/modeMove"/>
+                android:text="@string/modeMove"
+                />
 
             <RadioButton
                 android:id="@+id/modeEditEdges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/modeEditEdges"/>
+                android:text="@string/modeEditEdges"
+                />
 
             <RadioButton
                 android:id="@+id/modeAnnotateEdges"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
-                android:text="@string/modeAnnotateEdges"/>
+                android:text="@string/modeAnnotateEdges"
+                />
+
+            <RadioButton
+                android:id="@+id/modeAnnotateVertex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/modeAnnotateVertex"
+                />
 
         </RadioGroup>
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/edgeAttributesLegend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ListView>
+    <!--TODO: implement later -> nice to have-->
+    <!--<ListView-->
+    <!--android:id="@+id/edgeAttributesLegend"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--</ListView>-->
 </LinearLayout>

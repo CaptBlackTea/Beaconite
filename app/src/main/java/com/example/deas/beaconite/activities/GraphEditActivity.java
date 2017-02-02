@@ -19,16 +19,18 @@ import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgeEventHandler;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgePainterProvider;
+import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteVertexEventHandler;
+import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteVertexPaintProvider;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.EdgeAttribute;
+import com.example.deas.beaconite.graphStuff.VertexAttribute;
 
 import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
 import org.agp8x.android.lib.andrograph.model.PermissionPolicy;
 import org.agp8x.android.lib.andrograph.model.VertexPaintProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.DefaultGraphViewController;
-import org.agp8x.android.lib.andrograph.model.defaults.DefaultVertexPaintProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
@@ -85,11 +87,15 @@ public class GraphEditActivity extends AppCompatActivity {
 	private void setupGraphView() {
 
 		Map<EdgeAttribute, Paint> edgePaintMap = makeEdgePaintMap();
+		Map<VertexAttribute, Paint> vertexPaintMap = makeVertexPaintMap();
+
+		// TODO: implement later -> nice to have
 //		makeEdgeColorLegend(edgePaintMap);
 
 //		PositionProvider<BeaconiteVertex> positionProvider =  new GraphViewPositionProvider<>();
 		EdgePaintProvider<BeaconiteEdge> epp = new BeaconiteEdgePainterProvider<>(edgePaintMap);
-		VertexPaintProvider<BeaconiteVertex> vpp = new DefaultVertexPaintProvider<>();
+		VertexPaintProvider<BeaconiteVertex> vpp = new BeaconiteVertexPaintProvider<>
+				(vertexPaintMap);
 
 		PermissionPolicy<BeaconiteVertex, BeaconiteEdge> pp = new BeaconitePermissionPolicy();
 
@@ -105,6 +111,7 @@ public class GraphEditActivity extends AppCompatActivity {
 		Log.d(TAG, "#### Graph: " + mService.getGraph());
 	}
 
+	// TODO: implement later -> nice to have
 //	private void makeEdgeColorLegend(Map<EdgeAttribute, Paint> edgePaintMap) {
 //		// Find the ListView resource.
 //		ListView legend = (ListView) findViewById(R.id.edgeAttributesLegend);
@@ -128,19 +135,31 @@ public class GraphEditActivity extends AppCompatActivity {
 
 	@NonNull
 	private Map<EdgeAttribute, Paint> makeEdgePaintMap() {
-
+		int strokeWidth = 5;
 		Map<EdgeAttribute, Paint> paintHashMap = new HashMap<>();
-		paintHashMap.put(EdgeAttribute.MUSTNOT, makePaint(R.color.red_500));
-		paintHashMap.put(EdgeAttribute.REQUIRED, makePaint(R.color.green_500));
-		paintHashMap.put(EdgeAttribute.NONE, makePaint(R.color.black));
+		paintHashMap.put(EdgeAttribute.MUSTNOT, makePaint(R.color.red_500, strokeWidth));
+		paintHashMap.put(EdgeAttribute.REQUIRED, makePaint(R.color.green_500, strokeWidth));
+		paintHashMap.put(EdgeAttribute.NONE, makePaint(R.color.black, strokeWidth));
 		return paintHashMap;
 	}
 
 	@NonNull
-	private Paint makePaint(int color) {
+	private Map<VertexAttribute, Paint> makeVertexPaintMap() {
+		int strokeWidth = 5;
+
+		Map<VertexAttribute, Paint> paintHashMap = new HashMap<>();
+		paintHashMap.put(VertexAttribute.DANGER, makePaint(R.color.purple_500, strokeWidth));
+		paintHashMap.put(VertexAttribute.PROTECTION, makePaint(R.color.indigo_500, strokeWidth));
+		paintHashMap.put(VertexAttribute.TREASURE, makePaint(R.color.amber_A400, strokeWidth));
+		paintHashMap.put(VertexAttribute.NONE, makePaint(R.color.black, strokeWidth));
+		return paintHashMap;
+	}
+
+	@NonNull
+	private Paint makePaint(int color, int strokeWidth) {
 		Paint paint = new Paint();
 		paint.setColor(this.getResources().getColor(color));
-		paint.setStrokeWidth(5);
+		paint.setStrokeWidth(strokeWidth);
 		return paint;
 	}
 
@@ -243,6 +262,7 @@ public class GraphEditActivity extends AppCompatActivity {
 					graphView.setInsertionMode(true);
 					// just in case: reset the Handler to the default behaviour.
 					graphViewController.setEdgeEventHandler(null);
+					graphViewController.setVertexEventHandler(null);
 				}
 				break;
 			case R.id.modeEditEdges:
@@ -251,6 +271,7 @@ public class GraphEditActivity extends AppCompatActivity {
 					graphView.setInsertionMode(false);
 					// reset the edgeEventHandler to the default. adds/deletes edges if selected
 					graphViewController.setEdgeEventHandler(null);
+					graphViewController.setVertexEventHandler(null);
 				}
 				break;
 			case R.id.modeAnnotateEdges:
@@ -261,6 +282,19 @@ public class GraphEditActivity extends AppCompatActivity {
 					// use own EventHandler to manage the behaviour when an edge is selected in this
 					// mode
 					graphViewController.setEdgeEventHandler(new BeaconiteEdgeEventHandler(this));
+					graphViewController.setVertexEventHandler(null);
+				}
+				break;
+			case R.id.modeAnnotateVertex:
+				if (checked) {
+					// annotate edges
+					graphView.setInsertionMode(false);
+
+					// use own EventHandler to manage the behaviour when an vertex is selected in
+					// this
+					// mode
+					graphViewController.setVertexEventHandler(new BeaconiteVertexEventHandler
+							(this));
 				}
 				break;
 		}
