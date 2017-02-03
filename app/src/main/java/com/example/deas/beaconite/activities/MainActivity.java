@@ -32,13 +32,13 @@ import java.io.IOException;
  * https://github.com/AltBeacon/android-beacon-library-reference/blob/master/app/src/main/java/org/altbeacon/beaconreference/MonitoringActivity.java
  * <p/>
  * DONE: Refactoring so that this is the main activity that starts/stops all important services
- * TODO: has the control over the services (resetting data and so on)
+ * DONE: has the control over the services (resetting data and so on)
  * TODO: scanning mode on/off
  * TODO: start/stop/reset BeaconDataService
- * TODO: use/use not/restart MyBeaconSimulator
+ * DONE: use/use not/restart MyBeaconSimulator
  * DONE: go to TableActivity (= show table with live data)
  * DONE: go to ChartActivity (= show collected data as graph)
- * TODO: go to GenerateCachesActivity (= show/record caches)
+ * DONE: go to GenerateCachesActivity (= show/record caches)
  * DONE: Exit BeaconiteApp and close all services and background scans
  *
  * @author dea 25.6.2016

@@ -48,8 +48,6 @@ import java.util.TreeMap;
  * This service represents roughly the model. All activities etc can bind to it and ask for the
  * currently stored data.
  * <p>
- * TODO: implement permanent data storage to a file!
- * <p>
  * Created by deas on 26/08/16.
  */
 public class BeaconDataService extends Service implements BeaconConsumer {
@@ -437,7 +435,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	 * Loads a graph from a file leaves caches empty!
 	 */
 	public void loadGraphFromFile() {
-
+		// FIXME!
 	}
 
 	/**

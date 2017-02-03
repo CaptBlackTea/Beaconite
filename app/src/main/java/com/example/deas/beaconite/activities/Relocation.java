@@ -116,14 +116,16 @@ public class Relocation extends AppCompatActivity {
 	public void onSeparateCacheVertexBtnClicked(View view) {
 		// TODO
 
-		// Take Graph-Verti
+		// Take Graph-Vertices and disconnect from Cache Objects
 	}
 
 	public void onRecordNewCachesBtnClicked(View view) {
 		// TODO
+		// Record fresh caches
 	}
 
 	public void onRelocatedGraphBtnClicked(View view) {
 		// TODO
+		// show the relocated graph
 	}
 }
