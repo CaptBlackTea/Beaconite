@@ -15,7 +15,7 @@ import android.view.View;
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
 
-public class Relocation extends AppCompatActivity {
+public class RelocationActivity extends AppCompatActivity {
 	protected static final String TAG = "RelocationActivity";
 
 	// the Service
@@ -113,19 +113,26 @@ public class Relocation extends AppCompatActivity {
 	}
 
 
-	public void onSeparateCacheVertexBtnClicked(View view) {
+	public void onResetCacheRecordingsBtnClicked(View view) {
 		// TODO
 
-		// Take Graph-Vertices and disconnect from Cache Objects
+		// Remove all location data from Cache Objects
+		if (mService != null) {
+			mService.clearLocationDataForAllCaches();
+		}
 	}
 
 	public void onRecordNewCachesBtnClicked(View view) {
 		// TODO
 		// Record fresh caches
+		Intent myIntent = new Intent(this, GenerateCachesActivity.class);
+		this.startActivity(myIntent);
 	}
 
 	public void onRelocatedGraphBtnClicked(View view) {
 		// TODO
 		// show the relocated graph
+		Intent myIntent = new Intent(this, GraphRelocationActivity.class);
+		this.startActivity(myIntent);
 	}
 }

@@ -130,9 +130,23 @@ public class BeaconiteVertex {
 		return name;
 	}
 
-	// TODO: should the name (=main identificator) be changable??
-	public void setName(String name) {
+
+	/**
+	 * Set a name for this vertex. Must not be null or an empty String! Also renames the cache
+	 * connected to this vertex.
+	 *
+	 * @param name the new name of the vertex
+	 * @throws IllegalArgumentException
+	 */
+	public void setName(String name) throws IllegalArgumentException {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name must not be empty or null!");
+		}
 		this.name = name;
+
+		if (this.cache != null && !cache.getCacheName().equals(this.name)) {
+			this.cache.setName(this.name);
+		}
 	}
 
 	@Override
@@ -145,7 +159,11 @@ public class BeaconiteVertex {
 	}
 
 
-	// FIXME: maybe equals should work with the vertex id instead of or in combination with the name
+	/**
+	 * works with the vertex id instead of the name
+	 * @param o the vertex that is being compared to this one.
+	 * @return true if the vertices have the same id
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -153,13 +171,14 @@ public class BeaconiteVertex {
 
 		BeaconiteVertex vertex = (BeaconiteVertex) o;
 
-		return name != null ? name.equals(vertex.name) : vertex.name == null;
+//		return name != null ? name.equals(vertex.name) : vertex.name == null;
+		return id != null ? id.equals(vertex.id) : vertex.id == null;
 
 	}
 
 	@Override
 	public int hashCode() {
-		return name != null ? name.hashCode() : 0;
+		return id != null ? id.hashCode() : 0;
 	}
 
 	public void updateVertex(Map<String, String> attributes) {

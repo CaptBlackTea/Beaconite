@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.deas.beaconite.activities.Relocation">
+    tools:context="com.example.deas.beaconite.activities.RelocationActivity">
 
     <!-- Load the toolbar here -->
     <include
@@ -35,7 +35,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:onClick="onSeparateCacheVertexBtnClicked"
+                android:onClick="onResetCacheRecordingsBtnClicked"
                 android:text="@string/seperateBtnText"/>
 
             <Button

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_graph_relocation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+
+    tools:context="com.example.deas.beaconite.activities.GraphRelocationActivity">
+
+    <!-- Load the toolbar here -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<TextView-->
+        <!--android:id="@+id/textview"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Hello World!"/>-->
+
+
+        <!--<org.agp8x.android.lib.andrograph.view.GraphView-->
+        <!--android:id="@+id/graphview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"/>-->
+
+        <com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteGraphView
+            android:id="@+id/graphRelocationview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+
+        <!--<RadioGroup-->
+        <!--android:id="@+id/changeEditMode"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:checkedButton="@+id/modeMove"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="2dp">-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/modeMove"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onRadioButtonClicked"-->
+        <!--android:text="@string/modeMove"-->
+        <!--/>-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/modeEditEdges"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onRadioButtonClicked"-->
+        <!--android:text="@string/modeEditEdges"-->
+        <!--/>-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/modeAnnotateEdges"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onRadioButtonClicked"-->
+        <!--android:text="@string/modeAnnotateEdges"-->
+        <!--/>-->
+
+        <!--<RadioButton-->
+        <!--android:id="@+id/modeAnnotateVertex"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:onClick="onRadioButtonClicked"-->
+        <!--android:text="@string/modeAnnotateVertex"-->
+        <!--/>-->
+
+        <!--</RadioGroup>-->
+    </RelativeLayout>
+
+    <!--TODO: implement later -> nice to have-->
+    <!--<ListView-->
+    <!--android:id="@+id/edgeAttributesLegend"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content">-->
+    <!--</ListView>-->
+</LinearLayout>

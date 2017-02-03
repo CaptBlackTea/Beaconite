@@ -2,11 +2,15 @@ package com.example.deas.beaconite.graphStuff.BeaconiteAppGraph;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Pair;
 
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.graph.DefaultEdge;
+
+import java.util.List;
 
 /**
  * Created by deas on 25/01/17.
@@ -115,5 +119,22 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
 
+	// FIXME: make this method reachable or put it elsewhere :l
+	public void drawHighlightedVertex(List<V> vertices) {
+		for (V vertex : vertices) {
+			Pair<Float, Float> vertexCoord = super.vertex2view(vertex);
+
+			Canvas canvas = new Canvas();
+
+			//draw
+			Paint paint = new Paint();
+			paint.setColor(Color.RED);
+			canvas.drawCircle(
+					vertexCoord.first,
+					vertexCoord.second,
+					30,
+					paint);
+		}
+	}
 
 }

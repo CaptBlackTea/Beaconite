@@ -405,7 +405,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void onStartRelocationActivityBtnClicked(View view) {
-		Intent myIntent = new Intent(this, Relocation.class);
+		Intent myIntent = new Intent(this, RelocationActivity.class);
 		this.startActivity(myIntent);
 	}
 }

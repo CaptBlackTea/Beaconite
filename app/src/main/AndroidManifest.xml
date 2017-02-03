@@ -58,8 +58,10 @@
             android:parentActivityName=".activities.MainActivity">
         </activity>
         <activity
-            android:name=".activities.Relocation"
+            android:name=".activities.RelocationActivity"
             android:parentActivityName=".activities.MainActivity">
+        </activity>
+        <activity android:name=".activities.GraphRelocationActivity">
         </activity>
     </application>
 

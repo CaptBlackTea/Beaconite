@@ -22,7 +22,7 @@ import java.util.List;
 @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
 public class Cache {
 	protected static final String TAG = "Cache";
-	private final String name;
+	private String name;
 	private Fingerprint fingerprint;
 	// Collection of all time intervals associated with this cache.
 	private List<TimeInterval> timeIntervals;
@@ -118,6 +118,25 @@ public class Cache {
 	}
 
 	/**
+	 * Set a name for this cache. Must not be null or an empty String! Also renames the Vertex
+	 * connected to this cache.
+	 *
+	 * @param name the new name of the cache
+	 * @throws IllegalArgumentException
+	 */
+	public void setName(String name) throws IllegalArgumentException {
+		if (name == null || name.isEmpty()) {
+			throw new IllegalArgumentException("Name must not be empty or null!");
+		}
+		this.name = name;
+
+		if (this.vertex != null && !vertex.getName().equals(this.name)) {
+			this.vertex.setName(name);
+		}
+	}
+
+
+	/**
 	 * Returns all time intervals associated with this cache.
 	 *
 	 * @return a list of TimeInterval objects stored for this cache.
@@ -152,7 +171,7 @@ public class Cache {
 	}
 
 	/**
-	 * TODO: update!
+	 * TODO: update! -> what is here to update?? -.-" make better notes next time...
 	 *
 	 * @param vertex
 	 * @return true if the given vertex was disconnected from this cache false if given vertex is
@@ -174,6 +193,14 @@ public class Cache {
 
 	public BeaconiteVertex getVertex() {
 		return this.vertex;
+	}
+
+	/**
+	 * Clears the cache of all data needed for localizing it. Fingerprint and its Timestamp-Pairs.
+	 */
+	public void clearLocationData() {
+		this.fingerprint = null;
+		this.timeIntervals.clear();
 	}
 
 }

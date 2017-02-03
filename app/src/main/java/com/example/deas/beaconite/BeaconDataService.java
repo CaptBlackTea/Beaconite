@@ -321,6 +321,15 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	}
 
 	/**
+	 * Remove all data needed to locate a cache.
+	 */
+	public void clearLocationDataForAllCaches() {
+		for (Cache cache : this.allMyCaches) {
+			cache.clearLocationData();
+		}
+	}
+
+	/**
 	 * If the given cache is unknown it creates a new cache with this name and adds the given
 	 * timestamp pair. If this cache exists it just adds the timestamp pair.
 	 *
