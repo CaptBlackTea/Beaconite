@@ -456,8 +456,36 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		this.graph = fileSupervisor.loadGraphFromFile();
 
+		// reconnect caches and vertices
+		connectGraphWithCaches();
+
 		this.positionProvider.setAllPositions(fileSupervisor.loadPositionProviderFromFile().getJacksonPositionMap());
 
+//		for (Cache cache : allMyCaches) {
+//			Log.d(TAG, "cache:" + cache.getCacheName());
+//			Log.d(TAG, "cache-TSList:" + cache.getTimeIntervals().size());
+//			Log.d(TAG, "cache-vertex:" + cache.getVertex().getName());
+//
+//		}
+//
+//		for (BeaconiteVertex vertex : graph.vertexSet()) {
+//
+//			Log.d(TAG, "vertex: " + vertex.toString());
+//
+//		}
+	}
+
+	/**
+	 * Connect the vertices from the current graph with the current caches. Useful after loading
+	 * caches and graph from files to reconnect them. Currently: connection via name equivalency.
+	 */
+	private void connectGraphWithCaches() {
+		for (BeaconiteVertex v : graph.vertexSet()) {
+			for (Cache c : allMyCaches) {
+				if (c.getCacheName().equals(v.getName()))
+					v.connectToCache(c);
+			}
+		}
 	}
 
 	/**

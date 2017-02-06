@@ -55,8 +55,8 @@
     <string name="modeAnnotateVertex">Desc. Vertex</string>
     <string name="chooseAnnotation">Annotate selected edge:</string>
     <string name="chooseAnnotationVertex">Annotate selected vertex</string>
-    <string name="relocation">Relocation...</string>
-    <string name="seperateBtnText">Seperate Caches from Vertices</string>
+    <string name="relocation">Relocation&#8230;</string>
+    <string name="seperateBtnText">Clear location data</string>
     <string name="startRelocatedGraphActivity">Graph</string>
     <string name="recordNewCachesBtnText">Record Caches</string>
 </resources>

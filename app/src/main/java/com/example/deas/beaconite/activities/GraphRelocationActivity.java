@@ -101,6 +101,8 @@ public class GraphRelocationActivity extends AppCompatActivity {
 		graphViewController = new DefaultGraphViewController<>
 				(mService.getGraph(), mService.getPositionProvider(), epp, vpp, vertexFactory, pp);
 
+		graphViewController.setVertexEventHandler(new RealoacteEventHandler(this));
+
 		graphView.setController(graphViewController);
 		graphView.invalidate();
 
@@ -187,6 +189,7 @@ public class GraphRelocationActivity extends AppCompatActivity {
 		Log.d(TAG, "#### CREATE");
 
 		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphRelocationview);
+
 	}
 
 	@Override

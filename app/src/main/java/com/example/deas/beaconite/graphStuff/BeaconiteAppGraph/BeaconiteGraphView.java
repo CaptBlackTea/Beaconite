@@ -7,6 +7,8 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Pair;
 
+import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.graph.DefaultEdge;
 
@@ -17,6 +19,9 @@ import java.util.List;
  */
 
 public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E> {
+
+	protected static final String TAG = "BeaconiteGraphView";
+
 	public BeaconiteGraphView(Context context) {
 		super(context);
 	}
@@ -118,6 +123,37 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 		// remember: sqrt returns only positive result, therefore no .abs needed!
 		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
+
+	/**
+	 * Draws the vertex as set in the super class. Adds that a vertex is highlighted, if its
+	 * connected cache has no location recordings.
+	 *
+	 * @param canvas
+	 * @param v
+	 */
+	@Override
+	protected void drawVertex(Canvas canvas, V v) {
+
+
+		if (v instanceof BeaconiteVertex) {
+			BeaconiteVertex vertex = (BeaconiteVertex) v;
+
+			if (vertex.getCache() != null && vertex.getCache().getTimeIntervals().isEmpty()) {
+
+				//draw highlight around vertex that has no location recordings
+				Pair<Float, Float> vertexCoord = super.vertex2view(v);
+				Paint paint = new Paint();
+				paint.setColor(Color.RED);
+				canvas.drawCircle(
+						vertexCoord.first,
+						vertexCoord.second,
+						40,
+						paint);
+			}
+		}
+		super.drawVertex(canvas, v);
+	}
+
 
 	// FIXME: make this method reachable or put it elsewhere :l
 	public void drawHighlightedVertex(List<V> vertices) {

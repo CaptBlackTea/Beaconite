@@ -114,8 +114,6 @@ public class RelocationActivity extends AppCompatActivity {
 
 
 	public void onResetCacheRecordingsBtnClicked(View view) {
-		// TODO
-
 		// Remove all location data from Cache Objects
 		if (mService != null) {
 			mService.clearLocationDataForAllCaches();
@@ -123,14 +121,12 @@ public class RelocationActivity extends AppCompatActivity {
 	}
 
 	public void onRecordNewCachesBtnClicked(View view) {
-		// TODO
 		// Record fresh caches
 		Intent myIntent = new Intent(this, GenerateCachesActivity.class);
 		this.startActivity(myIntent);
 	}
 
 	public void onRelocatedGraphBtnClicked(View view) {
-		// TODO
 		// show the relocated graph
 		Intent myIntent = new Intent(this, GraphRelocationActivity.class);
 		this.startActivity(myIntent);

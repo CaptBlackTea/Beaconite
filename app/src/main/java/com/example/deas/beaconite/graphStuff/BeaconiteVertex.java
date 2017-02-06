@@ -155,6 +155,7 @@ public class BeaconiteVertex {
 				"name='" + name + '\'' +
 				"id='" + id + '\'' +
 				"attribute='" + attribute + '\'' +
+				"cache='" + cache + '\'' +
 				'}';
 	}
 

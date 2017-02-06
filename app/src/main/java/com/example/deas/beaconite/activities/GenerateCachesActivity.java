@@ -294,6 +294,11 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		// Bind to BeaconDataService
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
+
+		Intent intent = getIntent();
+		TextView recordThisCache = (TextView) GenerateCachesActivity.this.findViewById(R
+				.id.cacheInQuestion);
+		recordThisCache.setText(intent.getStringExtra("cache"));
 	}
 
 
