@@ -2,8 +2,6 @@ package com.example.deas.beaconite.activities;
 
 import android.os.Bundle;
 import android.os.RemoteException;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -25,7 +23,7 @@ import java.util.Collection;
  * over time) so it can be accessed by other Activities (e.g. an Activity that plots the Beacon data
  * in a graph)
  */
-public class TableActivity extends AppCompatActivity implements BeaconConsumer {
+public class TableActivity extends MenuActivity implements BeaconConsumer {
 	protected static final String TAG = "TableActivity";
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 
@@ -63,18 +61,6 @@ public class TableActivity extends AppCompatActivity implements BeaconConsumer {
 		// Make sure the toolbar exists in the activity and is not null
 		setSupportActionBar(toolbar);
 
-
-		Log.d(TAG, "onStart; toolbar: " + toolbar);
-
-		// Get a support ActionBar corresponding to this toolbar
-		ActionBar ab = getSupportActionBar();
-
-		Log.d(TAG, "getSupportActionBar: " + ab);
-		// Enable the Up button
-		if (ab != null) {
-			Log.d(TAG, "YAY!");
-			ab.setDisplayHomeAsUpEnabled(true);
-		}
 		// bind the Beacon notifier
 		beaconManager.bind(this);
 	}

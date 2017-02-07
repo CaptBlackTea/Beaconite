@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,7 @@ import android.view.View;
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
 
-public class RelocationActivity extends AppCompatActivity {
+public class RelocationActivity extends MenuActivity {
 	protected static final String TAG = "RelocationActivity";
 
 	// the Service
@@ -64,18 +62,6 @@ public class RelocationActivity extends AppCompatActivity {
 		// Make sure the toolbar exists in the activity and is not null
 		setSupportActionBar(toolbar);
 
-
-		Log.d(TAG, "onStart; toolbar: " + toolbar);
-
-		// Get a support ActionBar corresponding to this toolbar
-		ActionBar ab = getSupportActionBar();
-
-		Log.d(TAG, "getSupportActionBar: " + ab);
-		// Enable the Up button
-		if (ab != null) {
-			Log.d(TAG, "YAY!");
-			ab.setDisplayHomeAsUpEnabled(true);
-		}
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 
 		Log.d(TAG, "#### CREATE");

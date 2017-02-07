@@ -12,10 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 
 import com.example.deas.beaconite.BeaconDataService;
@@ -44,7 +42,9 @@ import java.io.IOException;
  * @author dea 25.6.2016
  */
 
-public class MainActivity extends AppCompatActivity {
+//public class MainActivity extends AppCompatActivity {
+// To have the same Menu in all Activities I extend from the MenuActivity, which extends AppC.
+public class MainActivity extends MenuActivity {
 	protected static final String TAG = "MainActivity";
 	private static final int PERMISSION_REQUEST_COARSE_LOCATION = 1;
 
@@ -174,14 +174,6 @@ public class MainActivity extends AppCompatActivity {
 				return;
 			}
 		}
-	}
-
-	// Menu icons are inflated just as they were with actionbar
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-		return true;
 	}
 
 	/**
@@ -406,6 +398,11 @@ public class MainActivity extends AppCompatActivity {
 
 	public void onStartRelocationActivityBtnClicked(View view) {
 		Intent myIntent = new Intent(this, RelocationActivity.class);
+		this.startActivity(myIntent);
+	}
+
+	public void onStartBaseGameActivityBtnClicked(View view) {
+		Intent myIntent = new Intent(this, BaseGameActivity.class);
 		this.startActivity(myIntent);
 	}
 }

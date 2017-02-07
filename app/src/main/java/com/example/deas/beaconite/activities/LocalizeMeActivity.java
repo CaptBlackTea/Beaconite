@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
@@ -30,7 +28,7 @@ import java.util.List;
  * <p>
  * Created by deas on 26/09/16.
  */
-public class LocalizeMeActivity extends AppCompatActivity {
+public class LocalizeMeActivity extends MenuActivity {
 	protected static final String TAG = "LocalizeMeActivity";
 
 	// the Service
@@ -137,19 +135,6 @@ public class LocalizeMeActivity extends AppCompatActivity {
 		// Sets the Toolbar to act as the ActionBar for this Activity window.
 		// Make sure the toolbar exists in the activity and is not null
 		setSupportActionBar(toolbar);
-
-
-		Log.d(TAG, "onStart; toolbar: " + toolbar);
-
-		// Get a support ActionBar corresponding to this toolbar
-		ActionBar ab = getSupportActionBar();
-
-		Log.d(TAG, "getSupportActionBar: " + ab);
-		// Enable the Up button
-		if (ab != null) {
-			Log.d(TAG, "YAY!");
-			ab.setDisplayHomeAsUpEnabled(true);
-		}
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 

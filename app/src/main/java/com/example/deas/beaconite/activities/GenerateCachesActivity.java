@@ -14,9 +14,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -33,7 +31,7 @@ import com.example.deas.beaconite.AdapterCache;
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
 
-public class GenerateCachesActivity extends AppCompatActivity {
+public class GenerateCachesActivity extends MenuActivity {
 
 	protected static final String TAG = "GenerateCachesActivity";
 
@@ -121,19 +119,6 @@ public class GenerateCachesActivity extends AppCompatActivity {
 		// Sets the Toolbar to act as the ActionBar for this Activity window.
 		// Make sure the toolbar exists in the activity and is not null
 		setSupportActionBar(toolbar);
-
-
-		Log.d(TAG, "onStart; toolbar: " + toolbar);
-
-		// Get a support ActionBar corresponding to this toolbar
-		ActionBar ab = getSupportActionBar();
-
-		Log.d(TAG, "getSupportActionBar: " + ab);
-		// Enable the Up button
-		if (ab != null) {
-			Log.d(TAG, "YAY!");
-			ab.setDisplayHomeAsUpEnabled(true);
-		}
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
 

@@ -12,8 +12,6 @@ import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.graph.DefaultEdge;
 
-import java.util.List;
-
 /**
  * Created by deas on 25/01/17.
  */
@@ -152,25 +150,6 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 			}
 		}
 		super.drawVertex(canvas, v);
-	}
-
-
-	// FIXME: make this method reachable or put it elsewhere :l
-	public void drawHighlightedVertex(List<V> vertices) {
-		for (V vertex : vertices) {
-			Pair<Float, Float> vertexCoord = super.vertex2view(vertex);
-
-			Canvas canvas = new Canvas();
-
-			//draw
-			Paint paint = new Paint();
-			paint.setColor(Color.RED);
-			canvas.drawCircle(
-					vertexCoord.first,
-					vertexCoord.second,
-					30,
-					paint);
-		}
 	}
 
 }

@@ -41,27 +41,57 @@
             android:name=".activities.ChartActivity"
             android:label="Chart"
             android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
         </activity>
         <activity
             android:name=".activities.GenerateCachesActivity"
             android:label="Generate Caches"
             android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
         </activity>
         <activity
             android:name=".activities.LocalizeMeActivity"
             android:label="Localize"
             android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.deas.beaconite.activities.MainActivity"/>
         </activity>
         <activity
             android:name=".activities.GraphEditActivity"
             android:label="Edit Graph"
             android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
         </activity>
         <activity
             android:name=".activities.RelocationActivity"
             android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>
         </activity>
-        <activity android:name=".activities.GraphRelocationActivity">
+        <activity
+            android:name=".activities.GraphRelocationActivity"
+            android:parentActivityName=".activities.RelocationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.RelocationActivity"/>
+            >
+        </activity>
+        <activity android:name=".activities.MenuActivity">
+        </activity>
+        <activity
+            android:name=".activities.BaseGameActivity"
+            android:parentActivityName=".activities.MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.MainActivity"/>>
         </activity>
     </application>
 

@@ -1,9 +1,10 @@
-package com.example.deas.beaconite.activities;
+package com.example.deas.beaconite.graphStuff.RelocationStuff;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
+import com.example.deas.beaconite.activities.GenerateCachesActivity;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 
 import org.agp8x.android.lib.andrograph.model.VertexEvent;
