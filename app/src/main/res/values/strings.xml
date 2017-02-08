@@ -63,4 +63,10 @@
     <string name="baseGame">Base Game...</string>
     <string name="action_backToBaseGame">Base Game Menu</string>
     <string name="title_activity_base_game">Basic Game</string>
+    <string name="generateBaseGameBtnText">Generate Base Game</string>
+    <string name="saveBaseGame">Save Base Game</string>
+    <string name="viewGraphBtn">View Graph</string>
+    <string name="playBaseGameActivity">Play Base Game</string>
+    <string name="graphActivity">Graph</string>
+    <string name="runGameInfoDialog">You now run: </string>
 </resources>

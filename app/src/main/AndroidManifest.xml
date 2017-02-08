@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name=".activities.GraphEditActivity"
-            android:label="Edit Graph"
+            android:label="@string/graphActivity"
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -91,7 +91,10 @@
             android:parentActivityName=".activities.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity"/>>
+                android:value=".activities.MainActivity"/>
+            >
+        </activity>
+        <activity android:name=".activities.RunGameActivity">
         </activity>
     </application>
 

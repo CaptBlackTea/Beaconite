@@ -66,6 +66,7 @@ public class DOTSettings {
 						map.put("id", vertex.getId());
 						map.put("attribute", vertex.getAttribute().toString());
 						map.put("shape", chooseShape(vertex));
+						// FIXME: add the new game attributes!
 						return map;
 					}
 				};
@@ -122,7 +123,7 @@ public class DOTSettings {
 			@Override
 			public BeaconiteEdge buildEdge(BeaconiteVertex from, BeaconiteVertex to, String label, Map<String, String> attributes) {
 
-				BeaconiteEdge edge = new BeaconiteEdge<BeaconiteVertex>(from, to);
+				BeaconiteEdge edge = new BeaconiteEdge<>(from, to);
 
 				System.out.println("Edge Provider: Label - " + label + "; From: " + from + "; To:" +
 						" " + to);
@@ -142,19 +143,6 @@ public class DOTSettings {
 				(vertexProvider, edgeProvider);
 
 		return importer;
-
-//		try (FileInputStream fin = new FileInputStream(directedGraphDOT)) {
-//
-//			String dotAsString = convertStreamToString(fin);
-//			//Make sure you close all streams.
-//
-//			importer.read(dotAsString, importGraph);
-//
-//			System.out.println("### Imported Graph: " + importGraph);
-//
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 	}
 
 	private static String chooseColor(BeaconiteEdge edge) {

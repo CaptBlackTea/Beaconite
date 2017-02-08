@@ -94,6 +94,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 	};
 	private File fileForGraphPosition;
+	private BaseGame baseGame;
 
 
 	/**
@@ -543,6 +544,13 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 	public GraphViewPositionProvider<BeaconiteVertex> getPositionProvider() {
 		return this.positionProvider;
+	}
+
+	/**
+	 * Generate a base game from the current graph
+	 */
+	public void generateBaseGame() {
+		this.baseGame = new BaseGame(this.graph);
 	}
 
 	/**

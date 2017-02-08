@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
 
 import com.example.deas.beaconite.BeaconDataService;
@@ -29,6 +30,7 @@ import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
 import org.agp8x.android.lib.andrograph.model.PermissionPolicy;
 import org.agp8x.android.lib.andrograph.model.VertexPaintProvider;
 import org.agp8x.android.lib.andrograph.model.defaults.DefaultGraphViewController;
+import org.agp8x.android.lib.andrograph.model.defaults.RestrictedPermissionPolicy;
 import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
@@ -39,6 +41,9 @@ import java.util.Map;
 public class GraphEditActivity extends MenuActivity {
 
 	protected static final String TAG = "GraphEditActivity";
+
+	// if true the graph cannot be edited or moved
+	private boolean readOnly = false;
 
 	// the Service
 	private BeaconDataService mService;
@@ -82,6 +87,7 @@ public class GraphEditActivity extends MenuActivity {
 	};
 
 
+
 	private void setupGraphView() {
 
 		Map<EdgeAttribute, Paint> edgePaintMap = makeEdgePaintMap();
@@ -96,6 +102,11 @@ public class GraphEditActivity extends MenuActivity {
 				(vertexPaintMap);
 
 		PermissionPolicy<BeaconiteVertex, BeaconiteEdge> pp = new BeaconitePermissionPolicy();
+
+		// if in read only mode disable movement:
+		if (readOnly) {
+			pp = new RestrictedPermissionPolicy<>();
+		}
 
 		// TODO: custom permission policy or other VertexFactory
 		VertexFactory<BeaconiteVertex> vertexFactory = new StringVertexFactory<>();
@@ -197,6 +208,20 @@ public class GraphEditActivity extends MenuActivity {
 		// Bind to BeaconDataService
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
+
+
+		Intent intent = getIntent();
+		if (intent.hasExtra("readOnly")) {
+			readOnly = intent.getBooleanExtra("readOnly", false);
+		} else {
+			readOnly = false;
+		}
+
+		if (readOnly) {
+			View changeEditModeButtons = findViewById(R.id.changeEditMode);
+			((ViewGroup) changeEditModeButtons.getParent()).removeView(changeEditModeButtons);
+		}
+
 	}
 
 	@Override
