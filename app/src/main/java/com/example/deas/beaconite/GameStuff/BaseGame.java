@@ -8,8 +8,10 @@ import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Takes a graph and generates a basic game based on the constraints annotated in this graph.
@@ -19,10 +21,11 @@ import java.util.Map;
 public class BaseGame {
 
 	private final Player player;
+	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
 	private List<String> possibleTokens;
 
 	public BaseGame(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
-
+		this.graph = graph;
 		player = new Player();
 		possibleTokens = new ArrayList<>();
 
@@ -32,6 +35,7 @@ public class BaseGame {
 		player.fillTokenlist(possibleTokens);
 	}
 
+	// FIXME: Delete this method and according to it the datastructur in the Vertices etc!
 	private void createGameVertices(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		Map<String, VertexAccess> allPossibleVertices = new HashMap<>();
 		for (BeaconiteVertex v : graph.vertexSet()) {
@@ -57,6 +61,27 @@ public class BaseGame {
 
 	public boolean goToVertex(String vertexId) {
 		return player.hasToken(vertexId);
+	}
+
+	// FIXME: refactor name and docu!
+
+	/**
+	 * Get all nodes from a vertex which should not be reachable.
+	 *
+	 * @param vertex
+	 * @return
+	 */
+	public Set<BeaconiteVertex> forbiddenNodesOf(BeaconiteVertex vertex) {
+
+		Set<BeaconiteVertex> nodes = new HashSet<>();
+
+		for (BeaconiteEdge edge : graph.outgoingEdgesOf(vertex)) {
+			if (edge.getAttribute().equals(EdgeAttribute.MUSTNOT)) {
+				nodes.add((BeaconiteVertex) edge.getVertexTarget());
+			}
+		}
+
+		return nodes;
 	}
 
 }
