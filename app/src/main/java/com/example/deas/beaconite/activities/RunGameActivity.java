@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.deas.beaconite.BeaconCacheMatcher;
 import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.Cache;
+import com.example.deas.beaconite.GameStuff.BaseGame;
 import com.example.deas.beaconite.R;
 
 import org.altbeacon.beacon.Beacon;
@@ -33,6 +34,8 @@ public class RunGameActivity extends MenuActivity {
 	private boolean mIsBound = false;
 	private Intent beaconDataServiceIntent;
 	private BeaconDataService.BeaconPositionCallback beaconPositionCallback;
+	private BaseGame game;
+
 	private Toast toast;
 
 	/**
@@ -57,7 +60,6 @@ public class RunGameActivity extends MenuActivity {
 			mIsBound = true;
 
 			// TODO: do stuff with Service data here
-
 
 			// TODO: grab cache fingerprints from the service
 			// TODO: make tmpFingerPrints every second or so and compare those to the cache FPs
@@ -86,6 +88,11 @@ public class RunGameActivity extends MenuActivity {
 			};
 
 			mService.setBeaconPositionCallback(beaconPositionCallback);
+			if (mService.getBaseGame() == null) {
+				game = mService.generateBaseGame();
+			} else {
+				game = mService.getBaseGame();
+			}
 		}
 
 		@Override
@@ -135,6 +142,7 @@ public class RunGameActivity extends MenuActivity {
 		setSupportActionBar(toolbar);
 
 		beaconDataServiceIntent = new Intent(this, BeaconDataService.class);
+
 
 //		if (toast == null) { // Initialize toast if needed
 //			toast = Toast.makeText(RunGameActivity.this, "", Toast.LENGTH_SHORT);

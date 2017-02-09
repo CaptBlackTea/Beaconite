@@ -1,13 +1,14 @@
-package com.example.deas.beaconite;
+package com.example.deas.beaconite.GameStuff;
 
-import com.example.deas.beaconite.GameStuff.GameToken;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.EdgeAttribute;
 
 import org.jgrapht.graph.SimpleDirectedGraph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,19 +18,25 @@ import java.util.Map;
  */
 public class BaseGame {
 
-	private final SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
+	private final Player player;
+	private List<String> possibleTokens;
 
 	public BaseGame(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
-		this.graph = graph;
+
+		player = new Player();
+		possibleTokens = new ArrayList<>();
 
 		// each vertex gets tokes attributes needed to make a base game
-		createGameVertices();
+		createGameVertices(graph);
+
+		player.fillTokenlist(possibleTokens);
 	}
 
-	private void createGameVertices() {
-		Map<String, GameToken> allPossibleVertices = new HashMap<>();
+	private void createGameVertices(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
+		Map<String, VertexAccess> allPossibleVertices = new HashMap<>();
 		for (BeaconiteVertex v : graph.vertexSet()) {
-			allPossibleVertices.put(v.getId(), GameToken.UNKNOWN);
+			allPossibleVertices.put(v.getId(), VertexAccess.UNKNOWN);
+			this.possibleTokens.add(v.getId());
 		}
 
 		for (BeaconiteEdge edge : graph.edgeSet()) {
@@ -41,12 +48,15 @@ public class BaseGame {
 				vertexSource.setTokens(allPossibleVertices);
 			}
 			if (edge.getAttribute().equals(EdgeAttribute.MUSTNOT)) {
-				vertexSource.setToken(vertexTarget.getId(), GameToken.NO_ACCESS);
+				vertexSource.setToken(vertexTarget.getId(), VertexAccess.NO_ACCESS);
 			} else {
-				vertexSource.setToken(vertexTarget.getId(), GameToken.ACCESS);
+				vertexSource.setToken(vertexTarget.getId(), VertexAccess.ACCESS);
 			}
 		}
 	}
 
+	public boolean goToVertex(String vertexId) {
+		return player.hasToken(vertexId);
+	}
 
 }

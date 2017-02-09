@@ -3,7 +3,7 @@ package com.example.deas.beaconite.graphStuff;
 import android.support.annotation.NonNull;
 
 import com.example.deas.beaconite.Cache;
-import com.example.deas.beaconite.GameStuff.GameToken;
+import com.example.deas.beaconite.GameStuff.VertexAccess;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.util.HashMap;
@@ -21,7 +21,7 @@ public class BeaconiteVertex {
 	private String id;
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
-	private Map<String, GameToken> tokens = new HashMap<>();
+	private Map<String, VertexAccess> tokens = new HashMap<>();
 
 
 	// the cache connected to this vertex
@@ -54,11 +54,11 @@ public class BeaconiteVertex {
 		this.attribute = VertexAttribute.NONE;
 	}
 
-	public Map<String, GameToken> getTokens() {
+	public Map<String, VertexAccess> getTokens() {
 		return tokens;
 	}
 
-	public void setTokens(Map<String, GameToken> tokens) {
+	public void setTokens(Map<String, VertexAccess> tokens) {
 		this.tokens = tokens;
 	}
 
@@ -73,7 +73,7 @@ public class BeaconiteVertex {
 	 *                  allowed. false if there is a connection, but it is not allowed to go from
 	 *                  this vertex to the given vertex id.
 	 */
-	public void setToken(@NonNull String vertexId, GameToken isAllowed) {
+	public void setToken(@NonNull String vertexId, VertexAccess isAllowed) {
 		if (vertexId != null && !vertexId.isEmpty()) {
 			tokens.put(vertexId, isAllowed);
 		}

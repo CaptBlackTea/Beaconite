@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.deas.beaconite.GameStuff.BaseGame;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.GraphViewPositionProvider;
@@ -546,11 +547,17 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return this.positionProvider;
 	}
 
+
 	/**
 	 * Generate a base game from the current graph
 	 */
-	public void generateBaseGame() {
+	public BaseGame generateBaseGame() {
 		this.baseGame = new BaseGame(this.graph);
+		return baseGame;
+	}
+
+	public BaseGame getBaseGame() {
+		return baseGame;
 	}
 
 	/**
