@@ -69,4 +69,6 @@
     <string name="playBaseGameActivity">Play Base Game</string>
     <string name="graphActivity">Graph</string>
     <string name="runGameInfoDialog">You now run: </string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>

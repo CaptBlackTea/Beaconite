@@ -1,12 +1,8 @@
 package com.example.deas.beaconite.graphStuff;
 
-import android.support.annotation.NonNull;
-
 import com.example.deas.beaconite.Cache;
-import com.example.deas.beaconite.GameStuff.VertexAccess;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,8 +17,6 @@ public class BeaconiteVertex {
 	private String id;
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
-	private Map<String, VertexAccess> tokens = new HashMap<>();
-
 
 	// the cache connected to this vertex
 	// @JsonBackReference is the back part of reference – it will be omitted from serialization.
@@ -54,30 +48,6 @@ public class BeaconiteVertex {
 		this.attribute = VertexAttribute.NONE;
 	}
 
-	public Map<String, VertexAccess> getTokens() {
-		return tokens;
-	}
-
-	public void setTokens(Map<String, VertexAccess> tokens) {
-		this.tokens = tokens;
-	}
-
-	/**
-	 * Add a token stating how this vertex is connected to an other vertex. No duplicates: if the
-	 * given vertex id is already stored in this vertex it is not added again. If the vertex id is
-	 * already stored its value (ACCESS) is updated to the given ACCESS value.
-	 *
-	 * @param vertexId  the vertex id of a connected vertex. Must not be null or empty, adding will
-	 *                  be ignored in those cases.
-	 * @param isAllowed true if the connection between this vertex and the given vertex id is
-	 *                  allowed. false if there is a connection, but it is not allowed to go from
-	 *                  this vertex to the given vertex id.
-	 */
-	public void setToken(@NonNull String vertexId, VertexAccess isAllowed) {
-		if (vertexId != null && !vertexId.isEmpty()) {
-			tokens.put(vertexId, isAllowed);
-		}
-	}
 
 	public String getId() {
 		return id;
@@ -198,7 +168,6 @@ public class BeaconiteVertex {
 		// TODO: do something useful here later, when the vertex attributes get updated
 		// e.g. when "treasure", "danger" or "protection" is assigned to a vertex
 
-		// FIXME: add the new game attributes!
 		if (attributes.containsKey("attribute")) {
 			VertexAttribute attr = VertexAttribute.valueOf(attributes.get("attribute"));
 			setAttribute(attr);

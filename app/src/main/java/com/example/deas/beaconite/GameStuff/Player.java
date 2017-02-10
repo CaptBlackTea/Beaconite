@@ -1,5 +1,7 @@
 package com.example.deas.beaconite.GameStuff;
 
+import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,21 +12,25 @@ import java.util.List;
  */
 public class Player {
 	// tokens that are currently owned by the player
-	private final List<String> tokens;
+	private final List<BeaconiteVertex> tokens;
 
 	public Player() {
 		tokens = new ArrayList<>();
 	}
 
-	public void fillTokenlist(List<String> tokens) {
+	public List<BeaconiteVertex> getTokens() {
+		return tokens;
+	}
+
+	public void fillTokenlist(List<BeaconiteVertex> tokens) {
 		this.tokens.addAll(tokens);
 	}
 
-	public void removeToken(String token) {
+	public void removeToken(BeaconiteVertex token) {
 		this.tokens.remove(token);
 	}
 
-	public boolean hasToken(String token) {
+	public boolean hasToken(BeaconiteVertex token) {
 		return tokens.contains(token);
 	}
 }
