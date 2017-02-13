@@ -113,7 +113,10 @@ public class BaseGameActivity extends MenuActivity {
 		// TODO: make the generated base game playable: no view of the graph, just tokens and
 		// messages of (not) allowed cache entering.
 		Intent myIntent = new Intent(this, RunGameActivity.class);
-		myIntent.putExtra("startedFrom", R.string.title_activity_base_game);
+
+		String startedFrom = this.getString(R.string.title_activity_base_game);
+
+		myIntent.putExtra("startedFrom", startedFrom);
 		this.startActivity(myIntent);
 	}
 

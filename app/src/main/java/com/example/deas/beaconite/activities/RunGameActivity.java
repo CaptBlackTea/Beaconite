@@ -112,6 +112,7 @@ public class RunGameActivity extends MenuActivity {
 			};
 
 			mService.setBeaconPositionCallback(beaconPositionCallback);
+
 			if (mService.getBaseGame() == null) {
 				game = mService.generateBaseGame();
 			} else {
@@ -261,7 +262,8 @@ public class RunGameActivity extends MenuActivity {
 
 		Intent startIntent = getIntent();
 		if (startIntent.hasExtra("startedFrom")) {
-			showAlertDialog(String.valueOf(R.string.runGameInfoDialog).concat(startIntent
+			showAlertDialog(String.valueOf(this.getString(R.string.runGameInfoDialog)).concat
+					(startIntent
 					.getStringExtra("startedFrom")));
 		}
 	}
@@ -301,6 +303,14 @@ public class RunGameActivity extends MenuActivity {
 						}
 					});
 
+		} else {
+			// setup buttons
+			builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+
+				public void onClick(DialogInterface dialog, int id) {
+					dialog.dismiss();
+				}
+			});
 		}
 
 		// 3. Get the AlertDialog from create()

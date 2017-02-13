@@ -51,6 +51,7 @@ public class GenerateCachesActivity extends MenuActivity {
 	private ProgressBar progressBarHorizontal;
 	private CountDownTimer countDownTimer;
 	private String cacheName;
+	private int recordingTime = 60000;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -76,7 +77,7 @@ public class GenerateCachesActivity extends MenuActivity {
 
 			countDownTimer = makeCountDownProgressBar();
 
-			setupRecordCacheButton();
+			setupRecordCacheButton(recordingTime);
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
@@ -125,6 +126,11 @@ public class GenerateCachesActivity extends MenuActivity {
 		Log.d(TAG, "#### CREATE");
 	}
 
+	/**
+	 * Sets up a button to record a cache. Recording starts when pushing the button down and lasts
+	 * as long as the button is held down. When the button is released (button up event) the
+	 * recording stops and the collected data is stored to the currently selected cache.
+	 */
 	private void setupRecordCacheButton() {
 		final Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
 
@@ -174,6 +180,42 @@ public class GenerateCachesActivity extends MenuActivity {
 		}
 	}
 
+	/**
+	 * Same as the method setupRecordCacheButton. The argument is the recording time for a cache in
+	 * milliseconds. When given a int argument the recording is started at button down and stops
+	 * after the given recording time. So no button holding down is required.
+	 *
+	 * @param recordingDuration time in milliseconds for a cache recording.
+	 */
+	private void setupRecordCacheButton(int recordingDuration) {
+		final Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
+
+		if (recordCacheBtn != null) {
+			recordCacheBtn.setOnTouchListener(new View.OnTouchListener() {
+				@TargetApi(Build.VERSION_CODES.M)
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+
+					if (event.getAction() == MotionEvent.ACTION_DOWN) {
+
+						countDownTimer.start();
+
+						startTimestampForCache = System.currentTimeMillis();
+						recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.red,
+								null));
+					}
+
+					return true;
+				}
+			});
+
+			recordCacheBtn.setEnabled(true);
+
+		} else {
+			showAlertDialog(String.valueOf(R.string.noCache_message));
+		}
+	}
+
 	private void resetCountDownTimer() {
 		bar = (ProgressBar) findViewById(R.id.progressbar);
 		bar.setProgress(0);
@@ -181,10 +223,14 @@ public class GenerateCachesActivity extends MenuActivity {
 
 	}
 
+	/**
+	 * Makes a countdown timer and progressbar that is connected to it.
+	 * @return
+	 */
 	private CountDownTimer makeCountDownProgressBar() {
 
-		// FIXME: set to 60!000
-		final int oneMin = 60000; // 1 minute in milli seconds
+		// Was refactored: instead use of "recordingTime", is now a field that can be accessed.
+//		final int oneMin = 60000; // 1 minute in milli seconds
 
 		bar = (ProgressBar) findViewById(R.id.progressbar);
 		bar.setProgress(0);
@@ -211,7 +257,7 @@ public class GenerateCachesActivity extends MenuActivity {
 		 * For applications where the length of the interval time is critical, the other
 		 * solutions posted here are probably the best.
 		 */
-		CountDownTimer cdt = new CountDownTimer(oneMin + 200, 1000) {
+		CountDownTimer cdt = new CountDownTimer(this.recordingTime + 200, 1000) {
 			public void onTick(long millisUntilFinished) {
 				bar.setMax(60);
 				bar.incrementProgressBy(1);
@@ -222,10 +268,40 @@ public class GenerateCachesActivity extends MenuActivity {
 			public void onFinish() {
 				// DO something when 1 minute is up
 				bar.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+
+				//TODO: added this functionality for the button method with the recording duration.
+				// if the button method without the argument is used disable the following or
+				// make a method duplicate etc
+				finishRecording();
 			}
 		};
 
 		return cdt;
+	}
+
+	@TargetApi(Build.VERSION_CODES.M)
+	private void finishRecording() {
+		if (countDownTimer != null) {
+			countDownTimer.cancel();
+			resetCountDownTimer();
+		}
+		Button recordCacheBtn = (Button) this.findViewById(R.id.recordCacheBtn);
+
+		recordCacheBtn.setBackgroundColor(getResources().getColor(R.color.green,
+				null));
+		stopTimestampForCache = System.currentTimeMillis();
+		TextView cacheNameView = (TextView) GenerateCachesActivity.this.findViewById
+				(R.id.cacheInQuestion);
+
+		if (cacheNameView != null && !cacheNameView.getText().equals("")) {
+			String cacheName = cacheNameView.getText().toString();
+
+			mService.addTimestampPairToCache(cacheName, startTimestampForCache, stopTimestampForCache);
+			adbCache.notifyDataSetChanged();
+			startTimestampForCache = -1L;
+			stopTimestampForCache = -1L;
+		}
+
 	}
 
 	private void showAlertDialog(String message) {
