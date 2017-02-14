@@ -424,6 +424,13 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
+		// if the graph has no vertices we strip the all caches from their vertex connections and
+		// create new vertices according to current cache data.
+		if (graph.vertexSet().isEmpty()) {
+			for (Cache cache : allMyCaches) {
+				cache.disconnectVertex(cache.getVertex());
+			}
+		}
 		constructGraph();
 
 		// TODO: check if the loading was successful; e.g. introduce a variable
@@ -443,7 +450,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	}
 
 	/**
-	 * Loads a graph from a file leaves caches empty!
+	 * Loads a graph from a file and constructs caches with no recordings!
 	 */
 	public void loadGraphFromFile() {
 		// FIXME!

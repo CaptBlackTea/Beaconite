@@ -218,13 +218,13 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/loadCaches_Btn"
+                android:id="@+id/cachesToGraph_Btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:onClick="onLoadCachesBtnClicked"
-                android:text="@string/loadCaches"/>
+                android:onClick="onCachesToGraphBtnClicked"
+                android:text="@string/cachesToGraph"/>
 
             <Button
                 android:id="@+id/loadGraph_Btn"

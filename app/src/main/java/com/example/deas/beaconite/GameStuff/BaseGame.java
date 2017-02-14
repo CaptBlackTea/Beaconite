@@ -34,6 +34,7 @@ public class BaseGame {
 	 * proceed to a next round.
 	 */
 	private boolean proceedGame;
+	private boolean gameFrozen;
 
 	public BaseGame(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		this.graph = graph;
@@ -133,8 +134,19 @@ public class BaseGame {
 	 * currently in.
 	 */
 	public void nextRound() {
-		List<BeaconiteVertex> freshTokenList = possibleTokens;
+		if (currentCache == null || gameFrozen) {
+			return;
+		}
+		List<BeaconiteVertex> freshTokenList = new ArrayList<>(possibleTokens);
 		freshTokenList.removeAll(noAccessVerticesOf(currentCache.getVertex()));
 		player.fillTokenlist(freshTokenList);
+	}
+
+	public void unfreeze() {
+		this.gameFrozen = false;
+	}
+
+	public void freeze() {
+		this.gameFrozen = true;
 	}
 }

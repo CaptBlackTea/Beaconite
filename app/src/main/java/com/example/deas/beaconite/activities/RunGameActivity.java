@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.deas.beaconite.BeaconCacheMatcher;
@@ -42,8 +43,14 @@ public class RunGameActivity extends MenuActivity {
 
 	private List<Cache> matchingCaches;
 	private int refreshCounter;
+	/**
+	 * True: access granted for the current position. proceed. or do whatever with this information.
+	 * False: access denied.
+	 */
+	private boolean accessGranted = true;
 
 	private Toast toast;
+	private AlertDialog dialog;
 	private int correctLocalizations;
 	private int falseLocalizations;
 	/**
@@ -83,22 +90,30 @@ public class RunGameActivity extends MenuActivity {
 					// scan (=beacons)
 					//e.g. Toast; refresh screen; calculate position; find matching caches etc
 
-					while (refreshCounter < 6) {
-						matchingCaches.addAll(BeaconCacheMatcher.matchesAnyCache(beacons, mService
-								.getAllMyCaches()));
-						refreshCounter++;
-					}
+					matchingCaches.addAll(BeaconCacheMatcher.matchesAnyCache(beacons, mService
+							.getAllMyCaches()));
+					refreshCounter++;
 
-					Log.d(TAG, "Matching Caches: " + matchingCaches);
-					Log.d(TAG, "Refresh Counter: " + refreshCounter);
+					Log.d(TAG, ">>>> Matching Caches: " + matchingCaches);
+					Log.d(TAG, ">>>> Refresh Counter: " + refreshCounter);
 
 					if (refreshCounter >= 6) {
 						Cache currentCache = findHighestOccurringCache();
-						game.setCurrentCache(currentCache);
-						showMatchResult(currentCache);
-						refreshCounter = 0;
+						Log.d(TAG, ">>>> Highest occuring Cache: " + currentCache);
+						if (currentCache != null) {
+							Log.d(TAG, ">>>> Highest occuring Cachename: " + currentCache.getCacheName
+									());
+							game.setCurrentCache(currentCache);
+							game.freeze();
+//							fillTokenTextView(game.getPlayerTokensNames());
+							showMatchResult(currentCache);
+							matchingCaches.clear();
+							refreshCounter = 0;
+						}
 					}
 
+					Log.d(TAG, ">>>> Proceed Game: " + game.proceedGame());
+//					if (game.proceedGame() && !accessGranted) {
 					if (game.proceedGame()) {
 						game.nextRound();
 					}
@@ -109,6 +124,7 @@ public class RunGameActivity extends MenuActivity {
 //						showMatchResult(matchingCaches);
 //					}
 				}
+
 			};
 
 			mService.setBeaconPositionCallback(beaconPositionCallback);
@@ -118,6 +134,17 @@ public class RunGameActivity extends MenuActivity {
 			} else {
 				game = mService.getBaseGame();
 			}
+
+
+			Intent startIntent = getIntent();
+			if (startIntent.hasExtra("startedFrom")) {
+//				showAlertDialog(String.valueOf(getString(R.string.runGameInfoDialog)).concat
+//						(startIntent
+//								.getStringExtra("startedFrom")));
+				String text = startIntent.getStringExtra("startedFrom");
+				Toast.makeText(RunGameActivity.this, text, Toast.LENGTH_LONG).show();
+			}
+
 		}
 
 		@Override
@@ -127,69 +154,102 @@ public class RunGameActivity extends MenuActivity {
 		}
 	};
 
+	private void fillTokenTextView(final List<String> playerTokensNames) {
+		final TextView tokenList = (TextView) RunGameActivity.this.findViewById(R.id.tokenList);
+		final String tokens = playerTokensNames.toString();
+
+		this.runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (mService != null && tokenList != null) {
+					String newTokenList = String.valueOf(getString(R.string.tokenList)) + "\n";
+					newTokenList += tokens;
+					tokenList.setText(newTokenList);
+				}
+			}
+		});
+	}
+
+
 	private Cache findHighestOccurringCache() {
-		Map<Cache, Integer> cacheOccurences = new HashMap<>();
+		Map<Cache, Integer> cacheOccurrences = new HashMap<>();
 		for (Cache cache : matchingCaches) {
-			if (cacheOccurences.containsKey(cache)) {
-				cacheOccurences.put(cache, cacheOccurences.get(cache) + 1);
+			if (cacheOccurrences.containsKey(cache)) {
+				cacheOccurrences.put(cache, cacheOccurrences.get(cache) + 1);
 			} else {
-				cacheOccurences.put(cache, 1);
+				cacheOccurrences.put(cache, 1);
 			}
 		}
 
 		Map.Entry<Cache, Integer> maxEntry = null;
 
-		for (Map.Entry<Cache, Integer> entry : cacheOccurences.entrySet()) {
+		for (Map.Entry<Cache, Integer> entry : cacheOccurrences.entrySet()) {
 			if (maxEntry == null || entry.getValue() > maxEntry.getValue()) {
 				maxEntry = entry;
 			}
 		}
 		// maxEntry should now contain the maximum,
 
+		if (maxEntry == null) {
+			return null;
+		}
 		return maxEntry.getKey();
 	}
 
 	private void showMatchResult(Cache cache) {
-		String locationInfo = String.format("You are in %s. You have ", cache.getCacheName());
+		StringBuilder locationInfo = new StringBuilder();
+		locationInfo.append(String.format("You are in %s. You are " +
+				"", cache
+				.getCacheName()));
 		if (!this.game.goToVertex(cache.getVertex())) {
-			locationInfo += "not ";
+			locationInfo.append("not ");
+//			accessGranted = false;
 		}
 
-		locationInfo += String.format("allowed to be here according to your list of tokens: %s %n",
-				game.getPlayerTokensNames());
+		locationInfo.append(String.format("allowed to be here according to your list of tokens: %s %n",
+				game.getPlayerTokensNames()));
 
-		locationInfo += "Is it correct that you are in this location?";
+		locationInfo.append("Is it correct that you are in this location?");
 
-		showAlertDialog(locationInfo, "Localization correct?", false);
-	}
+		final String message = locationInfo.toString();
 
-	private void showMatchResult(List<Cache> matchingCaches) {
-		Log.d(TAG, "Show Match Result");
-		String cacheNames = "Matching Caches \n";
-
-		if (!matchingCaches.isEmpty()) {
-
-			for (Cache c : matchingCaches) {
-				cacheNames = cacheNames + c.getCacheName() + "\n";
-			}
-		} else {
-			cacheNames = cacheNames + "- none found; searching -";
-		}
-
-		final String finalCacheNames = cacheNames;
-
-
+		// IMPORTANT: this gets called from service (onServiceConnect/update) -> change to correct
+		// thread
 		this.runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (toast == null) { // Initialize toast if needed
-					toast = Toast.makeText(RunGameActivity.this, "", Toast.LENGTH_SHORT);
-				}
-				toast.setText(finalCacheNames);
-				toast.show();
+				showAlertDialog(message, "Localization correct?", false);
 			}
 		});
 	}
+
+//	private void showMatchResult(List<Cache> matchingCaches) {
+//		Log.d(TAG, "Show Match Result");
+//		String cacheNames = "Matching Caches \n";
+//
+//		if (!matchingCaches.isEmpty()) {
+//
+//			for (Cache c : matchingCaches) {
+//				cacheNames = cacheNames + c.getCacheName() + "\n";
+//			}
+//		} else {
+//			cacheNames = cacheNames + "- none found; searching -";
+//		}
+//
+//		final String finalCacheNames = cacheNames;
+//
+//
+//		this.runOnUiThread(new Runnable() {
+//			@Override
+//			public void run() {
+//				if (toast == null) { // Initialize toast if needed
+//					toast = Toast.makeText(RunGameActivity.this, "", Toast.LENGTH_SHORT);
+//				}
+//				toast.setText(finalCacheNames);
+//				toast.show();
+//			}
+//		});
+//	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -260,19 +320,22 @@ public class RunGameActivity extends MenuActivity {
 		bindService(beaconDataServiceIntent, mConnection, Context.BIND_AUTO_CREATE);
 		Log.d(TAG, "#### START: mIsBound: " + mIsBound + " mService: " + mService);
 
-		Intent startIntent = getIntent();
-		if (startIntent.hasExtra("startedFrom")) {
-			showAlertDialog(String.valueOf(this.getString(R.string.runGameInfoDialog)).concat
-					(startIntent
-					.getStringExtra("startedFrom")));
-		}
+//		Intent startIntent = getIntent();
+//		if (startIntent.hasExtra("startedFrom")) {
+//			showAlertDialog(String.valueOf(this.getString(R.string.runGameInfoDialog)).concat
+//					(startIntent
+//							.getStringExtra("startedFrom")));
+//		}
 	}
 
-	private void showAlertDialog(String message) {
-		showAlertDialog(message, "Attention", true);
-	}
+//	private void showAlertDialog(String message) {
+//		showAlertDialog(message, "Attention", true);
+//	}
 
 	private void showAlertDialog(String message, String title, boolean cancelable) {
+		if (dialog != null && dialog.isShowing()) {
+			return;
+		}
 		// 1. Instantiate an AlertDialog.Builder with its constructor
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -287,19 +350,23 @@ public class RunGameActivity extends MenuActivity {
 
 				public void onClick(DialogInterface dialog, int id) {
 					// count how often the location was correct
+					game.setProceedGame(true);
+					game.unfreeze();
 					correctLocalizations++;
+					dialog.dismiss();
 				}
 			})
 					.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int id) {
 							// Localization was not correct, count that too
 							falseLocalizations++;
-							game.setProceedGame(true);
 
 							// the player position is not this cache, so the current cache is set
 							// null
 							game.setCurrentCache(null);
-							game.setProceedGame(false);
+							game.setProceedGame(true);
+							game.unfreeze();
+							dialog.dismiss();
 						}
 					});
 
@@ -314,7 +381,7 @@ public class RunGameActivity extends MenuActivity {
 		}
 
 		// 3. Get the AlertDialog from create()
-		AlertDialog dialog = builder.create();
+		dialog = builder.create();
 		dialog.show();
 	}
 }

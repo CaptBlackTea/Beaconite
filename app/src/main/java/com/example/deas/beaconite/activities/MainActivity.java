@@ -30,14 +30,11 @@ import java.io.IOException;
  * https://github.com/AltBeacon/android-beacon-library-reference/blob/master/app/src/main/java/org/altbeacon/beaconreference/MonitoringActivity.java
  * <p/>
  * DONE: Refactoring so that this is the main activity that starts/stops all important services
- * DONE: has the control over the services (resetting data and so on)
- * TODO: scanning mode on/off
- * TODO: start/stop/reset BeaconDataService
- * DONE: use/use not/restart MyBeaconSimulator
- * DONE: go to TableActivity (= show table with live data)
- * DONE: go to ChartActivity (= show collected data as graph)
- * DONE: go to GenerateCachesActivity (= show/record caches)
- * DONE: Exit BeaconiteApp and close all services and background scans
+ * DONE: has the control over the services (resetting data and so on) TODO: scanning mode on/off
+ * TODO: start/stop/reset BeaconDataService DONE: use/use not/restart MyBeaconSimulator DONE: go to
+ * TableActivity (= show table with live data) DONE: go to ChartActivity (= show collected data as
+ * graph) DONE: go to GenerateCachesActivity (= show/record caches) DONE: Exit BeaconiteApp and
+ * close all services and background scans
  *
  * @author dea 25.6.2016
  */
@@ -224,7 +221,8 @@ public class MainActivity extends MenuActivity {
 
 
 	/**
-	 * NO LONGER IN USE: used by the BeaconReferenceApplication which is currently not used. Kept here, but has no functionality, to satisfy the Applications needs.
+	 * NO LONGER IN USE: used by the BeaconReferenceApplication which is currently not used. Kept
+	 * here, but has no functionality, to satisfy the Applications needs.
 	 *
 	 * @param line
 	 */
@@ -240,8 +238,7 @@ public class MainActivity extends MenuActivity {
 	}
 
 	/**
-	 * Shall be called when the Application is to be shut down:
-	 * stop all services and so on.
+	 * Shall be called when the Application is to be shut down: stop all services and so on.
 	 *
 	 * @param view
 	 */
@@ -306,7 +303,8 @@ public class MainActivity extends MenuActivity {
 	}
 
 	/**
-	 * Removes all beacons that were stored till now from the service (stores and manages this data).
+	 * Removes all beacons that were stored till now from the service (stores and manages this
+	 * data).
 	 */
 	public void removeAllBeaconData() {
 		mService.resetBeaconData();
@@ -370,12 +368,39 @@ public class MainActivity extends MenuActivity {
 		}
 	}
 
-	public void onLoadCachesBtnClicked(View view) {
-		try {
-			mService.loadCachesFromFile();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public void onCachesToGraphBtnClicked(View view) {
+
+		// AlertDialog
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		// Add the buttons
+		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User clicked OK button
+				try {
+					mService.loadCachesFromFile();
+					dialog.dismiss();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				// User cancelled the dialog
+				dialog.dismiss();
+			}
+		});
+
+		// Set other dialog properties
+		builder.setTitle("Reload")
+				.setMessage("This will reload the cache data from file and construct a graph " +
+						"from it. Do you really want to proceed?");
+
+		// Create the AlertDialog
+		AlertDialog dialog = builder.create();
+		dialog.show();
+
 	}
 
 	public void loadGraphBtn(View view) {

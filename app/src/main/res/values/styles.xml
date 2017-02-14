@@ -44,4 +44,7 @@
 
     <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="myDialog" parent="Theme.AppCompat.Dialog">
+    </style>
+
 </resources>

@@ -23,6 +23,7 @@ public class Player {
 	}
 
 	public void fillTokenlist(List<BeaconiteVertex> tokens) {
+		this.tokens.clear();
 		this.tokens.addAll(tokens);
 	}
 
