@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:checkedButton="@+id/modeMove"
+            android:gravity="center"
             android:orientation="horizontal"
             android:padding="2dp">
 
@@ -61,6 +62,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/modeMove"
+                android:textSize="10dp"
+                android:textStyle="bold"
                 />
 
             <RadioButton
@@ -69,6 +72,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/modeEditEdges"
+                android:textSize="10dp"
+                android:textStyle="bold"
                 />
 
             <RadioButton
@@ -77,6 +82,8 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/modeAnnotateEdges"
+                android:textSize="10dp"
+                android:textStyle="bold"
                 />
 
             <RadioButton
@@ -85,6 +92,18 @@
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/modeAnnotateVertex"
+                android:textSize="10dp"
+                android:textStyle="bold"
+                />
+
+            <RadioButton
+                android:id="@+id/modeLimitAccess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/modeLimitAccess"
+                android:textSize="10dp"
+                android:textStyle="bold"
                 />
 
         </RadioGroup>

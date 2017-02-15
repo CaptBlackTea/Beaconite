@@ -7,10 +7,13 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.example.deas.beaconite.R;
+import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
+import com.example.deas.beaconite.graphStuff.EdgeAttribute;
 import com.example.deas.beaconite.graphStuff.VertexAttribute;
 
 import org.agp8x.android.lib.andrograph.model.VertexEvent;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 /**
  * Created by deas on 02/02/17.
@@ -20,9 +23,18 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 
 
 	private final Activity activity;
+	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
+
+	private boolean autoInsertMissingEdges = false;
 
 	public BeaconiteVertexEventHandler(Activity activity) {
 		this.activity = activity;
+	}
+
+	public BeaconiteVertexEventHandler(Activity activity, SimpleDirectedGraph<BeaconiteVertex,
+			BeaconiteEdge> graph) {
+		this(activity);
+		this.graph = graph;
 	}
 
 	/**
@@ -33,6 +45,11 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 	 */
 	@Override
 	public boolean vertexSelected(@Nullable final BeaconiteVertex vertex) {
+
+		if (autoInsertMissingEdges) {
+			drawMustNotEdges(vertex);
+			return true; // FIXME: make pretty "else" if this works
+		}
 
 		// if there is no such vertex: Alert and skip the rest!
 		if (vertex == null) {
@@ -76,5 +93,38 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 
 		builder.show();
 		return true;
+	}
+
+	/**
+	 * Adds incoming edges to the given vertex from all vertices of the graph to which it has no
+	 * edges so far. All added edges will be annotated with "MUSTNOT" Precondition: Directed graph,
+	 * no loops (vertex has no edge to itself) will be made.
+	 *
+	 * @param vertex the vertex to add incoming edges to
+	 */
+	private void drawMustNotEdges(BeaconiteVertex vertex) {
+		if (graph != null) {
+			// -1 because the given vertex is also part of the set
+			int maxAmountOfInEdges = graph.vertexSet().size() - 1;
+			System.out.println("maxAmountOfInEdges/vertexSet: " +
+					maxAmountOfInEdges + " / " + graph.vertexSet().size());
+
+			//only add edges if the given vertex is not connected to all vertices of the graph
+			if (graph.inDegreeOf(vertex) < maxAmountOfInEdges) {
+				for (BeaconiteVertex v : graph.vertexSet()) {
+					if (!graph.containsEdge(v, vertex) && !v.equals(vertex)) {
+						graph.addEdge(v, vertex).setAttribute(EdgeAttribute.MUSTNOT);
+					}
+				}
+			}
+		}
+	}
+
+	public boolean isAutoInsertMissingEdges() {
+		return autoInsertMissingEdges;
+	}
+
+	public void setAutoInsertMissingEdges(boolean autoInsertMissingEdges) {
+		this.autoInsertMissingEdges = autoInsertMissingEdges;
 	}
 }

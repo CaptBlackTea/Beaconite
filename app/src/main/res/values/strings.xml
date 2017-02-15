@@ -12,7 +12,7 @@
     <string name="distance">Distance:</string>
     <string name="found">Found:</string>
     <string name="not_scanning">Not scanning for Beacons</string>
-    <string name="scanning">Scanning...</string>
+    <string name="scanning">Scanning&#8230;</string>
     <string name="stop_scanning">Stop Scanning</string>
     <string name="RowNumberTitle">No.</string>
     <string name="beacon_data_service_stopped">BeaconDataService has stopped.</string>
@@ -50,9 +50,10 @@
     <string name="cancel">Cancel</string>
     <string name="txPower">Tx:</string>
     <string name="modeMove">Move</string>
-    <string name="modeEditEdges">Edit Edge</string>
-    <string name="modeAnnotateEdges">Desc. Edge</string>
-    <string name="modeAnnotateVertex">Desc. Vertex</string>
+    <string name="modeEditEdges">+ | -\nEdge</string>
+    <string name="modeAnnotateEdges">Annotate\nEdge</string>
+    <string name="modeAnnotateVertex">Annotate\nVertex</string>
+    <string name="modeLimitAccess">Vertex:\nLimit Access</string>
     <string name="chooseAnnotation">Annotate selected edge:</string>
     <string name="chooseAnnotationVertex">Annotate selected vertex</string>
     <string name="relocation">Relocation&#8230;</string>

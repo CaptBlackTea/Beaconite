@@ -105,8 +105,8 @@ public class RunGameActivity extends MenuActivity {
 									());
 							game.setCurrentCache(currentCache);
 							game.freeze();
-//							fillTokenTextView(game.getPlayerTokensNames());
 							showMatchResult(currentCache);
+							fillTokenTextView(game.getPlayerTokensNames());
 							matchingCaches.clear();
 							refreshCounter = 0;
 						}

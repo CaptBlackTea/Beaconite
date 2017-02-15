@@ -34,6 +34,7 @@ import org.agp8x.android.lib.andrograph.model.defaults.RestrictedPermissionPolic
 import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
+import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,6 +55,7 @@ public class GraphEditActivity extends MenuActivity {
 	private GraphView<BeaconiteVertex, BeaconiteEdge> graphView;
 	private DefaultGraphViewController<BeaconiteVertex, BeaconiteEdge> graphViewController;
 
+	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
 	/**
 	 * Defines callbacks for service binding, passed to bindService()
 	 */
@@ -73,6 +75,7 @@ public class GraphEditActivity extends MenuActivity {
 			mService = serviceBinder.getService();
 			mIsBound = true;
 
+			graph = mService.getGraph();
 			setupGraphView();
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
@@ -85,7 +88,6 @@ public class GraphEditActivity extends MenuActivity {
 			Log.d(TAG, "********** SERVICE WAS DISCONNECTED!");
 		}
 	};
-
 
 
 	private void setupGraphView() {
@@ -300,13 +302,35 @@ public class GraphEditActivity extends MenuActivity {
 					graphView.setInsertionMode(false);
 
 					// use own EventHandler to manage the behaviour when an vertex is selected in
-					// this
-					// mode
-					graphViewController.setVertexEventHandler(new BeaconiteVertexEventHandler
-							(this));
+					// this mode
+					graphViewController.setEdgeEventHandler(null);
+					BeaconiteVertexEventHandler eventHandler = new BeaconiteVertexEventHandler
+							(this);
+					eventHandler.setAutoInsertMissingEdges(false);
+					graphViewController.setVertexEventHandler(eventHandler);
+//					graphViewController.setVertexEventHandler(new BeaconiteVertexEventHandler
+//							(this));
+				}
+			case R.id.modeLimitAccess:
+				if (checked) {
+					// insert ingoing MUSTNOT edges to the selected vertex -> makes the vertex
+					// "unreachable" from any vertex.
+					graphView.setInsertionMode(false);
+
+					// use own EventHandler to manage the behaviour when an vertex is selected in
+					// this mode
+					graphViewController.setEdgeEventHandler(null);
+					BeaconiteVertexEventHandler eventHandler = new BeaconiteVertexEventHandler
+							(this, getGraph());
+					eventHandler.setAutoInsertMissingEdges(true);
+					graphViewController.setVertexEventHandler(eventHandler);
 				}
 				break;
 		}
 
+	}
+
+	public SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> getGraph() {
+		return graph;
 	}
 }
