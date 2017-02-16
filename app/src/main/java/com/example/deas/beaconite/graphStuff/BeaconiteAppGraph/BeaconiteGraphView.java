@@ -148,6 +148,19 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 						40,
 						paint);
 			}
+
+			if (vertex.hasStoryElement()) {
+				//draw highlight around vertex that has no story element assigned
+				Pair<Float, Float> vertexCoord = super.vertex2view(v);
+				Paint paint = new Paint();
+				paint.setColor(Color.MAGENTA);
+				canvas.drawCircle(
+						vertexCoord.first,
+						vertexCoord.second,
+						40,
+						paint);
+			}
+
 		}
 		super.drawVertex(canvas, v);
 	}

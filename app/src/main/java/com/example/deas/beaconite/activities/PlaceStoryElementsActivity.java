@@ -7,7 +7,6 @@ import android.content.ServiceConnection;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
@@ -15,11 +14,12 @@ import com.example.deas.beaconite.BeaconDataService;
 import com.example.deas.beaconite.R;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgePainterProvider;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteVertexPaintProvider;
-import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.RealoacteEventHandler;
+import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.PlaceElementsEventHandler;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.EdgeAttribute;
+import com.example.deas.beaconite.graphStuff.GraphColor;
 import com.example.deas.beaconite.graphStuff.VertexAttribute;
 
 import org.agp8x.android.lib.andrograph.model.EdgePaintProvider;
@@ -30,12 +30,12 @@ import org.agp8x.android.lib.andrograph.model.defaults.StringVertexFactory;
 import org.agp8x.android.lib.andrograph.view.GraphView;
 import org.jgrapht.VertexFactory;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class GraphRelocationActivity extends MenuActivity {
+public class PlaceStoryElementsActivity extends MenuActivity {
 
-	protected static final String TAG = "GraphRelocationActivity";
+	protected static final String TAG = "PlaceStoryElementsAct.";
 
 	// the Service
 	private BeaconDataService mService;
@@ -81,13 +81,9 @@ public class GraphRelocationActivity extends MenuActivity {
 
 	private void setupGraphView() {
 
-		Map<EdgeAttribute, Paint> edgePaintMap = makeEdgePaintMap();
-		Map<VertexAttribute, Paint> vertexPaintMap = makeVertexPaintMap();
+		Map<EdgeAttribute, Paint> edgePaintMap = GraphColor.makeEdgePaintMap(this);
+		Map<VertexAttribute, Paint> vertexPaintMap = GraphColor.makeVertexPaintMap(this);
 
-		// TODO: implement later -> nice to have
-//		makeEdgeColorLegend(edgePaintMap);
-
-//		PositionProvider<BeaconiteVertex> positionProvider =  new GraphViewPositionProvider<>();
 		EdgePaintProvider<BeaconiteEdge> epp = new BeaconiteEdgePainterProvider<>(edgePaintMap);
 		VertexPaintProvider<BeaconiteVertex> vpp = new BeaconiteVertexPaintProvider<>
 				(vertexPaintMap);
@@ -100,64 +96,12 @@ public class GraphRelocationActivity extends MenuActivity {
 		graphViewController = new DefaultGraphViewController<>
 				(mService.getGraph(), mService.getPositionProvider(), epp, vpp, vertexFactory, pp);
 
-		graphViewController.setVertexEventHandler(new RealoacteEventHandler(this));
+		graphViewController.setVertexEventHandler(new PlaceElementsEventHandler(this));
 
 		graphView.setController(graphViewController);
 		graphView.invalidate();
 
 		Log.d(TAG, "#### Graph: " + mService.getGraph());
-	}
-
-	// TODO: implement later -> nice to have
-//	private void makeEdgeColorLegend(Map<EdgeAttribute, Paint> edgePaintMap) {
-//		// Find the ListView resource.
-//		ListView legend = (ListView) findViewById(R.id.edgeAttributesLegend);
-//
-//		// Create and populate the list with the edge attribute enums
-//		Enum[] attributes = EdgeAttribute.values();
-//
-//		// Create ArrayAdapter using the array.
-//		int colors;
-//		ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, R.layout.edgecolors_legend, colors,
-//				attributes);
-//
-//		// If you passed a String[] instead of a List<String>
-//		// into the ArrayAdapter constructor, you must not add more items.
-//		// Otherwise an exception will occur.
-//
-//		// Set the ArrayAdapter as the ListView's adapter.
-//		legend.setAdapter( listAdapter );
-//	}
-
-
-	@NonNull
-	private Map<EdgeAttribute, Paint> makeEdgePaintMap() {
-		int strokeWidth = 5;
-		Map<EdgeAttribute, Paint> paintHashMap = new HashMap<>();
-		paintHashMap.put(EdgeAttribute.MUSTNOT, makePaint(R.color.red_500, strokeWidth));
-		paintHashMap.put(EdgeAttribute.REQUIRED, makePaint(R.color.green_500, strokeWidth));
-		paintHashMap.put(EdgeAttribute.NONE, makePaint(R.color.black, strokeWidth));
-		return paintHashMap;
-	}
-
-	@NonNull
-	private Map<VertexAttribute, Paint> makeVertexPaintMap() {
-		int strokeWidth = 5;
-
-		Map<VertexAttribute, Paint> paintHashMap = new HashMap<>();
-		paintHashMap.put(VertexAttribute.DANGER, makePaint(R.color.purple_500, strokeWidth));
-		paintHashMap.put(VertexAttribute.PROTECTION, makePaint(R.color.indigo_500, strokeWidth));
-		paintHashMap.put(VertexAttribute.TREASURE, makePaint(R.color.amber_A400, strokeWidth));
-		paintHashMap.put(VertexAttribute.NONE, makePaint(R.color.black, strokeWidth));
-		return paintHashMap;
-	}
-
-	@NonNull
-	private Paint makePaint(int color, int strokeWidth) {
-		Paint paint = new Paint();
-		paint.setColor(this.getResources().getColor(color));
-		paint.setStrokeWidth(strokeWidth);
-		return paint;
 	}
 
 	@Override
@@ -175,7 +119,7 @@ public class GraphRelocationActivity extends MenuActivity {
 
 		Log.d(TAG, "#### CREATE");
 
-		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphRelocationview);
+		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphAddElements);
 
 	}
 
@@ -221,4 +165,9 @@ public class GraphRelocationActivity extends MenuActivity {
 		super.onResume();
 	}
 
+	public List<String> getAvailableElements() {
+		// TODO: return the story elements from the game.
+		// TODO: write method in service to get this info from the game -> EventHandler needs this
+		return null;
+	}
 }

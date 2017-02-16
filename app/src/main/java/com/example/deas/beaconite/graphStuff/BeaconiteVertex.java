@@ -1,5 +1,7 @@
 package com.example.deas.beaconite.graphStuff;
 
+import android.support.annotation.NonNull;
+
 import com.example.deas.beaconite.Cache;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -17,6 +19,8 @@ public class BeaconiteVertex {
 	private String id;
 	// of what kind is this vertex? e.g. "treasure", "danger" or "protection"
 	private VertexAttribute attribute;
+
+	private String storyElement;
 
 	// the cache connected to this vertex
 	// @JsonBackReference is the back part of reference – it will be omitted from serialization.
@@ -144,6 +148,7 @@ public class BeaconiteVertex {
 
 	/**
 	 * works with the vertex id instead of the name
+	 *
 	 * @param o the vertex that is being compared to this one.
 	 * @return true if the vertices have the same id
 	 */
@@ -176,5 +181,25 @@ public class BeaconiteVertex {
 	}
 
 
+	/**
+	 * Returns only true if this vertex has an attribute other then NONE and if the storyElement of
+	 * this vertex is not null or empty.
+	 *
+	 * @return true: this vertex has a story element assigned. false: this vertex is supposed to
+	 * have an story element, but there is no element assigned yet.
+	 */
+	public boolean hasStoryElement() {
+		return !attribute.equals(VertexAttribute.NONE) && storyElement != null
+				&& !storyElement.isEmpty();
+	}
 
+	public String getStoryElement() {
+		return storyElement;
+	}
+
+	public void setStoryElement(@NonNull String storyElement) {
+		if (!storyElement.isEmpty()) {
+			this.storyElement = storyElement;
+		}
+	}
 }

@@ -214,11 +214,7 @@ public class GraphEditActivity extends MenuActivity {
 
 
 		Intent intent = getIntent();
-		if (intent.hasExtra("readOnly")) {
-			readOnly = intent.getBooleanExtra("readOnly", false);
-		} else {
-			readOnly = false;
-		}
+		readOnly = intent.hasExtra("readOnly") && intent.getBooleanExtra("readOnly", false);
 
 		if (readOnly) {
 			View changeEditModeButtons = findViewById(R.id.changeEditMode);

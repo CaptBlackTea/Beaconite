@@ -83,4 +83,6 @@
     <string name="storyElements">Story Elements</string>
     <string name="availableStoryElements">Available Story Elements</string>
     <string name="noStoryElementsCreated">No story elements have been created. Add some.</string>
+    <string name="placeElementsOnGraphIntro">This is your Game Graph. Each Vertex has already been assigned a type (Danger, Protection, Treasure).\nSelect a vertex to place an available game element on it.</string>
+    <string name="chooseStoryElementVertex">Choose Story Element</string>
 </resources>

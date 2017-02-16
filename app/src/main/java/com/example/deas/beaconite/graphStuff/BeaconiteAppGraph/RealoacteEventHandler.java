@@ -1,4 +1,4 @@
-package com.example.deas.beaconite.graphStuff.RelocationStuff;
+package com.example.deas.beaconite.graphStuff.BeaconiteAppGraph;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,16 +7,13 @@ import android.support.annotation.Nullable;
 import com.example.deas.beaconite.activities.GenerateCachesActivity;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 
-import org.agp8x.android.lib.andrograph.model.VertexEvent;
-
 /**
  * Created by deas on 06/02/17.
  */
-public class RealoacteEventHandler<V> implements VertexEvent<BeaconiteVertex> {
-	private final Activity activity;
+public class RealoacteEventHandler<V> extends BeaconiteVertexEventHandler {
 
 	public RealoacteEventHandler(Activity activity) {
-		this.activity = activity;
+		super(activity);
 	}
 
 	/**
@@ -28,9 +25,9 @@ public class RealoacteEventHandler<V> implements VertexEvent<BeaconiteVertex> {
 	 */
 	@Override
 	public boolean vertexSelected(@Nullable final BeaconiteVertex vertex) {
-		Intent myIntent = new Intent(this.activity, GenerateCachesActivity.class);
+		Intent myIntent = new Intent(activity, GenerateCachesActivity.class);
 		myIntent.putExtra("cache", vertex.getCache().getCacheName());
-		this.activity.startActivity(myIntent);
+		activity.startActivity(myIntent);
 		return true;
 	}
 }

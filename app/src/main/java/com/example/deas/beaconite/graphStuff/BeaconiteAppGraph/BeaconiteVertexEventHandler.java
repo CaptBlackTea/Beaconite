@@ -19,7 +19,7 @@ import org.agp8x.android.lib.andrograph.model.VertexEvent;
 public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVertex> {
 
 
-	private final Activity activity;
+	protected final Activity activity;
 
 	public BeaconiteVertexEventHandler(Activity activity) {
 		this.activity = activity;
