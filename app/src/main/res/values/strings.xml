@@ -73,4 +73,14 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="tokenList">Tokens:</string>
+    <string name="createStoryActivity">Create Story</string>
+    <string name="makeDangerProtectionPairsBtnText">Add Danger-Protection Pair</string>
+    <string name="addStoryCard">Add Story Card</string>
+    <string name="placeStoryElementsBtnText">Place Story Elements in Graph</string>
+    <string name="playStoryGame">Play Game</string>
+    <string name="addTreasureBtnText">Add Treasure</string>
+    <string name="storyToGame">Story to Game</string>
+    <string name="storyElements">Story Elements</string>
+    <string name="availableStoryElements">Available Story Elements</string>
+    <string name="noStoryElementsCreated">No story elements have been created. Add some.</string>
 </resources>

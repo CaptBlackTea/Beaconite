@@ -125,4 +125,9 @@ public class BaseGameActivity extends MenuActivity {
 		myIntent.putExtra("readOnly", true);
 		this.startActivity(myIntent);
 	}
+
+	public void onCreateStoryActivityBtnClicked(View view) {
+		Intent myIntent = new Intent(this, CreateStoryActivity.class);
+		this.startActivity(myIntent);
+	}
 }

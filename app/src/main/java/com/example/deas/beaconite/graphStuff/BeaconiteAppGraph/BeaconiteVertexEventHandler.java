@@ -7,13 +7,10 @@ import android.support.v7.app.AlertDialog;
 import android.widget.Toast;
 
 import com.example.deas.beaconite.R;
-import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
-import com.example.deas.beaconite.graphStuff.EdgeAttribute;
 import com.example.deas.beaconite.graphStuff.VertexAttribute;
 
 import org.agp8x.android.lib.andrograph.model.VertexEvent;
-import org.jgrapht.graph.SimpleDirectedGraph;
 
 /**
  * Created by deas on 02/02/17.
@@ -23,22 +20,14 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 
 
 	private final Activity activity;
-	private SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph;
-
-	private boolean autoInsertMissingEdges = false;
 
 	public BeaconiteVertexEventHandler(Activity activity) {
 		this.activity = activity;
 	}
 
-	public BeaconiteVertexEventHandler(Activity activity, SimpleDirectedGraph<BeaconiteVertex,
-			BeaconiteEdge> graph) {
-		this(activity);
-		this.graph = graph;
-	}
-
 	/**
-	 * Handles what happens if a vertex is selected.
+	 * If a vertex is selected a Dialog with a list of attributes is displayed from which an
+	 * element can be chosen. The chosen element is then assigned to this vertex.
 	 *
 	 * @param vertex the selected vertex
 	 * @return true: the event that this vertex was selected was consumed.
@@ -46,18 +35,13 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 	@Override
 	public boolean vertexSelected(@Nullable final BeaconiteVertex vertex) {
 
-		if (autoInsertMissingEdges) {
-			drawMustNotEdges(vertex);
-			return true; // FIXME: make pretty "else" if this works
-		}
-
 		// if there is no such vertex: Alert and skip the rest!
 		if (vertex == null) {
 			Toast.makeText(activity, "No such vertex.", Toast.LENGTH_LONG).show();
 			return true;
 		}
 
-		AlertDialog.Builder builder = new AlertDialog.Builder(this.activity);
+
 
 		String[] optionsForVertex = new String[VertexAttribute.values().length];
 
@@ -69,62 +53,30 @@ public class BeaconiteVertexEventHandler<V> implements VertexEvent<BeaconiteVert
 		System.out.println("Size Enum/options: " + VertexAttribute.values().length + "/" +
 				optionsForVertex.length);
 
-		builder.setTitle(R.string.chooseAnnotationVertex)
-				.setItems(optionsForVertex, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						// The 'which' argument contains the index position
-						// of the selected item
-						switch (which) {
-							case 0:
-								vertex.setAttribute(VertexAttribute.values()[0]);
-								break;
-							case 1:
-								vertex.setAttribute(VertexAttribute.values()[1]);
-								break;
-							case 2:
-								vertex.setAttribute(VertexAttribute.values()[2]);
-								break;
-							case 3:
-								vertex.setAttribute(VertexAttribute.values()[3]);
-								break;
-						}
-					}
-				});
-
-		builder.show();
+		DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int selectedIndex) {
+				vertex.setAttribute(VertexAttribute.values()[selectedIndex]);
+			}
+		};
+		buildDialog(optionsForVertex, R.string.chooseAnnotationVertex, onClickListener);
 		return true;
 	}
 
 	/**
-	 * Adds incoming edges to the given vertex from all vertices of the graph to which it has no
-	 * edges so far. All added edges will be annotated with "MUSTNOT" Precondition: Directed graph,
-	 * no loops (vertex has no edge to itself) will be made.
+	 * Makes and shows an AlertDialog with options to choose from
 	 *
-	 * @param vertex the vertex to add incoming edges to
+	 * @param optionsForVertex the options to select from
+	 * @param title            use Android R.string resource (this is an integer reference)
+	 * @param onClickListener  what should happen when an item is selected
 	 */
-	private void drawMustNotEdges(BeaconiteVertex vertex) {
-		if (graph != null) {
-			// -1 because the given vertex is also part of the set
-			int maxAmountOfInEdges = graph.vertexSet().size() - 1;
-			System.out.println("maxAmountOfInEdges/vertexSet: " +
-					maxAmountOfInEdges + " / " + graph.vertexSet().size());
+	protected void buildDialog(String[] optionsForVertex, int title, DialogInterface
+			.OnClickListener
+			onClickListener) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this.activity);
+		builder.setTitle(title)
+				.setItems(optionsForVertex, onClickListener);
 
-			//only add edges if the given vertex is not connected to all vertices of the graph
-			if (graph.inDegreeOf(vertex) < maxAmountOfInEdges) {
-				for (BeaconiteVertex v : graph.vertexSet()) {
-					if (!graph.containsEdge(v, vertex) && !v.equals(vertex)) {
-						graph.addEdge(v, vertex).setAttribute(EdgeAttribute.MUSTNOT);
-					}
-				}
-			}
-		}
+		builder.show();
 	}
 
-	public boolean isAutoInsertMissingEdges() {
-		return autoInsertMissingEdges;
-	}
-
-	public void setAutoInsertMissingEdges(boolean autoInsertMissingEdges) {
-		this.autoInsertMissingEdges = autoInsertMissingEdges;
-	}
 }

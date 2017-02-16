@@ -75,4 +75,36 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/createStoryActivity_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="onCreateStoryActivityBtnClicked"
+            android:text="@string/createStoryActivity"/>
+        <!--<Button-->
+        <!--android:id="@+id/viewGraphActivity_Btn"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_weight="1"-->
+        <!--android:onClick="onViewGraphBtnClicked"-->
+        <!--android:text="@string/viewGraphBtn"/>-->
+
+
+    </LinearLayout>
+
 </LinearLayout>

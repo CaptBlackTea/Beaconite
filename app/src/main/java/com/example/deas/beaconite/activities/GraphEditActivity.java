@@ -20,6 +20,7 @@ import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgeEven
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteEdgePainterProvider;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteVertexEventHandler;
 import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteVertexPaintProvider;
+import com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.LimitAccessEventHandler;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconitePermissionPolicy;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
@@ -298,21 +299,20 @@ public class GraphEditActivity extends MenuActivity {
 				break;
 			case R.id.modeAnnotateVertex:
 				if (checked) {
+					Log.d(TAG, "Mode: Annotate Vertex");
 					// annotate edges
 					graphView.setInsertionMode(false);
 
 					// use own EventHandler to manage the behaviour when an vertex is selected in
 					// this mode
 					graphViewController.setEdgeEventHandler(null);
-					BeaconiteVertexEventHandler eventHandler = new BeaconiteVertexEventHandler
-							(this);
-					eventHandler.setAutoInsertMissingEdges(false);
-					graphViewController.setVertexEventHandler(eventHandler);
-//					graphViewController.setVertexEventHandler(new BeaconiteVertexEventHandler
-//							(this));
+					graphViewController.setVertexEventHandler(new BeaconiteVertexEventHandler
+							(this));
 				}
+				break;
 			case R.id.modeLimitAccess:
 				if (checked) {
+					Log.d(TAG, "Mode: Limit Access");
 					// insert ingoing MUSTNOT edges to the selected vertex -> makes the vertex
 					// "unreachable" from any vertex.
 					graphView.setInsertionMode(false);
@@ -320,17 +320,11 @@ public class GraphEditActivity extends MenuActivity {
 					// use own EventHandler to manage the behaviour when an vertex is selected in
 					// this mode
 					graphViewController.setEdgeEventHandler(null);
-					BeaconiteVertexEventHandler eventHandler = new BeaconiteVertexEventHandler
-							(this, getGraph());
-					eventHandler.setAutoInsertMissingEdges(true);
-					graphViewController.setVertexEventHandler(eventHandler);
+					graphViewController.setVertexEventHandler(new LimitAccessEventHandler(this,
+							this.graph));
 				}
 				break;
 		}
 
-	}
-
-	public SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> getGraph() {
-		return graph;
 	}
 }

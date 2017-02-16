@@ -60,6 +60,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	// the file to where the Caches are written to and read from on the Android Device
 	private File fileForCaches;
 	private File fileForDOTGraph;
+	private File fileForGraphPosition;
 
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
@@ -68,6 +69,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private BeaconPositionCallback beaconPositionCallback;
 
 	private GraphViewPositionProvider<BeaconiteVertex> positionProvider;
+	private BaseGame baseGame;
 
 	private BeaconManager beaconManager = BeaconManager.getInstanceForApplication(this);
 	private RangeNotifier beaconNotifier = new RangeNotifier() {
@@ -94,8 +96,6 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 
 		}
 	};
-	private File fileForGraphPosition;
-	private BaseGame baseGame;
 
 
 	/**

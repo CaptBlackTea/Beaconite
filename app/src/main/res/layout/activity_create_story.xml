@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_create_story"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10sp"
+    tools:context="com.example.deas.beaconite.activities.CreateStoryActivity">
+
+    <!-- Load the toolbar here -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/storyElements"
+        android:textColor="@color/blue_900"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:id="@+id/addDangerProtectionPairs_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAddDangerProtectionPairsBtnClicked"
+            android:text="@string/makeDangerProtectionPairsBtnText"/>
+
+        <Button
+            android:id="@+id/addTreasure_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onAddTreasureBtnClicked"
+            android:text="@string/addTreasureBtnText"/>
+
+        <Button
+            android:id="@+id/addStoryCard_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="onAddStoryCardBtnClicked"
+            android:text="@string/addStoryCard"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/availableStoryElements"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/availableStoryElements"
+        android:layout_width="match_parent"
+        android:layout_height="200sp"
+        android:background="@color/blue_50"
+        android:fadeScrollbars="false"
+        android:hint="@string/noStoryElementsCreated"
+        android:padding="5sp"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbarStyle="insideOverlay"
+        android:scrollbars="vertical"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        >
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/storyToGame"
+        android:textColor="@color/green_800"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/placeStoryElements_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="onPlaceStoryElementsBtnClicked"
+            android:text="@string/placeStoryElementsBtnText"/>
+
+        <Button
+            android:id="@+id/playStoryGame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:onClick="onPlayStoryGameBtnClicked"
+            android:text="@string/playStoryGame"/>
+
+    </LinearLayout>
+
+</LinearLayout>

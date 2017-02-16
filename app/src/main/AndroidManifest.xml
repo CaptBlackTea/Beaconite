@@ -96,6 +96,8 @@
         </activity>
         <activity android:name=".activities.RunGameActivity">
         </activity>
+        <activity android:name=".activities.CreateStoryActivity">
+        </activity>
     </application>
 
 </manifest>

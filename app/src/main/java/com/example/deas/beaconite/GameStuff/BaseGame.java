@@ -8,8 +8,10 @@ import com.example.deas.beaconite.graphStuff.EdgeAttribute;
 import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -35,12 +37,17 @@ public class BaseGame {
 	 */
 	private boolean proceedGame;
 	private boolean gameFrozen;
+	private Map<String, String> dangerProtectionPairs;
+	private List<String> treasures;
 
 	public BaseGame(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		this.graph = graph;
 		player = new Player();
 		possibleTokens = new ArrayList<>();
 		possibleTokens.addAll(graph.vertexSet());
+
+		dangerProtectionPairs = new HashMap<>();
+		treasures = new ArrayList<>();
 
 		// in the first startup of the base game the player has no location, therefore the
 		// current cache is null.
@@ -148,5 +155,67 @@ public class BaseGame {
 
 	public void freeze() {
 		this.gameFrozen = true;
+	}
+
+	public boolean addDangerProtectionPair(String dangerName, String protectionName) throws
+			IllegalArgumentException {
+		if (dangerProtectionPairs.containsKey(dangerName)) {
+			throw new IllegalArgumentException(String.format("The Danger - %s - already exists!",
+					dangerName));
+		} else if (dangerProtectionPairs.containsValue(protectionName)) {
+			throw new IllegalArgumentException(String.format("The Protection - %s - already " +
+					"exists!", protectionName));
+		}
+
+		this.dangerProtectionPairs.put(dangerName, protectionName);
+
+		return true;
+	}
+
+	public String listAllStoryElements() {
+		StringBuilder allElements = new StringBuilder();
+		allElements.append("Danger - Protection Pairs: \n");
+		allElements.append(mapToBulletList(dangerProtectionPairs));
+		allElements.append("\n");
+		allElements.append("Treasures: \n");
+		// cut away brackets from List.toString
+		allElements.append(treasures.toString().substring(1, treasures.toString().length() - 1));
+		allElements.append("\n");
+		allElements.append("Story Cards (Titles): \n");
+//		allElements.append(storyCards.getTitles());
+		allElements.append("\n");
+
+
+		return String.valueOf(allElements);
+	}
+
+	private String mapToBulletList(Map<String, String> map) {
+		StringBuilder bulletList = new StringBuilder();
+		for (Map.Entry<String, String> pair : map.entrySet()) {
+			bulletList.append("- ");
+			bulletList.append(pair.getKey());
+			bulletList.append("\u2194"); // arrow in both directions
+			bulletList.append(pair.getValue());
+			bulletList.append("\n");
+
+		}
+		return String.valueOf(bulletList);
+	}
+
+	public void addTreasure(String treasure) throws IllegalArgumentException {
+		if (!treasures.contains(treasure)) {
+			treasures.add(treasure);
+		} else {
+			throw new IllegalArgumentException(String.format("The Treasure - %s - already " +
+					"exists!", treasure));
+		}
+	}
+
+	public List<String> getTreasures() {
+		return treasures;
+	}
+
+	public Map<String, String> getDangerProtectionPairs() {
+		return dangerProtectionPairs;
 	}
 }
