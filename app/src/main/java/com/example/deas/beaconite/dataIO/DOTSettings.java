@@ -65,6 +65,7 @@ public class DOTSettings {
 						Map<String, String> map = new LinkedHashMap<String, String>();
 						map.put("id", vertex.getId());
 						map.put("attribute", vertex.getAttribute().toString());
+						map.put("storyElement", vertex.getStoryElement());
 						map.put("shape", chooseShape(vertex));
 						// FIXME: add the new game attributes!
 						return map;

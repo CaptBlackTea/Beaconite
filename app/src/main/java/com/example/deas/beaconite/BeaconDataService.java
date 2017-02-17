@@ -61,6 +61,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	private File fileForCaches;
 	private File fileForDOTGraph;
 	private File fileForGraphPosition;
+	private File fileForGame;
 
 	private BeaconMap allMyBeacons;
 	private List<Cache> allMyCaches;
@@ -172,9 +173,10 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		this.fileForCaches = setUpFile("allCaches.json");
 		this.fileForDOTGraph = setUpFile("graph.dot");
 		this.fileForGraphPosition = setUpFile("graphPosition.json");
+		this.fileForGame = setUpFile("game.json");
 
 		fileSupervisor = new FileSupervisor(fileForCaches,
-				fileForDOTGraph, fileForGraphPosition);
+				fileForDOTGraph, fileForGraphPosition, fileForGame);
 
 		Log.d(TAG, " ON CREATE");
 	}
@@ -401,12 +403,15 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		}
 	}
 
-	public void writeAllDataInFile() throws IOException {
+	public void saveStoryElements() {
+		fileSupervisor.writeGameToFile(baseGame);
+	}
 
+	public void writeAllDataInFile() throws IOException {
 		// Create the file.
 //		fileSupervisor.writeAllCachesInFile(allMyCaches);
 		Log.d(TAG, "#### PositionProvider: " + positionProvider.getPositionMap());
-		fileSupervisor.writeAllDataInFile(allMyCaches, graph, positionProvider);
+		fileSupervisor.writeAllDataInFile(allMyCaches, graph, positionProvider, baseGame);
 	}
 
 
@@ -456,11 +461,19 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		// FIXME!
 	}
 
+
+	public void loadGameFromFile() throws IOException {
+		if (baseGame == null) {
+			generateBaseGame();
+		}
+		this.baseGame.setAvailabeleStoryElements(fileSupervisor.loadGame());
+	}
+
 	/**
 	 * Loads caches and graph from their files. Connects the corresponding caches with their
 	 * vertices.
 	 */
-	public void loadCachesAndGraphFromFile() throws IOException, ImportException {
+	public void loadAllFromFile() throws IOException, ImportException {
 		allMyCaches = fileSupervisor.loadCachesFromFile();
 
 		this.graph = fileSupervisor.loadGraphFromFile();
@@ -469,6 +482,8 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		connectGraphWithCaches();
 
 		this.positionProvider.setAllPositions(fileSupervisor.loadPositionProviderFromFile().getJacksonPositionMap());
+
+		loadGameFromFile();
 
 //		for (Cache cache : allMyCaches) {
 //			Log.d(TAG, "cache:" + cache.getCacheName());
@@ -566,6 +581,7 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 	public BaseGame getBaseGame() {
 		return baseGame;
 	}
+
 
 	/**
 	 * Not SO Pretty! but...

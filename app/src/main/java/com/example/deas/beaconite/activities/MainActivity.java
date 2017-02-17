@@ -412,7 +412,7 @@ public class MainActivity extends MenuActivity {
 	public void loadAllDataBtn(View view) {
 		if (mService != null) {
 			try {
-				mService.loadCachesAndGraphFromFile();
+				mService.loadAllFromFile();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (ImportException e) {

@@ -53,6 +53,7 @@ public class CreateStoryActivity extends MenuActivity {
 			mIsBound = true;
 
 			game = mService.getBaseGame();
+			updateAvailableElementsView();
 
 			Log.d(TAG, "------ on Service connected was called. mService, mIsBound: " + mService
 					+ ", " + mIsBound);
@@ -178,11 +179,6 @@ public class CreateStoryActivity extends MenuActivity {
 
 								try {
 									game.addDangerProtectionPair(newDangerName, newProtectionName);
-//									throw new IllegalArgumentException(String.format("The name %s" +
-//											"already exists!", newDangerName));
-//								} else if (game.addProtection(newProtectionName) == null) {
-//									throw new IllegalArgumentException(String.format("The name %s" +
-//											"already exists!", newProtectionName));
 								} catch (IllegalArgumentException e) {
 									throw e;
 								}
@@ -259,7 +255,8 @@ public class CreateStoryActivity extends MenuActivity {
 	}
 
 	public void onPlaceStoryElementsBtnClicked(View view) {
-		Toast.makeText(this, "Under construction", Toast.LENGTH_SHORT).show();
+		Intent intent = new Intent(this, PlaceStoryElementsActivity.class);
+		this.startActivity(intent);
 	}
 
 	public void onPlayStoryGameBtnClicked(View view) {

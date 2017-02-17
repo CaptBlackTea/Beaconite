@@ -4,11 +4,12 @@ import com.example.deas.beaconite.Cache;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
 import com.example.deas.beaconite.graphStuff.BeaconiteVertex;
 import com.example.deas.beaconite.graphStuff.EdgeAttribute;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import org.jgrapht.graph.SimpleDirectedGraph;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,8 +38,9 @@ public class BaseGame {
 	 */
 	private boolean proceedGame;
 	private boolean gameFrozen;
-	private Map<String, String> dangerProtectionPairs;
-	private List<String> treasures;
+	private AvailabeleStoryElements availabeleStoryElements;
+//	private Map<String, String> dangerProtectionPairs;
+//	private List<String> treasures;
 
 	public BaseGame(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
 		this.graph = graph;
@@ -46,8 +48,9 @@ public class BaseGame {
 		possibleTokens = new ArrayList<>();
 		possibleTokens.addAll(graph.vertexSet());
 
-		dangerProtectionPairs = new HashMap<>();
-		treasures = new ArrayList<>();
+		availabeleStoryElements = new AvailabeleStoryElements();
+//		dangerProtectionPairs = new HashMap<>();
+//		treasures = new ArrayList<>();
 
 		// in the first startup of the base game the player has no location, therefore the
 		// current cache is null.
@@ -157,29 +160,14 @@ public class BaseGame {
 		this.gameFrozen = true;
 	}
 
-	public boolean addDangerProtectionPair(String dangerName, String protectionName) throws
-			IllegalArgumentException {
-		if (dangerProtectionPairs.containsKey(dangerName)) {
-			throw new IllegalArgumentException(String.format("The Danger - %s - already exists!",
-					dangerName));
-		} else if (dangerProtectionPairs.containsValue(protectionName)) {
-			throw new IllegalArgumentException(String.format("The Protection - %s - already " +
-					"exists!", protectionName));
-		}
-
-		this.dangerProtectionPairs.put(dangerName, protectionName);
-
-		return true;
-	}
-
 	public String listAllStoryElements() {
 		StringBuilder allElements = new StringBuilder();
 		allElements.append("Danger - Protection Pairs: \n");
-		allElements.append(mapToBulletList(dangerProtectionPairs));
+		allElements.append(mapToBulletList(availabeleStoryElements.getDangerProtectionPairs()));
 		allElements.append("\n");
 		allElements.append("Treasures: \n");
 		// cut away brackets from List.toString
-		allElements.append(treasures.toString().substring(1, treasures.toString().length() - 1));
+		allElements.append(availabeleStoryElements.makeTreasuresPrettyList());
 		allElements.append("\n");
 		allElements.append("Story Cards (Titles): \n");
 //		allElements.append(storyCards.getTitles());
@@ -202,20 +190,47 @@ public class BaseGame {
 		return String.valueOf(bulletList);
 	}
 
+	public boolean addDangerProtectionPair(String dangerName, String protectionName) throws
+			IllegalArgumentException {
+		return availabeleStoryElements.addDangerProtectionPairs(dangerName, protectionName);
+	}
+
 	public void addTreasure(String treasure) throws IllegalArgumentException {
-		if (!treasures.contains(treasure)) {
-			treasures.add(treasure);
-		} else {
-			throw new IllegalArgumentException(String.format("The Treasure - %s - already " +
-					"exists!", treasure));
-		}
+		availabeleStoryElements.addTreasure(treasure);
 	}
 
 	public List<String> getTreasures() {
-		return treasures;
+		return availabeleStoryElements.getTreasures();
 	}
 
 	public Map<String, String> getDangerProtectionPairs() {
-		return dangerProtectionPairs;
+		return availabeleStoryElements.getDangerProtectionPairs();
+	}
+
+	public List<String> getDangers() {
+		return availabeleStoryElements.getDangerElements();
+	}
+
+	public List<String> getProtections() {
+		return availabeleStoryElements.getProtectionElements();
+	}
+
+
+	@JsonGetter("availabeleStoryElements")
+	public AvailabeleStoryElements getAvailabeleStoryElements() {
+		return availabeleStoryElements;
+	}
+
+	@JsonSetter("availabeleStoryElements")
+	public void setAvailabeleStoryElements(AvailabeleStoryElements availabeleStoryElements) {
+		this.availabeleStoryElements = availabeleStoryElements;
+	}
+
+	@Override
+	public String toString() {
+		return "BaseGame{" +
+				", possibleTokens=" + possibleTokens +
+				"availabeleStoryElements=" + availabeleStoryElements +
+				'}';
 	}
 }

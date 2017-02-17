@@ -1,7 +1,5 @@
 package com.example.deas.beaconite.graphStuff;
 
-import android.support.annotation.NonNull;
-
 import com.example.deas.beaconite.Cache;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -141,6 +139,7 @@ public class BeaconiteVertex {
 				"name='" + name + '\'' +
 				"id='" + id + '\'' +
 				"attribute='" + attribute + '\'' +
+				"story element='" + storyElement + '\'' +
 				"cache='" + cache + '\'' +
 				'}';
 	}
@@ -178,6 +177,10 @@ public class BeaconiteVertex {
 			setAttribute(attr);
 		}
 
+		if (attributes.containsKey("storyElement")) {
+			setStoryElement(attributes.get("storyElement"));
+		}
+
 	}
 
 
@@ -197,8 +200,8 @@ public class BeaconiteVertex {
 		return storyElement;
 	}
 
-	public void setStoryElement(@NonNull String storyElement) {
-		if (!storyElement.isEmpty()) {
+	public void setStoryElement(String storyElement) {
+		if (storyElement != null && !storyElement.isEmpty()) {
 			this.storyElement = storyElement;
 		}
 	}

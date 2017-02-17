@@ -33,7 +33,7 @@ import org.jgrapht.VertexFactory;
 import java.util.List;
 import java.util.Map;
 
-public class PlaceStoryElementsActivity extends MenuActivity {
+public class PlaceStoryElementsActivity extends MenuActivity implements StoryElements {
 
 	protected static final String TAG = "PlaceStoryElementsAct.";
 
@@ -107,7 +107,7 @@ public class PlaceStoryElementsActivity extends MenuActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_graph_relocation);
+		setContentView(R.layout.activity_place_story_elements);
 		// Find the toolbar view inside the activity layout
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		// Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -119,7 +119,7 @@ public class PlaceStoryElementsActivity extends MenuActivity {
 
 		Log.d(TAG, "#### CREATE");
 
-		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.graphAddElements);
+		graphView = (GraphView<BeaconiteVertex, BeaconiteEdge>) findViewById(R.id.placeStoryElementsGraphView);
 
 	}
 
@@ -165,9 +165,25 @@ public class PlaceStoryElementsActivity extends MenuActivity {
 		super.onResume();
 	}
 
-	public List<String> getAvailableElements() {
-		// TODO: return the story elements from the game.
+	@Override
+	public List<String> getDangerElements() {
+		// TODO: return the danger story elements from the game.
 		// TODO: write method in service to get this info from the game -> EventHandler needs this
+		return mService.getBaseGame().getDangers();
+	}
+
+	@Override
+	public List<String> getProtectionElements() {
+		return mService.getBaseGame().getProtections();
+	}
+
+	@Override
+	public List<String> getTreasures() {
+		return mService.getBaseGame().getTreasures();
+	}
+
+	@Override
+	public List<String> getStoryCardsElements() {
 		return null;
 	}
 }

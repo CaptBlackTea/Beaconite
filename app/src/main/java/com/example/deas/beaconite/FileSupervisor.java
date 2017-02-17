@@ -2,6 +2,8 @@ package com.example.deas.beaconite;
 
 import android.util.Log;
 
+import com.example.deas.beaconite.GameStuff.AvailabeleStoryElements;
+import com.example.deas.beaconite.GameStuff.BaseGame;
 import com.example.deas.beaconite.dataIO.BeaconMapper;
 import com.example.deas.beaconite.dataIO.DOTSettings;
 import com.example.deas.beaconite.graphStuff.BeaconiteEdge;
@@ -32,19 +34,21 @@ public class FileSupervisor {
 
 	// Mapper for JSON (de-)serialization
 	private final ObjectMapper jsonMapper = new BeaconMapper();
-	private final File graphPositionFile;
+	private File graphPositionFile;
+	private File gameFile;
 	private File cacheFile;
 	private File graphFile;
 	private String jsonAsString;
 
 	// FIXME: Exceptions
-	public FileSupervisor(File cacheFile, File graphFile, File graphPoistionFile) throws IllegalArgumentException {
+	public FileSupervisor(File cacheFile, File graphFile, File graphPoistionFile, File gameFile) throws IllegalArgumentException {
 		if (cacheFile == null && graphFile == null) {
 			throw new NullPointerException();
 		} else {
 			this.cacheFile = cacheFile;
 			this.graphFile = graphFile;
 			this.graphPositionFile = graphPoistionFile;
+			this.gameFile = gameFile;
 		}
 		// make JSON pretty ^^ then write it in a cacheFile
 //		jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -52,13 +56,31 @@ public class FileSupervisor {
 	}
 
 
-	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph, GraphViewPositionProvider<BeaconiteVertex> positionProvider) {
+	public void writeAllDataInFile(List<Cache> allMyCaches, SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph, GraphViewPositionProvider<BeaconiteVertex> positionProvider, BaseGame baseGame) {
 		try {
 			writeAllCachesInFile(allMyCaches);
 			writeGraphToFile(graph);
 			writeGraphPositionToFile(positionProvider);
+			writeGameToFile(baseGame);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	public void writeGameToFile(BaseGame game) {
+
+		// FIXME: Exceptions
+		Log.d(TAG, "--- Game: " + game.toString());
+
+		// Map the data with Jackson, write File not with Jackson
+		// writing cacheFile with Android native tools
+		try (FileOutputStream fOut = new FileOutputStream(gameFile)) {
+//			jsonAsString = jsonMapper.writeValueAsString(positionProvider);
+
+			jsonMapper.writeValue(fOut, game.getAvailabeleStoryElements());
+
+		} catch (IOException e) {
+			Log.e("Exception", "File write failed: " + e.toString());
 		}
 	}
 
@@ -157,6 +179,23 @@ public class FileSupervisor {
 			return positionProviderFromFile;
 		}
 
+	}
+
+	public AvailabeleStoryElements loadGame() throws IOException {
+		// TODO: optimize this?
+
+		// read Cache Data from a File with inputstream and mapper
+		try (FileInputStream fIn = new FileInputStream(gameFile)) {
+
+			AvailabeleStoryElements availabeleStoryElementsFromFile = jsonMapper
+					.readValue(fIn, AvailabeleStoryElements.class);
+			System.out.println("\n2. Convert JSON to AvailableStoryElements object :");
+
+			//Print list of person objects output using Java 8
+			System.out.println(availabeleStoryElementsFromFile.toString());
+
+			return availabeleStoryElementsFromFile;
+		}
 	}
 
 	//TODO: excpetion handling?

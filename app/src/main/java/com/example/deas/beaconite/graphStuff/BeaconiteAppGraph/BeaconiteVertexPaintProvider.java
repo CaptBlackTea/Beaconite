@@ -66,7 +66,15 @@ public class BeaconiteVertexPaintProvider<V> implements
 
 	@Override
 	public String getLabel(BeaconiteVertex beaconiteVertex) {
-		return "" + beaconiteVertex.getName() + " / " + beaconiteVertex.getAttribute();
+		String storyElement;
+		if (!beaconiteVertex.hasStoryElement()) {
+			storyElement = "no story element";
+		} else {
+			storyElement = beaconiteVertex.getStoryElement();
+		}
+
+		return "" + beaconiteVertex.getName() + " / " + beaconiteVertex.getAttribute() + "\n" +
+				storyElement;
 	}
 
 	@Override

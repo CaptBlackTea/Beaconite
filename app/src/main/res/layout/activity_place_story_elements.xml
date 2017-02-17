@@ -28,7 +28,7 @@
         android:layout_height="match_parent">
 
         <com.example.deas.beaconite.graphStuff.BeaconiteAppGraph.BeaconiteGraphView
-            android:id="@+id/graphAddElements"
+            android:id="@+id/placeStoryElementsGraphView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
