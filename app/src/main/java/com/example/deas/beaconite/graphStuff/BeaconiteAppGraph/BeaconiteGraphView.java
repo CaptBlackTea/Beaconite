@@ -145,7 +145,7 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 				canvas.drawCircle(
 						vertexCoord.first,
 						vertexCoord.second,
-						40,
+						60,
 						paint);
 			}
 
@@ -157,7 +157,7 @@ public class BeaconiteGraphView<V, E extends DefaultEdge> extends GraphView<V, E
 				canvas.drawCircle(
 						vertexCoord.first,
 						vertexCoord.second,
-						60,
+						40,
 						paint);
 			}
 

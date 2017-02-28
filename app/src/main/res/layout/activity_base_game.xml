@@ -24,21 +24,29 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/generateBaseGameActivity_Btn"
+            android:id="@+id/generateBaseGame_Btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="onGenerateBaseGameBtnClicked"
             android:text="@string/generateBaseGameBtnText"/>
 
         <Button
+            android:id="@+id/refreshBaseGame_Btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="onRefreshBaseGameBtnClicked"
+            android:text="@string/refreshBaseGameBtnText"/>
+
+        <Button
             android:id="@+id/saveBaseGame_Btn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:onClick="onSaveBaseGameBtnClicked"
-            android:text="@string/saveBaseGame"/>
+            android:onClick="onSaveCurrentGameSetupBtnClicked"
+            android:text="@string/saveCurrentGame"/>
 
     </LinearLayout>
 

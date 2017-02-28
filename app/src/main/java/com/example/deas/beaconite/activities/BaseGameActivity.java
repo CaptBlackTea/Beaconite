@@ -104,7 +104,7 @@ public class BaseGameActivity extends MenuActivity {
 
 	}
 
-	public void onSaveBaseGameBtnClicked(View view) {
+	public void onSaveCurrentGameSetupBtnClicked(View view) {
 		// TODO: what to save and in which form? Should it be saved at all or being created fresh
 		// every time?
 	}
@@ -129,5 +129,16 @@ public class BaseGameActivity extends MenuActivity {
 	public void onCreateStoryActivityBtnClicked(View view) {
 		Intent myIntent = new Intent(this, CreateStoryActivity.class);
 		this.startActivity(myIntent);
+	}
+
+	/**
+	 * Refreshes the base game status (e.g. Tokens) from the current graph.
+	 *
+	 * @param view
+	 */
+	public void onRefreshBaseGameBtnClicked(View view) {
+		if (mIsBound) {
+			mService.refreshBaseGame();
+		}
 	}
 }

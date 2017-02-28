@@ -70,6 +70,12 @@ public class FileSupervisor {
 	public void writeGameToFile(BaseGame game) {
 
 		// FIXME: Exceptions
+		if (game == null) {
+			Log.d(TAG, "--- Game: " + game);
+
+			return;
+		}
+
 		Log.d(TAG, "--- Game: " + game.toString());
 
 		// Map the data with Jackson, write File not with Jackson

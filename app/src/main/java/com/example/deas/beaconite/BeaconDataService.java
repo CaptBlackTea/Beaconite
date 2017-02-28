@@ -582,6 +582,19 @@ public class BeaconDataService extends Service implements BeaconConsumer {
 		return baseGame;
 	}
 
+	/**
+	 * Refreshes the base game setup. Takes the current graph and sets game values according to it.
+	 *
+	 * @return the refreshed base game; null if there is no game.
+	 */
+	public BaseGame refreshBaseGame() {
+		if (this.baseGame != null) {
+			this.baseGame.refreshStatus(this.graph);
+		}
+
+		return this.baseGame;
+	}
+
 
 	/**
 	 * Not SO Pretty! but...

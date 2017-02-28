@@ -233,4 +233,22 @@ public class BaseGame {
 				"availabeleStoryElements=" + availabeleStoryElements +
 				'}';
 	}
+
+	/**
+	 * Refreshes the basic game state: Takes the given graph, fills the possible token list
+	 * according to the graph vertices, resets the current cache to null (player is in no cache) and
+	 * fills the players token list with the new possible tokens. Proceed game is true afterwards.
+	 * Already set game elements stay untouched.
+	 *
+	 * @param graph
+	 */
+	public void refreshStatus(SimpleDirectedGraph<BeaconiteVertex, BeaconiteEdge> graph) {
+		if (graph != null) {
+			currentCache = null;
+			proceedGame = true;
+			possibleTokens.clear();
+			possibleTokens.addAll(graph.vertexSet());
+			player.fillTokenlist(possibleTokens);
+		}
+	}
 }
